@@ -1,8 +1,8 @@
-package communication.object;
+package de.uol.swp.client.communication.object;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import message.IMessage;
+import de.uol.swp.common.message.IMessage;
 
 /**
  * Netty handler for incoming connections

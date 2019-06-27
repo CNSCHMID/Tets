@@ -1,6 +1,6 @@
-package message;
+package de.uol.swp.common.message;
 
-import user.Session;
+import de.uol.swp.common.user.Session;
 
 /**
  * Base class of all messages. Basic handling of session information

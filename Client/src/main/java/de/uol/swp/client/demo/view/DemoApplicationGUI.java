@@ -1,15 +1,18 @@
-package demo.view;
-
-import java.util.List;
-
-import javax.security.auth.login.LoginException;
+package de.uol.swp.client.demo.view;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-
-import communication.object.DemoClient;
-import demo.IConnectionListener;
+import de.uol.swp.client.communication.object.DemoClient;
+import de.uol.swp.client.demo.IConnectionListener;
+import de.uol.swp.client.user.UserServiceFactory;
+import de.uol.swp.common.user.IUserService;
+import de.uol.swp.common.user.Session;
 import io.netty.channel.Channel;
+
+import de.uol.swp.common.user.message.LoginSuccessfullMessage;
+import de.uol.swp.common.user.message.UserLoggedInMessage;
+import de.uol.swp.common.user.message.UserLoggedOutMessage;
+import de.uol.swp.common.user.message.UsersListMessage;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -17,32 +20,22 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import user.IUserService;
-import user.Session;
-import user.UserServiceFactory;
-import user.message.LoginSuccessfullMessage;
-import user.message.UserLoggedInMessage;
-import user.message.UserLoggedOutMessage;
-import user.message.UsersListMessage;
+
+import javax.security.auth.login.LoginException;
+import java.util.List;
 
 public class DemoApplicationGUI extends Application implements IConnectionListener {
 
 	private String host;
 	private int port;
 
-	IUserService userService;
-	Session userSession = Session.invalid;
+	private IUserService userService;
+	private Session userSession = Session.invalid;
 
 	private Stage primaryStage;
 	private Scene loginScene;
@@ -178,7 +171,7 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 
 			@Override
 			public void run() {
-				Alert a = new Alert(AlertType.ERROR, "Server returned an error:\n" + e.getMessage());
+				Alert a = new Alert(Alert.AlertType.ERROR, "Server returned an error:\n" + e.getMessage());
 				a.showAndWait();
 			}
 		});
@@ -189,7 +182,7 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 
 			@Override
 			public void run() {
-				Alert alert = new Alert(AlertType.ERROR, "Error logging in to server");
+				Alert alert = new Alert(Alert.AlertType.ERROR, "Error logging in to server");
 				alert.showAndWait();
 				showLoginScreen();
 			}

@@ -1,4 +1,4 @@
-package demo;
+package de.uol.swp.server.demo;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,9 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import exception.SecurityException;
-import user.IUserService;
-import user.Session;
+import de.uol.swp.common.exception.SecurityException;
+import de.uol.swp.common.user.IUserService;
+import de.uol.swp.common.user.Session;
 
 /**
  * Class encapsulates all user specific server services

@@ -1,7 +1,7 @@
-package command;
+package de.uol.swp.common.command;
 
-import message.AbstractMessage;
-import user.Session;
+import de.uol.swp.common.message.AbstractMessage;
+import de.uol.swp.common.user.Session;
 
 /**
  * A simple way to send a simple parameterless command (e.g. to retrieve all current logged in users)

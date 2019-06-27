@@ -1,7 +1,7 @@
-package user.command;
+package de.uol.swp.common.user.command;
 
-import message.AbstractMessage;
-import user.Session;
+import de.uol.swp.common.message.AbstractMessage;
+import de.uol.swp.common.user.Session;
 
 /**
  * A command send from client to server to log out

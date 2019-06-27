@@ -1,14 +1,14 @@
-package user.message;
+package de.uol.swp.common.user.message;
 
-import message.AbstractMessage;
-import user.Session;
+import de.uol.swp.common.message.AbstractMessage;
+import de.uol.swp.common.user.Session;
 
 /**
  * A message to indicate a logged out user
  * @author Marco Grawunder
  *
  */
-public class UserLoggedOutMessage extends AbstractMessage{
+public class UserLoggedOutMessage extends AbstractMessage {
 
 	private static final long serialVersionUID = -2071886836547126480L;
 	private String username;

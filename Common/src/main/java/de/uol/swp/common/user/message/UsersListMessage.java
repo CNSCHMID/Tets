@@ -1,9 +1,9 @@
-package user.message;
+package de.uol.swp.common.user.message;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import message.AbstractMessage;
+import de.uol.swp.common.message.AbstractMessage;
 
 /**
  * A message containing all current logged in usernames
@@ -11,7 +11,7 @@ import message.AbstractMessage;
  * @author Marco Grawunder
  *
  */
-public class UsersListMessage extends AbstractMessage{
+public class UsersListMessage extends AbstractMessage {
 
 	private static final long serialVersionUID = -7968574381977330152L;
 	private ArrayList<String> users;

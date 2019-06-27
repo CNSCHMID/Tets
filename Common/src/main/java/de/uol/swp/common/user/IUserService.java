@@ -1,4 +1,4 @@
-package user;
+package de.uol.swp.common.user;
 
 import java.util.List;
 

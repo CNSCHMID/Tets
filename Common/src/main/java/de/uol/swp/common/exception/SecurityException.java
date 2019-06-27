@@ -1,4 +1,4 @@
-package exception;
+package de.uol.swp.common.exception;
 
 /**
  * Exception to state e.g. that a login is required

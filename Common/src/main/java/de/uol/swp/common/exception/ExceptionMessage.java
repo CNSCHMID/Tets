@@ -1,6 +1,6 @@
-package exception;
+package de.uol.swp.common.exception;
 
-import message.AbstractMessage;
+import de.uol.swp.common.message.AbstractMessage;
 
 /**
  * Encapsulates an Exception in a message object

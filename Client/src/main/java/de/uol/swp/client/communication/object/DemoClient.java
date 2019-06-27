@@ -1,4 +1,4 @@
-package communication.object;
+package de.uol.swp.client.communication.object;
 
 import java.net.InetSocketAddress;
 import java.util.List;
@@ -8,8 +8,8 @@ import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
-import demo.IConnectionListener;
-import exception.ExceptionMessage;
+import de.uol.swp.client.demo.IConnectionListener;
+import de.uol.swp.common.exception.ExceptionMessage;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -21,7 +21,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
-import message.IMessage;
+import de.uol.swp.common.message.IMessage;
 
 /**
  * The Client Connection class

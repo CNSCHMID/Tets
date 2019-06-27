@@ -1,6 +1,6 @@
-package demo;
+package de.uol.swp.server.demo;
 
-import communication.DemoServer;
+import de.uol.swp.server.communication.DemoServer;
 
 public class DemoApplicationServer {
 

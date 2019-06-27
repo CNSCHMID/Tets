@@ -1,6 +1,7 @@
-package user;
+package de.uol.swp.client.user;
 
-import communication.object.ObjectCommunication;
+import de.uol.swp.client.communication.object.ObjectCommunication;
+import de.uol.swp.common.user.IUserService;
 import io.netty.channel.Channel;
 
 /**

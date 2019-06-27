@@ -1,8 +1,8 @@
-package message;
+package de.uol.swp.common.message;
 
 import java.io.Serializable;
 
-import user.Session;
+import de.uol.swp.common.user.Session;
 
 /**
  * Base interface of all messages

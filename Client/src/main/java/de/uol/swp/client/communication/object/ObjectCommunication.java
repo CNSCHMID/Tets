@@ -1,15 +1,15 @@
-package communication.object;
+package de.uol.swp.client.communication.object;
 
 import java.io.Serializable;
 import java.util.List;
 
-import command.GenericCommand;
-import command.GenericCommands;
+import de.uol.swp.common.command.GenericCommand;
+import de.uol.swp.common.command.GenericCommands;
 import io.netty.channel.Channel;
-import user.IUserService;
-import user.Session;
-import user.command.LoginCommand;
-import user.command.LogoutCommand;
+import de.uol.swp.common.user.IUserService;
+import de.uol.swp.common.user.Session;
+import de.uol.swp.common.user.command.LoginCommand;
+import de.uol.swp.common.user.command.LogoutCommand;
 
 /**
  * This class is used to hide the communication details

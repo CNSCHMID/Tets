@@ -1,9 +1,9 @@
-package communication;
+package de.uol.swp.server.communication;
 
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import message.IMessage;
+import de.uol.swp.common.message.IMessage;
 
 /**
  * Netty handler for incomming communication

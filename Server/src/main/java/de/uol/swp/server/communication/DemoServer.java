@@ -1,4 +1,4 @@
-package communication;
+package de.uol.swp.server.communication;
 
 import java.net.InetSocketAddress;
 import java.util.HashMap;
@@ -12,9 +12,9 @@ import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
-import command.GenericCommand;
-import exception.ExceptionMessage;
-import exception.SecurityException;
+import de.uol.swp.common.command.GenericCommand;
+import de.uol.swp.common.exception.ExceptionMessage;
+import de.uol.swp.common.exception.SecurityException;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
@@ -26,16 +26,16 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
-import message.AbstractMessage;
-import message.IMessage;
-import user.IUserService;
-import user.Session;
-import user.command.LoginCommand;
-import user.command.LogoutCommand;
-import user.message.LoginSuccessfullMessage;
-import user.message.UserLoggedInMessage;
-import user.message.UserLoggedOutMessage;
-import user.message.UsersListMessage;
+import de.uol.swp.common.message.AbstractMessage;
+import de.uol.swp.common.message.IMessage;
+import de.uol.swp.common.user.IUserService;
+import de.uol.swp.common.user.Session;
+import de.uol.swp.common.user.command.LoginCommand;
+import de.uol.swp.common.user.command.LogoutCommand;
+import de.uol.swp.common.user.message.LoginSuccessfullMessage;
+import de.uol.swp.common.user.message.UserLoggedInMessage;
+import de.uol.swp.common.user.message.UserLoggedOutMessage;
+import de.uol.swp.common.user.message.UsersListMessage;
 
 public class DemoServer implements ServerHandlerDelegate {
 	/**

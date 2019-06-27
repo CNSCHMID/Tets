@@ -1,7 +1,7 @@
-package communication;
+package de.uol.swp.server.communication;
 
 import io.netty.channel.ChannelHandlerContext;
-import message.IMessage;
+import de.uol.swp.common.message.IMessage;
 
 /**
  * An interface used to decouple ServerHandler and ServerApplication
