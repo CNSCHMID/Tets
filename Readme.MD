@@ -1,6 +1,6 @@
-Netzwerkdemo
-------------
+SWP Basissystem	
+===============
 
-Dieses ist ein auf Netty basierendes Beispiel für eine Client-Server-Kommunikation. Diese Struktur darf als Ausgangsbasis direkt für eigene Projekte übernommen werden.
+Der folgende Code sollte als Basis für das Software Projekt verwendet werden.
 
-Weitere Hinweise zur Netzwerkkommunikation mit Java sind in den anliegenden Folien (aus dem Jahr 2018) zu finden.
+TODO: Erklärung 
