@@ -1,7 +1,6 @@
 package de.uol.swp.common.user.command;
 
 import de.uol.swp.common.message.AbstractMessage;
-import de.uol.swp.common.user.Session;
 
 /**
  * A command send from client to server, trying to log in with

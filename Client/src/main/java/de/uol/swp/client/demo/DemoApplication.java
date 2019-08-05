@@ -7,7 +7,6 @@ import de.uol.swp.client.communication.object.Client;
 import de.uol.swp.client.user.UserServiceFactory;
 import io.netty.channel.Channel;
 import de.uol.swp.common.user.IUserService;
-import de.uol.swp.common.user.Session;
 import de.uol.swp.common.user.message.LoginSuccessfulMessage;
 import de.uol.swp.common.user.message.UserLoggedInMessage;
 import de.uol.swp.common.user.message.UserLoggedOutMessage;
@@ -17,7 +16,6 @@ public class DemoApplication extends Thread implements IConnectionListener {
 
 	static Channel channel = null;
 	IUserService userService;
-	Session userSession = Session.invalid;
 
 	@Override
 	public void run() {
@@ -42,7 +40,7 @@ public class DemoApplication extends Thread implements IConnectionListener {
 		userService.login(userName, password);
 
 		delay(1000);
-		userService.retrieveAllUsers(userSession);
+		userService.retrieveAllUsers();
 
 		delay(2000);
 		// HashCode (so every client has its own username)
@@ -83,7 +81,6 @@ public class DemoApplication extends Thread implements IConnectionListener {
 	public void process(LoginSuccessfulMessage in){
 		if (in.getSession().isValid()) {
 			System.out.println("Login for user " + in.getUsername()+ " successful " + in.getSession());
-			this.userSession = in.getSession();
 		} else {
 			System.err.println("Error logging in user!");
 		}
@@ -94,7 +91,7 @@ public class DemoApplication extends Thread implements IConnectionListener {
 	public void process(UserLoggedInMessage in) {
 		if (in.getSession().isValid()) {
 			System.out.println("User " + in.getUsername()+ " logged in with session " + in.getSession());
-			userService.retrieveAllUsers(userSession);
+			userService.retrieveAllUsers();
 		} else {
 			System.err.println("Error logging in user!");
 		}

@@ -1,8 +1,10 @@
-package de.uol.swp.common.user;
+package de.uol.swp.server.communication;
+
+import de.uol.swp.common.user.ISession;
 
 import java.io.Serializable;
 
-public class Session implements Serializable{
+public class Session implements ISession {
 
 	private static final long serialVersionUID = -3012502325550415132L;
 	// JUST FOR DEMO. DO NOT USE THIS KINDS OF SESSIONS, THEY CAN BE GUESSED!
@@ -19,11 +21,13 @@ public class Session implements Serializable{
 	private Session(boolean state){
 		sessionId = null;
 	}
-		
+
+	@Override
 	public String getSessionId() {
 		return sessionId;
 	}
 
+	@Override
 	public boolean isValid() {
 		return sessionId != null;
 	}

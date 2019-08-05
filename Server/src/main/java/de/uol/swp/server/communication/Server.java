@@ -3,11 +3,10 @@ package de.uol.swp.server.communication;
 import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import de.uol.swp.common.command.GenericCommand;
 import de.uol.swp.common.exception.ExceptionMessage;
 import de.uol.swp.common.message.IMessage;
+import de.uol.swp.common.user.ISession;
 import de.uol.swp.common.user.IUserService;
-import de.uol.swp.common.user.Session;
 import de.uol.swp.common.user.message.UsersListMessage;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -46,7 +45,7 @@ public class Server implements ServerHandlerDelegate {
 	/**
 	 * Client with logged in sessions
 	 */
-	final private Map<ChannelHandlerContext, Session> activeSessions = new HashMap<>();
+	final private Map<ChannelHandlerContext, ISession> activeSessions = new HashMap<>();
 
 	/**
 	 * For demo reasons the eventBus as part of this class
@@ -111,6 +110,7 @@ public class Server implements ServerHandlerDelegate {
 		try {
 			// Bind msg to ctx
 			msg.setInfo(ctx);
+			msg.setSession(this.activeSessions.get(ctx));
 			eventBus.post(msg);
 
 		} catch (Exception e) {
@@ -123,26 +123,6 @@ public class Server implements ServerHandlerDelegate {
 	private void handleEventBusError(DeadEvent deadEvent){
 		System.err.println("DeadEvent detected "+deadEvent);
 	}
-
-
-
-	@Subscribe
-	private void processGenericCommand(GenericCommand msg) {
-		if (msg.getInfo() instanceof ChannelHandlerContext) {
-			ChannelHandlerContext ctx = (ChannelHandlerContext) msg.getInfo();
-			System.out.println("Got a command " + msg.getCommand() + " for session " + msg.getSession());
-			checkLogin(ctx, msg);
-			switch (msg.getCommand()) {
-			case RETRIEVE_USERS_LIST:
-				UsersListMessage user = new UsersListMessage(userService.retrieveAllUsers(msg.getSession()));
-				sendToClient(ctx, user);
-				break;
-			default:
-				System.err.println("Unknown command!");
-			}
-		}
-	}
-
 
 
 	// -------------------------------------------------------------------------------

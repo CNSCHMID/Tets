@@ -1,7 +1,6 @@
 package de.uol.swp.common.user.message;
 
 import de.uol.swp.common.message.AbstractMessage;
-import de.uol.swp.common.user.Session;
 
 /**
  * A message to indicate a new logged in user
@@ -14,7 +13,6 @@ public class UserLoggedInMessage extends AbstractMessage {
 	private String username;
 	
 	public UserLoggedInMessage(){
-		super(Session.invalid);
 	}
 	
 	public UserLoggedInMessage(String username){

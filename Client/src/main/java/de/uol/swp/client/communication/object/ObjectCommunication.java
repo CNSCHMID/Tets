@@ -3,8 +3,6 @@ package de.uol.swp.client.communication.object;
 import java.io.Serializable;
 import java.util.List;
 
-import de.uol.swp.common.command.GenericCommand;
-import de.uol.swp.common.command.GenericCommands;
 import io.netty.channel.Channel;
 import de.uol.swp.common.user.IUserService;
 import de.uol.swp.common.user.Session;

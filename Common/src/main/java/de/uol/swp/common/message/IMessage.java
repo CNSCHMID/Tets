@@ -1,8 +1,9 @@
 package de.uol.swp.common.message;
 
+import de.uol.swp.common.user.ISession;
+
 import java.io.Serializable;
 
-import de.uol.swp.common.user.Session;
 
 /**
  * Base interface of all messages
@@ -11,5 +12,11 @@ import de.uol.swp.common.user.Session;
  */
 
 public interface IMessage extends Serializable{
+
+	void setInfo(Object info);
+	Object getInfo();
+
+	void setSession(ISession session);
+	ISession getSession();
 
 }

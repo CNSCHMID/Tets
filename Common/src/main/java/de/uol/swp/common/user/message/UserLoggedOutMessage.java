@@ -1,7 +1,6 @@
 package de.uol.swp.common.user.message;
 
 import de.uol.swp.common.message.AbstractMessage;
-import de.uol.swp.common.user.Session;
 
 /**
  * A message to indicate a logged out user
@@ -14,7 +13,6 @@ public class UserLoggedOutMessage extends AbstractMessage {
 	private String username;
 	
 	public UserLoggedOutMessage(){
-		super(Session.invalid);
 	}
 	
 	public UserLoggedOutMessage(String username){

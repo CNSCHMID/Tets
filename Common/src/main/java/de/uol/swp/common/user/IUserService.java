@@ -15,20 +15,19 @@ public interface IUserService {
 	 * Login with username and password
 	 * @param username the name of the user
 	 * @param password the password of the user
-	 * @return a session object
+	 * @return a new user object
 	 */
-	Session login(String username, String password);
+	IUser login(String username, String password);
 
 	/**
 	 * Login out from server
 	 */
-	String logout(Session session);
+	void logout(IUser username);
 
 	/**
 	 * Retrieve the list of all current logged in users
-	 * @param session The current logged in users are only visible if a user is logged in
-	 * @return a list of user names
+	 * @return a list of users
 	 */
-	List<String> retrieveAllUsers(Session session);
+	List<IUser> retrieveAllUsers();
 
 }
