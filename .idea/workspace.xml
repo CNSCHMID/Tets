@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ef83a65-f4d7-4e13-b173-e1cd21d14148" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/communication/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/communication/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/demo/ApplicationServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/demo/ApplicationServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/UserService.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -41,7 +39,7 @@
         <entry file="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/UserService.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="347">
-              <caret line="50" column="17" selection-start-line="50" selection-start-column="17" selection-end-line="50" selection-end-column="17" />
+              <caret line="51" column="35" selection-start-line="51" selection-start-column="35" selection-end-line="51" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -651,12 +649,12 @@
       <updated>1561619593371</updated>
       <workItem from="1561619595913" duration="6918000" />
       <workItem from="1564992336265" duration="2819000" />
-      <workItem from="1564995201608" duration="12951000" />
+      <workItem from="1564995201608" duration="13155000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22688000" />
+    <option name="totallyTimeSpent" value="22892000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1043,7 +1041,7 @@
     <entry file="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/UserService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="347">
-          <caret line="50" column="17" selection-start-line="50" selection-start-column="17" selection-end-line="50" selection-end-column="17" />
+          <caret line="51" column="35" selection-start-line="51" selection-start-column="35" selection-end-line="51" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

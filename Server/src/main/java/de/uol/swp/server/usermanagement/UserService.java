@@ -45,16 +45,13 @@ public class UserService {
     @Subscribe
     private void processLoginCommand(LoginCommand msg) {
         System.out.println("Got new login message with " + msg.getUsername() + " " + msg.getPassword());
-        IUser newSession = userManagement.login(msg.getUsername(), msg.getPassword());
-
-        // TODO: who created the session?
-        // TODO: Exceptions on eventbus?
-
-        final IMessage returnMessage;
-        if (newSession.isValid()) {
+        IMessage returnMessage;
+        try {
+            IUser newSession = userManagement.login(msg.getUsername(), msg.getPassword());
             returnMessage = new LoginSuccessfulMessage(msg.getUsername());
-            returnMessage.setSession(newSession);
-        } else {
+            // TODO: create session
+            // returnMessage.setSession(newSession);
+        }catch (SecurityException e){
             returnMessage = new ExceptionMessage(new LoginException());
         }
         bus.post(returnMessage);
