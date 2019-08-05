@@ -1,5 +1,6 @@
 package de.uol.swp.server.usermanagement;
 
+import com.google.common.base.Strings;
 import de.uol.swp.common.user.IUser;
 
 import java.util.List;
@@ -40,8 +41,15 @@ public class UserManagement extends AbstractUserManagement {
         if (user.isEmpty()){
             throw new UserManagemtException("Username unknown!");
         }
-        return userStore.updateUser(userToUpdate.getUsername(), userToUpdate.getPassword(), userToUpdate.getEMail());
+        // Only update if there are new values
+        String newPassword = firstNotNull(userToUpdate.getPassword(), user.get().getPassword());
+        String newEMail = firstNotNull(userToUpdate.getEMail(), user.get().getEMail());
+        return userStore.updateUser(userToUpdate.getUsername(), newPassword, newEMail);
 
+    }
+
+    private String firstNotNull(String firstValue, String secondValue) {
+        return Strings.isNullOrEmpty(firstValue)?secondValue:firstValue;
     }
 
     @Override
@@ -52,6 +60,6 @@ public class UserManagement extends AbstractUserManagement {
 
     @Override
     public List<IUser> retrieveAllUsers() {
-        return null;
+        return userStore.getAllUsers();
     }
 }

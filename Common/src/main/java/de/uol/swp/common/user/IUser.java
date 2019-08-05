@@ -4,4 +4,6 @@ public interface IUser {
     String getUsername();
     String getPassword();
     String getEMail();
+
+    IUser getWithoutPassword();
 }

@@ -6,7 +6,6 @@ import de.uol.swp.common.exception.ExceptionMessage;
 import de.uol.swp.common.exception.SecurityException;
 import de.uol.swp.common.message.IMessage;
 import de.uol.swp.common.user.ISession;
-import de.uol.swp.common.user.IUser;
 import de.uol.swp.common.user.command.LoginCommand;
 import de.uol.swp.common.user.command.LogoutCommand;
 import de.uol.swp.common.user.message.LoginSuccessfulMessage;
@@ -15,7 +14,10 @@ import de.uol.swp.server.communication.Session;
 import io.netty.channel.ChannelHandlerContext;
 
 import javax.security.auth.login.LoginException;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Mapping vom event bus calls to user management calls
@@ -28,8 +30,8 @@ public class UserService {
     /**
      * The list of current logged in users
      */
-    final private List<String> users = new ArrayList<>();
     final private Map<Session, String> userSessions = new HashMap<>();
+
     private final UserManagement userManagement;
 
     public UserService(EventBus bus, IUserStore userStore) {
@@ -90,7 +92,7 @@ public class UserService {
         return username;
     }
 
-    public String logout(ISession session){
+    public String logout(ISession session) {
         String user = this.userSessions.remove(session);
         return logout(user);
     }

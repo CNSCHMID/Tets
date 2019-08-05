@@ -3,6 +3,8 @@ package de.uol.swp.server.demo;
 import com.google.common.eventbus.EventBus;
 import de.uol.swp.common.user.IUserService;
 import de.uol.swp.server.communication.Server;
+import de.uol.swp.server.usermanagement.IUserStore;
+import de.uol.swp.server.usermanagement.SimpleUserStore;
 import de.uol.swp.server.usermanagement.UserService;
 
 public class ApplicationServer {
@@ -23,7 +25,8 @@ public class ApplicationServer {
 
 		// Create dependencies:
 		EventBus eventBus = new EventBus();
-		IUserService userService = 	new UserService(eventBus);
+		IUserStore userStore = new SimpleUserStore();
+		IUserService userService = 	new UserService(eventBus, userStore);
 
 		new Server(port,userService, eventBus).start();
 	}
