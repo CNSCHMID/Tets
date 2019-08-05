@@ -167,8 +167,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1298" />
-    <option name="y" value="3" />
+    <option name="x" value="1840" />
+    <option name="y" value="77" />
     <option name="width" value="2578" />
     <option name="height" value="1398" />
   </component>
@@ -498,7 +498,7 @@
       </MavenSettings>
       <method v="2" />
     </configuration>
-    <configuration name="StartClient" type="MavenRunConfiguration" factoryName="Maven">
+    <configuration name="StartClient" type="MavenRunConfiguration" factoryName="Maven" singleton="false">
       <MavenSettings>
         <option name="myGeneralSettings" />
         <option name="myRunnerSettings" />
