@@ -4,34 +4,6 @@
     <list default="true" id="5ef83a65-f4d7-4e13-b173-e1cd21d14148" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Client/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/communication/object/DemoClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/communication/object/DemoClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/communication/object/DemoClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/communication/object/DemoClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/communication/object/ObjectCommunication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/communication/object/ObjectCommunication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/demo/DemoApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/demo/DemoApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/demo/IConnectionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/demo/IConnectionListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/demo/view/DemoApplicationGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/demo/view/DemoApplicationGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/user/UserServiceFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/user/UserServiceFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Common/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/src/main/java/de/swp/common/command/GenericCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/command/GenericCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/src/main/java/de/swp/common/command/GenericCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/command/GenericCommands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/src/main/java/de/swp/common/exception/ExceptionMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/exception/ExceptionMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/src/main/java/de/swp/common/exception/SecurityException.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/exception/SecurityException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/src/main/java/de/swp/common/message/AbstractMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/message/AbstractMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/src/main/java/de/swp/common/message/IMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/message/IMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/src/main/java/de/swp/common/user/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/IUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/src/main/java/de/swp/common/user/Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/Session.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/src/main/java/de/swp/common/user/command/LoginCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/command/LoginCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/src/main/java/de/swp/common/user/command/LogoutCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/command/LogoutCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/src/main/java/de/swp/common/user/message/LoginSuccessfullMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/message/LoginSuccessfullMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/src/main/java/de/swp/common/user/message/UserLoggedInMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/message/UserLoggedInMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/src/main/java/de/swp/common/user/message/UserLoggedOutMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/message/UserLoggedOutMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/src/main/java/de/swp/common/user/message/UsersListMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/message/UsersListMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/communication/DemoServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/communication/DemoServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/communication/DemoServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/communication/DemoServerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/communication/ServerHandlerDelegate.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/communication/ServerHandlerDelegate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/demo/DemoApplicationServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/demo/DemoApplicationServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/demo/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/demo/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -46,29 +18,15 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DefaultGradleProjectSettings">
-    <option name="testRunner" value="GRADLE" />
-    <option name="delegatedBuild" value="true" />
+    <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/communication/object/DemoClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1308">
-              <caret line="7" column="43" selection-start-line="7" selection-start-column="43" selection-end-line="7" selection-end-column="43" />
-              <folding>
-                <element signature="e#2824#2825#0" expanded="true" />
-                <element signature="e#2868#2869#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/communication/object/ObjectCommunication.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+            <state relative-caret-position="170">
+              <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -79,7 +37,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/demo/DemoApplication.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
+            <state relative-caret-position="408">
               <caret line="35" selection-start-line="35" selection-end-line="35" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -91,8 +49,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/demo/view/DemoApplicationGUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="35" selection-start-column="8" selection-end-column="35" />
+            <state relative-caret-position="68">
+              <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -109,7 +67,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/demo/DemoApplicationServer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="68">
@@ -121,8 +79,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Client/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="545">
-              <caret line="35" column="52" selection-start-line="35" selection-start-column="52" selection-end-line="35" selection-end-column="52" />
+            <state relative-caret-position="136">
+              <caret line="8" column="35" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -140,16 +98,28 @@
         <entry file="file://$PROJECT_DIR$/Common/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="187">
-              <caret line="11" selection-start-line="11" selection-end-line="11" />
+              <caret line="11" column="22" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="22" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="20" column="31" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
+            <state relative-caret-position="-221">
+              <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/communication/DemoServer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="152">
+              <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -168,7 +138,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/communication/DemoServerHandler.java" />
-        <option value="$PROJECT_DIR$/Common/pom.xml" />
         <option value="$PROJECT_DIR$/Common/src/main/java/de/swp/common/command/GenericCommand.java" />
         <option value="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/command/GenericCommand.java" />
         <option value="$PROJECT_DIR$/Server/pom.xml" />
@@ -183,6 +152,7 @@
         <option value="$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/user/UserServiceFactory.java" />
         <option value="$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/communication/object/DemoClient.java" />
         <option value="$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/demo/view/DemoApplicationGUI.java" />
+        <option value="$PROJECT_DIR$/Common/pom.xml" />
         <option value="$PROJECT_DIR$/Client/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
       </list>
@@ -197,7 +167,7 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1152" />
+    <option name="x" value="1298" />
     <option name="y" value="3" />
     <option name="width" value="2578" />
     <option name="height" value="1398" />
@@ -207,7 +177,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -401,7 +371,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -476,6 +446,58 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Build Common" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="clean" />
+                <option value="install" />
+              </list>
+            </option>
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <configuration name="Buildall" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="clean" />
+                <option value="verify" />
+              </list>
+            </option>
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="true" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
     <configuration name="StartClient" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -495,8 +517,8 @@
             <option name="profilesMap">
               <map />
             </option>
-            <option name="resolveToWorkspace" value="false" />
-            <option name="workingDirPath" value="$PROJECT_DIR$" />
+            <option name="resolveToWorkspace" value="true" />
+            <option name="workingDirPath" value="$PROJECT_DIR$/Client" />
           </MavenRunnerParameters>
         </option>
       </MavenSettings>
@@ -534,12 +556,14 @@
       <item itemvalue="Application.DemoApplicationServer" />
       <item itemvalue="Application.DemoApplicationServer (1)" />
       <item itemvalue="Maven.StartClient" />
+      <item itemvalue="Maven.Buildall" />
+      <item itemvalue="Maven.Build Common" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.DemoApplicationServer (1)" />
         <item itemvalue="Application.DemoApplicationGUI" />
         <item itemvalue="Application.DemoApplication" />
-        <item itemvalue="Application.DemoApplicationServer (1)" />
         <item itemvalue="Application.DemoApplicationServer" />
       </list>
     </recent_temporary>
@@ -554,46 +578,48 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1561619593371</updated>
-      <workItem from="1561619595913" duration="5308000" />
+      <workItem from="1561619595913" duration="6918000" />
+      <workItem from="1564992336265" duration="2819000" />
+      <workItem from="1564995201608" duration="1372000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5308000" />
+    <option name="totallyTimeSpent" value="11109000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="922" y="3" width="2062" height="1118" extended-state="0" />
+    <frame x="1039" y="3" width="2062" height="1118" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Image Layers" />
-      <window_info id="Designer" />
-      <window_info id="UI Designer" />
-      <window_info id="Capture Tool" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18481518" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18881118" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Messages" weight="0.3296146" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3296146" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.5111562" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Palette" />
-      <window_info anchor="right" id="Theme Preview" />
-      <window_info anchor="right" id="Maven" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="right" id="Palette&#9;" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.3296146" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Maven" order="6" />
+      <window_info anchor="right" id="Capture Analysis" order="7" />
+      <window_info anchor="right" id="Palette&#9;" order="8" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -641,16 +667,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/communication/DemoServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="26" selection-start-column="26" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/demo/UserService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -691,8 +707,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/communication/object/ObjectCommunication.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
+        <state relative-caret-position="204">
           <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/communication/object/DemoClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -701,8 +727,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/demo/DemoApplication.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
+        <state relative-caret-position="408">
           <caret line="35" selection-start-line="35" selection-end-line="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/demo/view/DemoApplicationGUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -716,13 +752,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/communication/object/DemoClient.java">
+    <entry file="file://$PROJECT_DIR$/Server/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1308">
-          <caret line="7" column="43" selection-start-line="7" selection-start-column="43" selection-end-line="7" selection-end-column="43" />
+        <state relative-caret-position="391">
+          <caret line="23" column="10" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="35" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Common/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="22" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-221">
+          <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/communication/DemoServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
           <folding>
-            <element signature="e#2824#2825#0" expanded="true" />
-            <element signature="e#2868#2869#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -731,44 +794,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/demo/view/DemoApplicationGUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="35" selection-start-column="8" selection-end-column="35" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Common/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Client/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="545">
-          <caret line="35" column="52" selection-start-line="35" selection-start-column="52" selection-end-line="35" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Server/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="10" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="31" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
         </state>
       </provider>
     </entry>
