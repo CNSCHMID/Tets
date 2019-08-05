@@ -14,8 +14,8 @@ public class LogoutCommand extends AbstractMessage {
 	
 	private static final long serialVersionUID = -5912075449879112061L;
 
-	public LogoutCommand(Session session) {
-		super(session);
+	public LogoutCommand() {
+		super();
 	}
 
 }

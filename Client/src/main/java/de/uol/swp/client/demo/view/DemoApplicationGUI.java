@@ -9,7 +9,7 @@ import de.uol.swp.common.user.IUserService;
 import de.uol.swp.common.user.Session;
 import io.netty.channel.Channel;
 
-import de.uol.swp.common.user.message.LoginSuccessfullMessage;
+import de.uol.swp.common.user.message.LoginSuccessfulMessage;
 import de.uol.swp.common.user.message.UserLoggedInMessage;
 import de.uol.swp.common.user.message.UserLoggedOutMessage;
 import de.uol.swp.common.user.message.UsersListMessage;
@@ -114,7 +114,7 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 	// -----------------------------------------------------
 
 	@Subscribe
-	public void userLoggedIn(LoginSuccessfullMessage message) {
+	public void userLoggedIn(LoginSuccessfulMessage message) {
 		if (message.getSession().isValid()) {
 			this.username = message.getUsername();
 			this.userSession = message.getSession();

@@ -1,20 +1,14 @@
 package de.uol.swp.server.communication;
 
-import java.net.InetSocketAddress;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
-
-import javax.security.auth.login.LoginException;
-
 import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-
 import de.uol.swp.common.command.GenericCommand;
 import de.uol.swp.common.exception.ExceptionMessage;
-import de.uol.swp.common.exception.SecurityException;
+import de.uol.swp.common.message.IMessage;
+import de.uol.swp.common.user.IUserService;
+import de.uol.swp.common.user.Session;
+import de.uol.swp.common.user.message.UsersListMessage;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
@@ -26,16 +20,12 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
-import de.uol.swp.common.message.AbstractMessage;
-import de.uol.swp.common.message.IMessage;
-import de.uol.swp.common.user.IUserService;
-import de.uol.swp.common.user.Session;
-import de.uol.swp.common.user.command.LoginCommand;
-import de.uol.swp.common.user.command.LogoutCommand;
-import de.uol.swp.common.user.message.LoginSuccessfullMessage;
-import de.uol.swp.common.user.message.UserLoggedInMessage;
-import de.uol.swp.common.user.message.UserLoggedOutMessage;
-import de.uol.swp.common.user.message.UsersListMessage;
+
+import java.net.InetSocketAddress;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Server implements ServerHandlerDelegate {
 	/**
@@ -61,7 +51,7 @@ public class Server implements ServerHandlerDelegate {
 	/**
 	 * For demo reasons the eventBus as part of this class
 	 */
-	final private EventBus eventBus = new EventBus();
+	final private EventBus eventBus;
 
 	/**
 	 * Creates a new Server Object and start listening on given port
@@ -71,10 +61,11 @@ public class Server implements ServerHandlerDelegate {
 	 * @param userService
 	 *            The userService that should be used for the server
 	 */
-	public Server(int port, IUserService userService) {
+	public Server(int port, IUserService userService, EventBus eventBus) {
 		this.port = port;
 		this.userService = userService;
 		// TODO: Ping clients
+		this.eventBus = eventBus;
 		eventBus.register(this);
 	}
 
@@ -133,45 +124,7 @@ public class Server implements ServerHandlerDelegate {
 		System.err.println("DeadEvent detected "+deadEvent);
 	}
 
-	@Subscribe
-	private void processLoginCommand(LoginCommand msg) {
-		if (msg.getInfo() instanceof ChannelHandlerContext) {
-			ChannelHandlerContext ctx = (ChannelHandlerContext) msg.getInfo();
 
-			System.out.println("Got new login message with " + msg.getUsername() + " " + msg.getPassword());
-
-			Session newSession = userService.login(msg.getUsername(), msg.getPassword());
-
-			if (newSession.isValid()) {
-				sendToClient(ctx, new LoginSuccessfullMessage(newSession, msg.getUsername()));
-				putSession(ctx, newSession);
-
-				// Send all clients information, that a new user is logged in
-				sendToAll(new UserLoggedInMessage(msg.getUsername()));
-			} else {
-				sendToClient(ctx, new ExceptionMessage(new LoginException()));
-			}
-		}
-	}
-
-	@Subscribe
-	private void processLogoutCommand(LogoutCommand msg) {
-		if (msg.getInfo() instanceof ChannelHandlerContext) {
-			ChannelHandlerContext ctx = (ChannelHandlerContext) msg.getInfo();
-			System.out.println("Got new logout " + msg.getSession());
-			checkLogin(ctx, msg);
-			removeUser(ctx, msg.getSession());
-		}
-	}
-
-
-	private void removeUser(ChannelHandlerContext ctx, Session session) {
-		String user = userService.logout(session);
-		if (user != null) {
-			UserLoggedOutMessage loggedOutMessage = new UserLoggedOutMessage(user);
-			sendToAll(loggedOutMessage);
-		}
-	}
 
 	@Subscribe
 	private void processGenericCommand(GenericCommand msg) {
@@ -190,12 +143,7 @@ public class Server implements ServerHandlerDelegate {
 		}
 	}
 
-	private void checkLogin(ChannelHandlerContext ctx, AbstractMessage msg) {
-		msg.forceSession();
-		if (!msg.getSession().equals(getSession(ctx))) {
-			throw new SecurityException("Login required for " + msg);
-		}
-	}
+
 
 	// -------------------------------------------------------------------------------
 	// Handling of connected clients

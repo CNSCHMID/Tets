@@ -1,6 +1,9 @@
 package de.uol.swp.server.demo;
 
+import com.google.common.eventbus.EventBus;
+import de.uol.swp.common.user.IUserService;
 import de.uol.swp.server.communication.Server;
+import de.uol.swp.server.usermanagement.UserService;
 
 public class ApplicationServer {
 
@@ -17,7 +20,12 @@ public class ApplicationServer {
 			port = 8889;
 		}
 		System.out.println("Starting Server on port "+port);
-		new Server(port, new UserService()).start();
+
+		// Create dependencies:
+		EventBus eventBus = new EventBus();
+		IUserService userService = 	new UserService(eventBus);
+
+		new Server(port,userService, eventBus).start();
 	}
 	
 }

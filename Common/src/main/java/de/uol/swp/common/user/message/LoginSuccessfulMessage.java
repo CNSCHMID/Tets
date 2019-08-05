@@ -9,14 +9,13 @@ import de.uol.swp.common.user.Session;
  * @author Marco Grawunder
  *
  */
-public class LoginSuccessfullMessage extends AbstractMessage {
+public class LoginSuccessfulMessage extends AbstractMessage {
 
 	private static final long serialVersionUID = -9107206137706636541L;
 
 	final String username;
 
-	public LoginSuccessfullMessage(Session session, String username) {
-		super(session);
+	public LoginSuccessfulMessage(String username) {
 		this.username = username;
 	}
 

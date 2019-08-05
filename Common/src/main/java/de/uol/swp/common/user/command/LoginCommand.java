@@ -17,7 +17,6 @@ public class LoginCommand extends AbstractMessage {
 	String password;
 	
 	public LoginCommand(String username, String password) {
-		super(Session.invalid);
 		this.username = username;
 		this.password = password;
 	}
