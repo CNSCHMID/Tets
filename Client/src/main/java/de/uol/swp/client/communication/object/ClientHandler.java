@@ -10,24 +10,24 @@ import de.uol.swp.common.message.IMessage;
  * @author Marco Grawunder
  *
  */
-public class DemoClientHandler extends ChannelInboundHandlerAdapter {
+public class ClientHandler extends ChannelInboundHandlerAdapter {
 
-	private DemoClient demoClient;
+	private Client client;
 
-	public DemoClientHandler(DemoClient demoClient) {
-		this.demoClient = demoClient;
+	public ClientHandler(Client client) {
+		this.client = client;
 	}
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		System.out.println("Connected to server " + ctx);
-		demoClient.fireConnectionEstablished(ctx.channel());
+		client.fireConnectionEstablished(ctx.channel());
 	}
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object in) throws Exception {
 		if (in instanceof IMessage) {
-			demoClient.receivedMessage((IMessage) in);
+			client.receivedMessage((IMessage) in);
 		}else{
 			System.err.println("Illegal Object read from channel. Ignored!");
 		}
@@ -35,7 +35,7 @@ public class DemoClientHandler extends ChannelInboundHandlerAdapter {
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-		demoClient.process(cause);
+		client.process(cause);
 		ctx.close();
 	}
 }

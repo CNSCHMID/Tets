@@ -18,16 +18,7 @@ import de.uol.swp.common.user.Session;
  */
 public class UserService implements IUserService {
 
-	/*
-	 * The should be only one instance of the user service (Singleton)
-	 */
-	static final UserService instance = new UserService();
-
-	public static UserService getInstance() {
-		return instance;
-	}
-
-	private UserService() {
+	public UserService() {
 	}
 
 	/**

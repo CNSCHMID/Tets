@@ -12,15 +12,15 @@ import de.uol.swp.common.message.IMessage;
  *
  */
 @Sharable
-public class DemoServerHandler extends ChannelInboundHandlerAdapter {
+public class ServerHandler extends ChannelInboundHandlerAdapter {
 
 	private ServerHandlerDelegate delegate;
 
 	/**
-	 * Creates a new DemoServerHandler
+	 * Creates a new ServerHandler
 	 * @param delegate The ServerHandlerDelegate that should receive information about the connection 
 	 */
-	public DemoServerHandler(ServerHandlerDelegate delegate) {
+	public ServerHandler(ServerHandlerDelegate delegate) {
 		this.delegate = delegate;
 	}
 

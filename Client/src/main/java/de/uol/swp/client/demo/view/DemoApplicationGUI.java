@@ -2,7 +2,7 @@ package de.uol.swp.client.demo.view;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import de.uol.swp.client.communication.object.DemoClient;
+import de.uol.swp.client.communication.object.Client;
 import de.uol.swp.client.demo.IConnectionListener;
 import de.uol.swp.client.user.UserServiceFactory;
 import de.uol.swp.common.user.IUserService;
@@ -43,7 +43,7 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 	private ObservableList<String> users;
 	private String username;
 
-	DemoClient clientConnection;
+	Client clientConnection;
 
 	final EventBus eventBus = new EventBus();
 
@@ -59,7 +59,7 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 		if (args.size() != 2) {
 			host = "localhost";
 			port = 8889;
-			System.err.println("Usage: " + DemoClient.class.getSimpleName() + " host port");
+			System.err.println("Usage: " + Client.class.getSimpleName() + " host port");
 			System.err.println("Using default port " + port + " on " + host);
 		} else {
 			host = args.get(0);
@@ -75,7 +75,7 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage = primaryStage;
 		primaryStage.setTitle("SWP Demo Application");
-		clientConnection = new DemoClient(host, port, eventBus);
+		clientConnection = new Client(host, port, eventBus);
 		clientConnection.addConnectionListener(this);
 		// Register this class for events (e.g. for exceptions)
 		eventBus.register(this);

@@ -29,7 +29,7 @@ import de.uol.swp.common.message.IMessage;
  *
  */
 
-public class DemoClient {
+public class Client {
 	private final String host;
 	private final int port;
 	private List<IConnectionListener> connectionListener = new CopyOnWriteArrayList<>();
@@ -42,7 +42,7 @@ public class DemoClient {
 	 * @param port The server port to connect to
 	 * @param eventBus for handling messages
 	 */
-	public DemoClient(String host, int port, EventBus eventBus) {
+	public Client(String host, int port, EventBus eventBus) {
 		this.host = host;
 		this.port = port;
 		this.eventBus = eventBus;
@@ -66,7 +66,7 @@ public class DemoClient {
 							ch.pipeline().addLast(new ObjectEncoder());
 							ch.pipeline().addLast(new ObjectDecoder(ClassResolvers.cacheDisabled(null)));
 							// Add a client handler
-							ch.pipeline().addLast(new DemoClientHandler(DemoClient.this));
+							ch.pipeline().addLast(new ClientHandler(Client.this));
 						}
 					});
 			ChannelFuture f = b.connect().sync();

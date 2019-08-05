@@ -37,7 +37,7 @@ import de.uol.swp.common.user.message.UserLoggedInMessage;
 import de.uol.swp.common.user.message.UserLoggedOutMessage;
 import de.uol.swp.common.user.message.UsersListMessage;
 
-public class DemoServer implements ServerHandlerDelegate {
+public class Server implements ServerHandlerDelegate {
 	/**
 	 * Server port
 	 */
@@ -64,14 +64,14 @@ public class DemoServer implements ServerHandlerDelegate {
 	final private EventBus eventBus = new EventBus();
 
 	/**
-	 * Creates a new DemoServer Object and start listening on given port
+	 * Creates a new Server Object and start listening on given port
 	 *
 	 * @param port
 	 *            The port the server should listen for new connection
 	 * @param userService
 	 *            The userService that should be used for the server
 	 */
-	public DemoServer(int port, IUserService userService) {
+	public Server(int port, IUserService userService) {
 		this.port = port;
 		this.userService = userService;
 		// TODO: Ping clients
@@ -84,7 +84,7 @@ public class DemoServer implements ServerHandlerDelegate {
 	 * @throws Exception
 	 */
 	public void start() throws Exception {
-		final DemoServerHandler serverHandler = new DemoServerHandler(this);
+		final ServerHandler serverHandler = new ServerHandler(this);
 		EventLoopGroup bossGroup = new NioEventLoopGroup(1);
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
 		try {
@@ -113,7 +113,7 @@ public class DemoServer implements ServerHandlerDelegate {
 		}
 	}
 
-	// Called from DemoServerHandler
+	// Called from ServerHandler
 	@Override
 	public void process(ChannelHandlerContext ctx, IMessage msg) {
 

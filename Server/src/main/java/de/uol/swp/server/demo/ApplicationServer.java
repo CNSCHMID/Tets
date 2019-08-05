@@ -1,8 +1,8 @@
 package de.uol.swp.server.demo;
 
-import de.uol.swp.server.communication.DemoServer;
+import de.uol.swp.server.communication.Server;
 
-public class DemoApplicationServer {
+public class ApplicationServer {
 
 	public static void main(String[] args) throws Exception {
 		int port = -1;
@@ -17,8 +17,7 @@ public class DemoApplicationServer {
 			port = 8889;
 		}
 		System.out.println("Starting Server on port "+port);
-		// Reduce getInstance() methods as far as possible!
-		new DemoServer(port, UserService.getInstance()).start();
+		new Server(port, new UserService()).start();
 	}
 	
 }

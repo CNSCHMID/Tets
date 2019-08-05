@@ -3,7 +3,7 @@ package de.uol.swp.client.demo;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
-import de.uol.swp.client.communication.object.DemoClient;
+import de.uol.swp.client.communication.object.Client;
 import de.uol.swp.client.user.UserServiceFactory;
 import io.netty.channel.Channel;
 import de.uol.swp.common.user.IUserService;
@@ -136,14 +136,14 @@ public class DemoApplication extends Thread implements IConnectionListener {
 		if (args.length != 2) {
 			host = "localhost";
 			port = 8889;
-			System.err.println("Usage: " + DemoClient.class.getSimpleName() + " host port");
+			System.err.println("Usage: " + Client.class.getSimpleName() + " host port");
 			System.err.println("Using default port " + port + " on " + host);
 		} else {
 			host = args[0];
 			port = Integer.parseInt(args[1]);
 		}
 		EventBus eventBus = new EventBus();
-		DemoClient clientConnection = new DemoClient(host, port, eventBus);
+		Client clientConnection = new Client(host, port, eventBus);
 		eventBus.register(clientConnection);
 		clientConnection.addConnectionListener(appl);
 		new Thread() {
