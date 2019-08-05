@@ -60,9 +60,8 @@ public class Server implements ServerHandlerDelegate {
 	 * @param userService
 	 *            The userService that should be used for the server
 	 */
-	public Server(int port, IUserService userService, EventBus eventBus) {
+	public Server(int port, EventBus eventBus) {
 		this.port = port;
-		this.userService = userService;
 		// TODO: Ping clients
 		this.eventBus = eventBus;
 		eventBus.register(this);

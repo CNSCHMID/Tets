@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ef83a65-f4d7-4e13-b173-e1cd21d14148" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/IUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/IUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/communication/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/communication/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/demo/ApplicationServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/demo/ApplicationServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/IUserStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/IUserStore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/UserManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/UserManagement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/UserService.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -31,8 +28,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/communication/Server.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="121">
-              <caret line="125" selection-start-line="125" selection-end-line="125" />
+            <state relative-caret-position="189">
+              <caret line="62" column="11" selection-start-line="62" selection-start-column="11" selection-end-line="62" selection-end-column="11" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -43,8 +40,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/UserService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="36" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
+            <state relative-caret-position="347">
+              <caret line="50" column="17" selection-start-line="50" selection-start-column="17" selection-end-line="50" selection-end-column="17" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -52,8 +52,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/UserManagement.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="415">
-              <caret line="62" column="33" selection-start-line="62" selection-start-column="33" selection-end-line="62" selection-end-column="33" />
+            <state relative-caret-position="189">
+              <caret line="20" column="17" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#169#170#0" expanded="true" />
@@ -67,8 +67,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/demo/ApplicationServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="27" column="41" lean-forward="true" selection-start-line="27" selection-start-column="41" selection-end-line="27" selection-end-column="41" />
+            <state relative-caret-position="425">
+              <caret line="30" column="20" selection-start-line="30" selection-start-column="20" selection-end-line="30" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -88,7 +88,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/User.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
+            <state relative-caret-position="510">
               <caret line="30" column="39" selection-start-line="30" selection-start-column="39" selection-end-line="30" selection-end-column="39" />
               <folding>
                 <element signature="e#441#442#0" expanded="true" />
@@ -199,19 +199,19 @@
         <option value="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/message/LoginSuccessfulMessage.java" />
         <option value="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/message/UserLoggedOutMessage.java" />
         <option value="$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/demo/DemoApplication.java" />
-        <option value="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/communication/Server.java" />
         <option value="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/communication/ServerHandler.java" />
         <option value="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/AbstractUserManagement.java" />
         <option value="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/IUserManagement.java" />
         <option value="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/IUserService.java" />
         <option value="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/UserManagemtException.java" />
-        <option value="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/demo/ApplicationServer.java" />
         <option value="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/UserManagement.java" />
         <option value="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/IUserStore.java" />
         <option value="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/IUser.java" />
         <option value="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/User.java" />
         <option value="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/SimpleUserStore.java" />
         <option value="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/User.java" />
+        <option value="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/communication/Server.java" />
+        <option value="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/demo/ApplicationServer.java" />
         <option value="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/UserService.java" />
       </list>
     </option>
@@ -651,12 +651,12 @@
       <updated>1561619593371</updated>
       <workItem from="1561619595913" duration="6918000" />
       <workItem from="1564992336265" duration="2819000" />
-      <workItem from="1564995201608" duration="12552000" />
+      <workItem from="1564995201608" duration="12951000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22289000" />
+    <option name="totallyTimeSpent" value="22688000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -956,29 +956,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/communication/Server.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="125" selection-start-line="125" selection-end-line="125" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/UserManagement.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="415">
-          <caret line="62" column="33" selection-start-line="62" selection-start-column="33" selection-end-line="62" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#169#170#0" expanded="true" />
-            <element signature="e#195#196#0" expanded="true" />
-            <element signature="e#2203#2204#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/IUserStore.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -1007,13 +984,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/demo/ApplicationServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="27" column="41" lean-forward="true" selection-start-line="27" selection-start-column="41" selection-end-line="27" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/SimpleUserStore.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
@@ -1026,7 +996,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/User.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
+        <state relative-caret-position="510">
           <caret line="30" column="39" selection-start-line="30" selection-start-column="39" selection-end-line="30" selection-end-column="39" />
           <folding>
             <element signature="e#441#442#0" expanded="true" />
@@ -1040,10 +1010,43 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/communication/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="62" column="11" selection-start-line="62" selection-start-column="11" selection-end-line="62" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/demo/ApplicationServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="30" column="20" selection-start-line="30" selection-start-column="20" selection-end-line="30" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/UserManagement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="20" column="17" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#169#170#0" expanded="true" />
+            <element signature="e#195#196#0" expanded="true" />
+            <element signature="e#2203#2204#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/UserService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="36" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
+        <state relative-caret-position="347">
+          <caret line="50" column="17" selection-start-line="50" selection-start-column="17" selection-end-line="50" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

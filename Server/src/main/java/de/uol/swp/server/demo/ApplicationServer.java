@@ -9,6 +9,8 @@ import de.uol.swp.server.usermanagement.UserService;
 
 public class ApplicationServer {
 
+	static UserService userService;
+
 	public static void main(String[] args) throws Exception {
 		int port = -1;
 		if (args.length == 1){
@@ -26,9 +28,10 @@ public class ApplicationServer {
 		// Create dependencies:
 		EventBus eventBus = new EventBus();
 		IUserStore userStore = new SimpleUserStore();
-		IUserService userService = 	new UserService(eventBus, userStore);
+		// avoid GC?
+		userService = 	new UserService(eventBus, userStore);
 
-		new Server(port,userService, eventBus).start();
+		new Server(port, eventBus).start();
 	}
 	
 }

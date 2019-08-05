@@ -6,6 +6,8 @@ import de.uol.swp.common.exception.ExceptionMessage;
 import de.uol.swp.common.exception.SecurityException;
 import de.uol.swp.common.message.IMessage;
 import de.uol.swp.common.user.ISession;
+import de.uol.swp.common.user.IUser;
+import de.uol.swp.common.user.IUserService;
 import de.uol.swp.common.user.command.LoginCommand;
 import de.uol.swp.common.user.command.LogoutCommand;
 import de.uol.swp.common.user.message.LoginSuccessfulMessage;
@@ -43,7 +45,10 @@ public class UserService {
     @Subscribe
     private void processLoginCommand(LoginCommand msg) {
         System.out.println("Got new login message with " + msg.getUsername() + " " + msg.getPassword());
-        Session newSession = login(msg.getUsername(), msg.getPassword());
+        IUser newSession = userManagement.login(msg.getUsername(), msg.getPassword());
+
+        // TODO: who created the session?
+        // TODO: Exceptions on eventbus?
 
         final IMessage returnMessage;
         if (newSession.isValid()) {
@@ -74,39 +79,6 @@ public class UserService {
     }
 
 
-    public Session login(String username, String password) {
-        Session newSession;
-        if (isValidLogin(username, password)) {
-            newSession = new Session();
-            this.users.add(username);
-            this.userSessions.put(newSession, username);
-            System.out.println("Logging in user with Session " + newSession);
-        } else {
-            newSession = Session.invalid;
-        }
-        return newSession;
-    }
 
-    public String logout(String username) {
-        users.remove(username);
-        return username;
-    }
-
-    public String logout(ISession session) {
-        String user = this.userSessions.remove(session);
-        return logout(user);
-    }
-
-    private boolean isValidLogin(String username, String password) {
-        // TODO: Call real logic
-        return username.equalsIgnoreCase(password);
-    }
-
-    public List<String> retrieveAllUsers(Session session) {
-        if (session.isValid()) {
-            return Collections.unmodifiableList(users);
-        }
-        throw new SecurityException("Login Required!");
-    }
 
 }
