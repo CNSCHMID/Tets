@@ -3,11 +3,17 @@ package de.uol.swp.server.communication;
 import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import de.uol.swp.common.exception.ExceptionMessage;
-import de.uol.swp.common.message.IMessage;
+import de.uol.swp.common.message.ExceptionMessage;
+import de.uol.swp.common.message.IRequestMessage;
+import de.uol.swp.common.message.IResponseMessage;
+import de.uol.swp.common.message.IServerMessage;
 import de.uol.swp.common.user.ISession;
-import de.uol.swp.common.user.IUserService;
-import de.uol.swp.common.user.message.UsersListMessage;
+import de.uol.swp.common.user.message.UserLoggedInMessage;
+import de.uol.swp.common.user.message.UserLoggedOutMessage;
+import de.uol.swp.common.user.response.LoginSuccessfulMessage;
+import de.uol.swp.server.message.ClientAuthorizedMessage;
+import de.uol.swp.server.message.ClientDisconnectedMessage;
+import de.uol.swp.server.message.ServerExceptionMessage;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
@@ -19,23 +25,24 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Server implements ServerHandlerDelegate {
+
+	static final Logger LOG = LogManager.getLogger(Server.class);
+
 	/**
 	 * Server port
 	 */
 	final private int port;
-
-	/**
-	 * User Service
-	 */
-	final private IUserService userService;
 
 	/**
 	 * Clients that are connected
@@ -57,8 +64,7 @@ public class Server implements ServerHandlerDelegate {
 	 *
 	 * @param port
 	 *            The port the server should listen for new connection
-	 * @param userService
-	 *            The userService that should be used for the server
+
 	 */
 	public Server(int port, EventBus eventBus) {
 		this.port = port;
@@ -104,28 +110,41 @@ public class Server implements ServerHandlerDelegate {
 
 	// Called from ServerHandler
 	@Override
-	public void process(ChannelHandlerContext ctx, IMessage msg) {
+	public void process(ChannelHandlerContext ctx, IRequestMessage msg) {
 
 		try {
-			// Bind msg to ctx
-			msg.setInfo(ctx);
-			msg.setSession(this.activeSessions.get(ctx));
+			// check if msg requires login and append session if available
+			if (msg.authorizationNeeded() ) {
+				if (!getSession(ctx).isPresent()) {
+					throw new SecurityException("Authorization required. Client not logged in!");
+				}
+				msg.setSession(getSession(ctx).get());
+			}
 			eventBus.post(msg);
 
 		} catch (Exception e) {
-			System.err.println("ServerException " + e.getClass().getName() + " " + e.getMessage());
+			LOG.error("ServerException " + e.getClass().getName() + " " + e.getMessage());
 			sendToClient(ctx, new ExceptionMessage(e));
 		}
 	}
 
 	@Subscribe
+	private void onServerException(ServerExceptionMessage msg){
+		Optional<ChannelHandlerContext> ctx = getCtx(msg.getSession());
+		LOG.error(msg.getException());
+		if (ctx.isPresent()) {
+			sendToClient(ctx.get(), new ExceptionMessage(msg.getException()));
+		}
+	}
+
+	@Subscribe
 	private void handleEventBusError(DeadEvent deadEvent){
-		System.err.println("DeadEvent detected "+deadEvent);
+		LOG.error("DeadEvent detected "+deadEvent);
 	}
 
 
 	// -------------------------------------------------------------------------------
-	// Handling of connected clients
+	// Handling of connected clients (from netty)
 	// -------------------------------------------------------------------------------
 	@Override
 	public void newClientConnected(ChannelHandlerContext ctx) {
@@ -136,31 +155,73 @@ public class Server implements ServerHandlerDelegate {
 	@Override
 	public void clientDisconnected(ChannelHandlerContext ctx) {
 		System.err.println("Client disconnected");
-		removeUser(ctx, getSession(ctx));
+		ISession session = this.activeSessions.get(ctx);
+		if (session != null) {
+			ClientDisconnectedMessage msg = new ClientDisconnectedMessage();
+			msg.setSession(session);
+			eventBus.post(msg);
+			removeSession(ctx);
+		}
 		connectedClients.remove(ctx);
 	}
 
 	// -------------------------------------------------------------------------------
-	// Session Management
+	// Session Management Events (from event bus)
 	// -------------------------------------------------------------------------------
-	private void putSession(ChannelHandlerContext ctx, Session newSession) {
+	@Subscribe
+	public void onClientAuthorized(ClientAuthorizedMessage msg){
+		Optional<ChannelHandlerContext> ctx = getCtx(msg.getSession());
+		if (ctx.isPresent()) {
+			putSession(ctx.get(), msg.getSession());
+			sendToClient(ctx.get(), new LoginSuccessfulMessage(msg.getUser()));
+			sendToAll(new UserLoggedInMessage(msg.getUser().getUsername()));
+		}else{
+			// TODO: Warning
+		}
+	}
+
+	@Subscribe
+	public void onClientLoggedOut(UserLoggedOutMessage msg){
+		// do not send Session to client!
+		sendToAll(new UserLoggedOutMessage(msg.getUsername()));
+	}
+
+	// -------------------------------------------------------------------------------
+	// Session Management (helper methods)
+	// -------------------------------------------------------------------------------
+
+	private void putSession(ChannelHandlerContext ctx, ISession newSession) {
 		// TODO: check if session is already bound to connection
 		activeSessions.put(ctx, newSession);
 	}
 
-	private Session getSession(ChannelHandlerContext ctx) {
-		return activeSessions.get(ctx);
+	private void removeSession(ChannelHandlerContext ctx){
+		activeSessions.remove(ctx);
+	}
+
+	private Optional<ISession> getSession(ChannelHandlerContext ctx) {
+		ISession session = activeSessions.get(ctx);
+		return session != null? Optional.of(session):Optional.empty();
+	}
+
+	private Optional<ChannelHandlerContext> getCtx(ISession session){
+		for(Map.Entry<ChannelHandlerContext, ISession> e : activeSessions.entrySet()){
+			if (e.getValue().equals(session)){
+				return Optional.of(e.getKey());
+			}
+		}
+		return Optional.empty();
 	}
 
 	// -------------------------------------------------------------------------------
 	// Help methods: Send only objects of type IMessage
 	// -------------------------------------------------------------------------------
 
-	private void sendToClient(ChannelHandlerContext ctx, IMessage message) {
+	private void sendToClient(ChannelHandlerContext ctx, IResponseMessage message) {
 		ctx.writeAndFlush(message);
 	}
 
-	private void sendToAll(IMessage msg) {
+	private void sendToAll(IServerMessage msg) {
 		for (ChannelHandlerContext client : connectedClients) {
 			try {
 				client.writeAndFlush(msg);

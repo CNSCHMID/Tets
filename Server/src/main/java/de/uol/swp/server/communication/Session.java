@@ -1,8 +1,8 @@
 package de.uol.swp.server.communication;
 
+// FIXME: DO NOT USE COUNTERS FOR SESSIONS!
 import de.uol.swp.common.user.ISession;
 
-import java.io.Serializable;
 
 public class Session implements ISession {
 
@@ -22,7 +22,11 @@ public class Session implements ISession {
 		sessionId = null;
 	}
 
-	@Override
+    public static ISession create() {
+		return new Session();
+    }
+
+    @Override
 	public String getSessionId() {
 		return sessionId;
 	}

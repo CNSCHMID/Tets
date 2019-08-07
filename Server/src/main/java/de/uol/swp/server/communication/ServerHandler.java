@@ -1,6 +1,6 @@
 package de.uol.swp.server.communication;
 
-import de.uol.swp.common.message.IMessage;
+import de.uol.swp.common.message.IRequestMessage;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandler;
@@ -46,8 +46,9 @@ public class ServerHandler implements ChannelInboundHandler {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        if (msg instanceof IMessage) {
-            delegate.process(ctx, (IMessage) msg);
+        // Server ignores everything but IRequestMessages
+        if (msg instanceof IRequestMessage) {
+            delegate.process(ctx, (IRequestMessage) msg);
         } else {
             System.err.println("Illegal Object read from channel. Ignored!");
         }

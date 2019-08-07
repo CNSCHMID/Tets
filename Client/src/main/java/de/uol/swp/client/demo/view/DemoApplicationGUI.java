@@ -5,14 +5,13 @@ import com.google.common.eventbus.Subscribe;
 import de.uol.swp.client.communication.object.Client;
 import de.uol.swp.client.demo.IConnectionListener;
 import de.uol.swp.client.user.UserServiceFactory;
+import de.uol.swp.common.user.IUser;
 import de.uol.swp.common.user.IUserService;
-import de.uol.swp.common.user.Session;
-import io.netty.channel.Channel;
-
-import de.uol.swp.common.user.message.LoginSuccessfulMessage;
 import de.uol.swp.common.user.message.UserLoggedInMessage;
 import de.uol.swp.common.user.message.UserLoggedOutMessage;
 import de.uol.swp.common.user.message.UsersListMessage;
+import de.uol.swp.common.user.response.LoginSuccessfulMessage;
+import io.netty.channel.Channel;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -29,19 +28,20 @@ import javafx.stage.Stage;
 import javax.security.auth.login.LoginException;
 import java.util.List;
 
+// TODO: MVC
+
 public class DemoApplicationGUI extends Application implements IConnectionListener {
 
 	private String host;
 	private int port;
 
 	private IUserService userService;
-	private Session userSession = Session.invalid;
 
 	private Stage primaryStage;
 	private Scene loginScene;
 	private Scene lobbyScene;
 	private ObservableList<String> users;
-	private String username;
+	private IUser user;
 
 	Client clientConnection;
 
@@ -95,10 +95,9 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 
 	@Override
 	public void stop() throws Exception {
-		if (userService != null && userSession != null && userSession.isValid()) {
-			Session session = userSession;
-			userSession = Session.invalid;
-			userService.logout(session);
+		if (userService != null && user != null) {
+			userService.logout(user);
+			user = null;
 		}
 		// Important: Close connection so connection thread can terminate
 		// else client application will not stop
@@ -116,8 +115,7 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 	@Subscribe
 	public void userLoggedIn(LoginSuccessfulMessage message) {
 		if (message.getSession().isValid()) {
-			this.username = message.getUsername();
-			this.userSession = message.getSession();
+			this.user = message.getUser();
 			showLobbyScreen();
 		} else {
 			showLoginErrorScreen();
@@ -126,16 +124,12 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 
 	@Subscribe
 	public void newUser(UserLoggedInMessage userName) {
-		if (userSession.isValid()) {
-			userService.retrieveAllUsers(userSession);
-		}
+		userService.retrieveAllUsers();
 	}
 
 	@Subscribe
 	public void userLeft(UserLoggedOutMessage username) {
-		if (userSession.isValid()) {
-			userService.retrieveAllUsers(userSession);
-		}
+		userService.retrieveAllUsers();
 	}
 
 	@Subscribe
@@ -194,7 +188,7 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				primaryStage.setTitle("SWP Demo Application for " + username);
+				primaryStage.setTitle("SWP Demo Application for " + user);
 				if (lobbyScene == null) {
 					GridPane rootPane = new GridPane();
 					lobbyScene = new Scene(rootPane, 800, 600);

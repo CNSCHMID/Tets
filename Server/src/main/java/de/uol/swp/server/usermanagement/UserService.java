@@ -2,23 +2,21 @@ package de.uol.swp.server.usermanagement;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import de.uol.swp.common.exception.ExceptionMessage;
 import de.uol.swp.common.exception.SecurityException;
-import de.uol.swp.common.message.IMessage;
 import de.uol.swp.common.user.ISession;
 import de.uol.swp.common.user.IUser;
-import de.uol.swp.common.user.IUserService;
-import de.uol.swp.common.user.command.LoginCommand;
-import de.uol.swp.common.user.command.LogoutCommand;
-import de.uol.swp.common.user.message.LoginSuccessfulMessage;
-import de.uol.swp.common.user.message.UserLoggedOutMessage;
+import de.uol.swp.common.user.request.LoginRequest;
+import de.uol.swp.common.user.request.LogoutRequest;
 import de.uol.swp.server.communication.Session;
-import io.netty.channel.ChannelHandlerContext;
+import de.uol.swp.server.message.ClientAuthorizedMessage;
+import de.uol.swp.server.message.IServerInternalMessage;
+import de.uol.swp.server.message.ServerExceptionMessage;
+import de.uol.swp.server.usermanagement.store.IUserStore;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.security.auth.login.LoginException;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,11 +26,14 @@ import java.util.Map;
  */
 public class UserService {
 
+    static final Logger LOG = LogManager.getLogger(UserService.class);
+
     private final EventBus bus;
+
     /**
      * The list of current logged in users
      */
-    final private Map<Session, String> userSessions = new HashMap<>();
+    final private Map<ISession, IUser> userSessions = new HashMap<>();
 
     private final UserManagement userManagement;
 
@@ -43,39 +44,39 @@ public class UserService {
     }
 
     @Subscribe
-    private void processLoginCommand(LoginCommand msg) {
-        System.out.println("Got new login message with " + msg.getUsername() + " " + msg.getPassword());
-        IMessage returnMessage;
+    private void onLoginRequest(LoginRequest msg) {
+        if (LOG.isDebugEnabled()){
+            LOG.debug("Got new login message with " + msg.getUsername() + " " + msg.getPassword());
+        }
+        IServerInternalMessage returnMessage;
         try {
-            IUser newSession = userManagement.login(msg.getUsername(), msg.getPassword());
-            returnMessage = new LoginSuccessfulMessage(msg.getUsername());
-            // TODO: create session
-            // returnMessage.setSession(newSession);
-        }catch (SecurityException e){
-            returnMessage = new ExceptionMessage(new LoginException());
+            IUser newUser = userManagement.login(msg.getUsername(), msg.getPassword());
+            returnMessage = new ClientAuthorizedMessage(newUser);
+            ISession newSession = Session.create();
+            userSessions.put(newSession,newUser);
+            returnMessage.setSession(newSession);
+        }catch (Exception e){
+            returnMessage = new ServerExceptionMessage(new LoginException());
         }
         bus.post(returnMessage);
     }
 
     @Subscribe
-    private void processLogoutCommand(LogoutCommand msg) {
-        if (msg.getInfo() instanceof ChannelHandlerContext) {
-            ChannelHandlerContext ctx = (ChannelHandlerContext) msg.getInfo();
-            System.out.println("Got new logout " + msg.getSession());
-            removeUser(ctx, msg.getSession());
+    private void onLogoutRequest(LogoutRequest msg) {
+        IUser userToLogOut = userSessions.get(msg.getSession());
+
+        // Could be already logged out
+        if (userToLogOut != null){
+
+            if (LOG.isDebugEnabled()){
+                LOG.debug("Logging out user " + userToLogOut.getUsername());
+            }
+
+            userManagement.logout(userToLogOut);
+            userSessions.remove(msg.getSession());
         }
+
     }
-
-
-    private void removeUser(ChannelHandlerContext ctx, ISession session) {
-        String user = logout(session);
-        if (user != null) {
-            UserLoggedOutMessage loggedOutMessage = new UserLoggedOutMessage(user);
-            bus.post(loggedOutMessage);
-        }
-    }
-
-
 
 
 }

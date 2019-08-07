@@ -1,13 +1,14 @@
 package de.uol.swp.client.communication.object;
 
+import de.uol.swp.common.user.IUser;
+import de.uol.swp.common.user.IUserService;
+import de.uol.swp.common.user.request.LoginRequest;
+import de.uol.swp.common.user.request.LogoutRequest;
+import de.uol.swp.common.user.request.RetrieveAllUsersRequest;
+import io.netty.channel.Channel;
+
 import java.io.Serializable;
 import java.util.List;
-
-import io.netty.channel.Channel;
-import de.uol.swp.common.user.IUserService;
-import de.uol.swp.common.user.Session;
-import de.uol.swp.common.user.command.LoginCommand;
-import de.uol.swp.common.user.command.LogoutCommand;
 
 /**
  * This class is used to hide the communication details
@@ -34,23 +35,22 @@ public class ObjectCommunication implements IUserService {
 	}
 
 	@Override
-	public Session login(String username, String password){
-		LoginCommand msg = new LoginCommand(username, password);
+	public IUser login(String username, String password){
+		LoginRequest msg = new LoginRequest(username, password);
 		sendMessage(msg);
 		return null; // asynch call
 	}
 
 	@Override
-	public String logout(Session session){
-		LogoutCommand msg = new LogoutCommand(session);
+	public void logout(IUser username){
+		LogoutRequest msg = new LogoutRequest();
 		sendMessage(msg);
-		return null;
 	}
 
 
 	@Override
-	public List<String> retrieveAllUsers(Session session) {
-		GenericCommand cmd = new GenericCommand(GenericCommands.RETRIEVE_USERS_LIST, session);
+	public List<IUser> retrieveAllUsers() {
+		RetrieveAllUsersRequest cmd = new RetrieveAllUsersRequest();
 		sendMessage(cmd);
 		return null; // asynch call
 	}

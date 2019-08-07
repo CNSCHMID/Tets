@@ -1,6 +1,4 @@
-package de.uol.swp.common.exception;
-
-import de.uol.swp.common.message.AbstractMessage;
+package de.uol.swp.common.message;
 
 /**
  * Encapsulates an Exception in a message object
@@ -8,7 +6,7 @@ import de.uol.swp.common.message.AbstractMessage;
  * @author Marco Grawunder
  *
  */
-public class ExceptionMessage extends AbstractMessage {
+public class ExceptionMessage extends AbstractResponseMessage{
 
 	private static final long serialVersionUID = -7739395567707525535L;
 	Exception exception;

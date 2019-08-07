@@ -1,4 +1,4 @@
-package de.uol.swp.server.usermanagement;
+package de.uol.swp.server.usermanagement.store;
 
 import de.uol.swp.common.user.IUser;
 

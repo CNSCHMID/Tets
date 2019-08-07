@@ -22,7 +22,7 @@ public interface IUserService {
 	/**
 	 * Login out from server
 	 */
-	void logout(IUser username);
+	void logout(IUser user);
 
 	/**
 	 * Retrieve the list of all current logged in users

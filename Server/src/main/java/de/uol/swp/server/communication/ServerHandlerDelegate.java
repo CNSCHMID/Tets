@@ -1,5 +1,6 @@
 package de.uol.swp.server.communication;
 
+import de.uol.swp.common.message.IRequestMessage;
 import io.netty.channel.ChannelHandlerContext;
 import de.uol.swp.common.message.IMessage;
 
@@ -32,6 +33,6 @@ public interface ServerHandlerDelegate {
 	 * @param ctx The ChannelHandlerContext for this connection (identifies the client)
 	 * @param msg The message send from the client
 	 */
-	void process(ChannelHandlerContext ctx, IMessage msg);
+	void process(ChannelHandlerContext ctx, IRequestMessage msg);
 
 }

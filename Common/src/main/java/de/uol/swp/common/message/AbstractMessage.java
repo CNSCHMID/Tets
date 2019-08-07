@@ -11,21 +11,7 @@ import de.uol.swp.common.user.ISession;
 @SuppressWarnings("serial")
 abstract public class AbstractMessage implements IMessage{
 
-	Object info = null;
 	ISession session = null;
-
-	protected AbstractMessage(){
-	}
-
-	@Override
-	public void setInfo(Object info) {
-		this.info = info;
-	}
-
-	@Override
-	public Object getInfo() {
-		return null;
-	}
 
 	@Override
 	public void setSession(ISession session){

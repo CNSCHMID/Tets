@@ -2,6 +2,7 @@ package de.uol.swp.server.usermanagement;
 
 import com.google.common.base.Strings;
 import de.uol.swp.common.user.IUser;
+import de.uol.swp.server.usermanagement.store.IUserStore;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +32,7 @@ public class UserManagement extends AbstractUserManagement {
     public IUser createUser(IUser userToCreate){
         Optional<IUser> user = userStore.findUser(userToCreate.getUsername());
         if (user.isPresent()){
-            throw new UserManagemtException("Username already used!");
+            throw new UserManagementException("Username already used!");
         }
         return userStore.createUser(userToCreate.getUsername(), userToCreate.getPassword(), userToCreate.getEMail());
     }
@@ -39,7 +40,7 @@ public class UserManagement extends AbstractUserManagement {
     public IUser updateUser(IUser userToUpdate){
         Optional<IUser> user = userStore.findUser(userToUpdate.getUsername());
         if (user.isEmpty()){
-            throw new UserManagemtException("Username unknown!");
+            throw new UserManagementException("Username unknown!");
         }
         // Only update if there are new values
         String newPassword = firstNotNull(userToUpdate.getPassword(), user.get().getPassword());

@@ -2,17 +2,20 @@ package de.uol.swp.client.demo;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-
 import de.uol.swp.client.communication.object.Client;
 import de.uol.swp.client.user.UserServiceFactory;
-import io.netty.channel.Channel;
 import de.uol.swp.common.user.IUserService;
-import de.uol.swp.common.user.message.LoginSuccessfulMessage;
 import de.uol.swp.common.user.message.UserLoggedInMessage;
 import de.uol.swp.common.user.message.UserLoggedOutMessage;
 import de.uol.swp.common.user.message.UsersListMessage;
+import de.uol.swp.common.user.response.LoginSuccessfulMessage;
+import io.netty.channel.Channel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DemoApplication extends Thread implements IConnectionListener {
+
+	static final Logger LOG = LogManager.getLogger(DemoApplication.class);
 
 	static Channel channel = null;
 	IUserService userService;
@@ -79,18 +82,13 @@ public class DemoApplication extends Thread implements IConnectionListener {
 
 	@Subscribe
 	public void process(LoginSuccessfulMessage in){
-		if (in.getSession().isValid()) {
-			System.out.println("Login for user " + in.getUsername()+ " successful " + in.getSession());
-		} else {
-			System.err.println("Error logging in user!");
-		}
-
+		LOG.debug("Login for user " + in.getUser().getUsername()+ " successful " + in.getSession());
 	}
 
 	@Subscribe
 	public void process(UserLoggedInMessage in) {
 		if (in.getSession().isValid()) {
-			System.out.println("User " + in.getUsername()+ " logged in with session " + in.getSession());
+			LOG.debug("User " + in.getUsername()+ " logged in");
 			userService.retrieveAllUsers();
 		} else {
 			System.err.println("Error logging in user!");

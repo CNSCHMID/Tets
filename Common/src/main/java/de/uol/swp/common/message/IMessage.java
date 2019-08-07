@@ -13,9 +13,6 @@ import java.io.Serializable;
 
 public interface IMessage extends Serializable{
 
-	void setInfo(Object info);
-	Object getInfo();
-
 	void setSession(ISession session);
 	ISession getSession();
 

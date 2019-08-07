@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.uol.swp.common.message.AbstractMessage;
+import de.uol.swp.common.message.AbstractServerMessage;
+import de.uol.swp.common.message.IServerMessage;
 
 /**
  * A message containing all current logged in usernames
@@ -11,7 +13,7 @@ import de.uol.swp.common.message.AbstractMessage;
  * @author Marco Grawunder
  *
  */
-public class UsersListMessage extends AbstractMessage {
+public class UsersListMessage extends AbstractServerMessage {
 
 	private static final long serialVersionUID = -7968574381977330152L;
 	private ArrayList<String> users;
