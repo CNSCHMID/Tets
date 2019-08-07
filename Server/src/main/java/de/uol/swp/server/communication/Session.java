@@ -18,7 +18,7 @@ public class Session implements ISession {
 		}
 	}
 	
-	private Session(boolean state){
+	protected Session(boolean state){
 		sessionId = null;
 	}
 

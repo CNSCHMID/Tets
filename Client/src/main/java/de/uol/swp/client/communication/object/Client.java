@@ -113,7 +113,7 @@ public class Client {
 
 	public void process(Throwable message) {
 		for (IConnectionListener l:connectionListener){
-			l.exceptionOccured(message);
+			l.exceptionOccured(message.getMessage());
 		}
 	}
 

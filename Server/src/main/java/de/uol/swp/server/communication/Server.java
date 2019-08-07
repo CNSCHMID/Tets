@@ -119,12 +119,15 @@ public class Server implements ServerHandlerDelegate {
 					throw new SecurityException("Authorization required. Client not logged in!");
 				}
 				msg.setSession(getSession(ctx).get());
+			}else{
+				// In case of exception without session, response channel is needed
+				msg.setSession(new ConnectionWrapper(ctx));
 			}
 			eventBus.post(msg);
 
 		} catch (Exception e) {
 			LOG.error("ServerException " + e.getClass().getName() + " " + e.getMessage());
-			sendToClient(ctx, new ExceptionMessage(e));
+			sendToClient(ctx, new ExceptionMessage(e.getMessage()));
 		}
 	}
 
@@ -133,7 +136,7 @@ public class Server implements ServerHandlerDelegate {
 		Optional<ChannelHandlerContext> ctx = getCtx(msg.getSession());
 		LOG.error(msg.getException());
 		if (ctx.isPresent()) {
-			sendToClient(ctx.get(), new ExceptionMessage(msg.getException()));
+			sendToClient(ctx.get(), new ExceptionMessage(msg.getException().getMessage()));
 		}
 	}
 
@@ -205,6 +208,10 @@ public class Server implements ServerHandlerDelegate {
 	}
 
 	private Optional<ChannelHandlerContext> getCtx(ISession session){
+		if (session instanceof ConnectionWrapper){
+			return Optional.of(((ConnectionWrapper) session).getCtx());
+		}
+
 		for(Map.Entry<ChannelHandlerContext, ISession> e : activeSessions.entrySet()){
 			if (e.getValue().equals(session)){
 				return Optional.of(e.getKey());

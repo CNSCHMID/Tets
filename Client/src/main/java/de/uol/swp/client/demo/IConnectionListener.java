@@ -14,6 +14,6 @@ public interface IConnectionListener {
 	 * If the server sends an exception, this method is called
 	 * @param cause
 	 */
-	void exceptionOccured(Throwable cause);
+	void exceptionOccured(String cause);
 	
 }

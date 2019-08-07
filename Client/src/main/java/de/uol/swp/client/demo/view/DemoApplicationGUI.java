@@ -1,10 +1,12 @@
 package de.uol.swp.client.demo.view;
 
+import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.uol.swp.client.communication.object.Client;
 import de.uol.swp.client.demo.IConnectionListener;
 import de.uol.swp.client.user.UserServiceFactory;
+import de.uol.swp.common.message.ExceptionMessage;
 import de.uol.swp.common.user.IUser;
 import de.uol.swp.common.user.IUserService;
 import de.uol.swp.common.user.message.UserLoggedInMessage;
@@ -24,13 +26,16 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.security.auth.login.LoginException;
 import java.util.List;
 
 // TODO: MVC
 
 public class DemoApplicationGUI extends Application implements IConnectionListener {
+
+	private static final Logger LOG = LogManager.getLogger(DemoApplicationGUI.class);
 
 	private String host;
 	private int port;
@@ -85,7 +90,7 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 				try {
 					clientConnection.start();
 				} catch (Exception e) {
-					exceptionOccured(e);
+					exceptionOccured(e.getMessage());
 				}
 			};
 		};
@@ -114,12 +119,8 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 
 	@Subscribe
 	public void userLoggedIn(LoginSuccessfulMessage message) {
-		if (message.getSession().isValid()) {
-			this.user = message.getUser();
-			showLobbyScreen();
-		} else {
-			showLoginErrorScreen();
-		}
+		this.user = message.getUser();
+		showLobbyScreen();
 	}
 
 	@Subscribe
@@ -137,13 +138,19 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 		updateUsersList(userList.getUsers());
 	}
 
+	@Subscribe
+	public void serverException(ExceptionMessage message){
+		showServerError(message.getException());
+	}
+
+	@Subscribe
+	private void handleEventBusError(DeadEvent deadEvent){
+		LOG.error("DeadEvent detected "+deadEvent);
+	}
+
 	@Override
-	public void exceptionOccured(Throwable e) {
-		if (e instanceof LoginException) {
-			showLoginErrorScreen();
-		} else {
-			showServerError(e);
-		}
+	public void exceptionOccured(String e) {
+		showServerError(e);
 	}
 
 	@Override
@@ -160,12 +167,12 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 	// JavFX Help methods
 	// -----------------------------------------------------
 
-	public void showServerError(Throwable e) {
+	public void showServerError(String e) {
 		Platform.runLater(new Runnable() {
 
 			@Override
 			public void run() {
-				Alert a = new Alert(Alert.AlertType.ERROR, "Server returned an error:\n" + e.getMessage());
+				Alert a = new Alert(Alert.AlertType.ERROR, "Server returned an error:\n" + e);
 				a.showAndWait();
 			}
 		});

@@ -111,8 +111,8 @@ public class DemoApplication extends Thread implements IConnectionListener {
 
 
 	@Override
-	public void exceptionOccured(Throwable e) {
-		System.err.println("Server sends an exception " + e.getClass().getName() + " " + e.getMessage());
+	public void exceptionOccured(String e) {
+		System.err.println("Server sends an exception " + e.getClass().getName() + " " + e);
 		// e.printStackTrace();
 	}
 

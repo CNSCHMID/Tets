@@ -2,7 +2,6 @@ package de.uol.swp.server.usermanagement;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import de.uol.swp.common.exception.SecurityException;
 import de.uol.swp.common.user.ISession;
 import de.uol.swp.common.user.IUser;
 import de.uol.swp.common.user.request.LoginRequest;
@@ -56,7 +55,8 @@ public class UserService {
             userSessions.put(newSession,newUser);
             returnMessage.setSession(newSession);
         }catch (Exception e){
-            returnMessage = new ServerExceptionMessage(new LoginException());
+            returnMessage = new ServerExceptionMessage(new LoginException("Cannot login user "+msg.getUsername()));
+            returnMessage.setSession(msg.getSession());
         }
         bus.post(returnMessage);
     }
