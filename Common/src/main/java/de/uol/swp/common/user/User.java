@@ -1,12 +1,15 @@
 package de.uol.swp.common.user;
 
-public class User implements IUser {
+import java.util.Objects;
+
+public class User implements IUser, Comparable<User> {
 
     private final String username;
     private final String password;
     private final String eMail;
 
     public User(String username, String password, String eMail) {
+        Objects.nonNull(username);
         this.username = username;
         this.password = password;
         this.eMail = eMail;
@@ -32,4 +35,8 @@ public class User implements IUser {
         return new User(username, null, eMail);
     }
 
+    @Override
+    public int compareTo(User o) {
+        return this.getUsername().compareTo(o.getUsername());
+    }
 }

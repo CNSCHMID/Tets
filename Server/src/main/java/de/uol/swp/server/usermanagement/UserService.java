@@ -55,6 +55,7 @@ public class UserService {
             userSessions.put(newSession,newUser);
             returnMessage.setSession(newSession);
         }catch (Exception e){
+            LOG.error(e);
             returnMessage = new ServerExceptionMessage(new LoginException("Cannot login user "+msg.getUsername()));
             returnMessage.setSession(msg.getSession());
         }

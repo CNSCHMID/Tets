@@ -9,6 +9,11 @@ public class SimpleUserStore implements IUserStore {
 
     Map<String, IUser> users = new HashMap<>();
 
+    // FIXME: Remove after registration
+    public SimpleUserStore(){
+        createUser("test","test","test@test.de");
+    }
+
     @Override
     public Optional<IUser> findUser(String username, String password) {
         Optional<IUser> usr = findUser(username);
