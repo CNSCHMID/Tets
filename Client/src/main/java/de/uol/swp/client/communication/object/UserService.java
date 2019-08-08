@@ -18,7 +18,7 @@ import java.util.List;
  *
  */
 
-public class ObjectCommunication implements IUserService {
+public class UserService implements IUserService {
 
 
 	/**
@@ -30,7 +30,7 @@ public class ObjectCommunication implements IUserService {
 	 * Creates a new Communication object with the connection information
 	 * @param client
 	 */
-	public ObjectCommunication(Channel client) {
+	public UserService(Channel client) {
 		this.client = client;
 	}
 
