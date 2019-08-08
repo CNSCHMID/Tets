@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="196.0" prefWidth="407.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uol.swp.client.user.LoginPresenter">
+   <children>
+      <Label layoutX="43.0" layoutY="39.0" text="Login" />
+      <TextField id="loginField" layoutX="142.0" layoutY="34.0" promptText="Enter Login">
+         <tooltip>
+            <Tooltip text="Enter your login here" />
+         </tooltip></TextField>
+      <PasswordField id="passwordField" layoutX="142.0" layoutY="78.0" promptText="Enter Password" />
+      <Button id="loginButton" layoutX="116.0" layoutY="133.0" mnemonicParsing="false" text="Login" />
+      <Button id="registerButton" layoutX="192.0" layoutY="133.0" mnemonicParsing="false" text="Register" />
+      <Label layoutX="44.0" layoutY="83.0" text="Password" />
+   </children>
+</AnchorPane>

@@ -4,11 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/communication/ServerHandler.java" line="79" mnemonic="7" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ef83a65-f4d7-4e13-b173-e1cd21d14148" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/store/SimpleUserStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/store/SimpleUserStore.java" afterDir="false" />
-    </list>
+    <list default="true" id="5ef83a65-f4d7-4e13-b173-e1cd21d14148" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/Common/target/" />
     <ignored path="$PROJECT_DIR$/Client/target/" />
@@ -45,15 +41,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/AbstractUserManagement.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="58" lean-forward="true" selection-start-line="2" selection-start-column="58" selection-end-line="2" selection-end-column="58" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/store/SimpleUserStore.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -139,23 +126,33 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/com/google/guava/guava/28.0-jre/guava-28.0-jre.jar!/com/google/common/cache/LocalCache.class">
+        <entry file="file://$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/User.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="894" selection-start-line="894" selection-end-line="894" />
+            <state relative-caret-position="391">
+              <caret line="27" column="13" lean-forward="true" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
+              <folding>
+                <element signature="e#751#752#0" expanded="true" />
+                <element signature="e#775#776#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/user/LoginPresenter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="27" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="27" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/User.java">
+        <entry file="file://$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/user/LoginView.fxml">
+          <provider editor-type-id="JavaFX-Scene-Builder" />
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
-              <folding>
-                <element signature="e#751#752#0" expanded="true" />
-                <element signature="e#775#776#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="136">
+              <caret line="8" column="172" selection-start-line="8" selection-start-column="172" selection-end-line="8" selection-end-column="172" />
             </state>
           </provider>
         </entry>
@@ -167,6 +164,8 @@
       <list>
         <option value="Interface" />
         <option value="Class" />
+        <option value="JavaFXApplication" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
@@ -186,7 +185,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/command/LoginCommand.java" />
         <option value="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/message/AbstractResponseMessage.java" />
         <option value="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/message/AbstractServerMessage.java" />
         <option value="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/command/LoginRequest.java" />
@@ -237,6 +235,7 @@
         <option value="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/store/SimpleUserStore.java" />
         <option value="$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/UserService.java" />
         <option value="$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/User.java" />
+        <option value="$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/user/LoginView.fxml" />
       </list>
     </option>
   </component>
@@ -255,8 +254,8 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1210" />
-    <option name="y" value="47" />
+    <option name="x" value="1876" />
+    <option name="y" value="40" />
     <option name="width" value="2578" />
     <option name="height" value="1313" />
   </component>
@@ -285,6 +284,56 @@
               <item name="parent" type="b2602c69:ProjectViewProjectNode" />
               <item name="swpbaseproject" type="462c0819:PsiDirectoryNode" />
               <item name="Client" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="swpbaseproject" type="462c0819:PsiDirectoryNode" />
+              <item name="Client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="swpbaseproject" type="462c0819:PsiDirectoryNode" />
+              <item name="Client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="swpbaseproject" type="462c0819:PsiDirectoryNode" />
+              <item name="Client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="swpbaseproject" type="462c0819:PsiDirectoryNode" />
+              <item name="Client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="swpbaseproject" type="462c0819:PsiDirectoryNode" />
+              <item name="Client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="demo" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="parent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="swpbaseproject" type="462c0819:PsiDirectoryNode" />
+              <item name="Client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="user" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="parent" type="b2602c69:ProjectViewProjectNode" />
@@ -361,7 +410,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/Client/src/main/resources" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
+    <property name="settings.editor.selected.configurable" value="preferences.JavaFX" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -576,12 +625,12 @@
       <updated>1561619593371</updated>
       <workItem from="1561619595913" duration="6918000" />
       <workItem from="1564992336265" duration="2819000" />
-      <workItem from="1564995201608" duration="35782000" />
+      <workItem from="1564995201608" duration="37842000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="45519000" />
+    <option name="totallyTimeSpent" value="47579000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -593,10 +642,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="968" y="38" width="2062" height="1050" extended-state="0" />
+    <frame x="1501" y="32" width="2062" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18431568" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18431568" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -606,8 +655,8 @@
       <window_info anchor="bottom" id="Problems" order="0" weight="0.32897604" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32897604" />
-      <window_info anchor="bottom" id="Run" order="3" weight="0.3398693" />
-      <window_info active="true" anchor="bottom" id="Debug" order="4" visible="true" weight="0.39978212" />
+      <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.3398693" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.39978212" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="7" weight="0.32897604" />
@@ -702,30 +751,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Server/src/main/java/de/uol/swp/server/usermanagement/IUserManagement.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="48" lean-forward="true" selection-start-line="4" selection-start-column="48" selection-end-line="4" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/IUserService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="23" column="7" lean-forward="true" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/response/LoginSuccessfulMessage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="12" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/IUser.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -1133,12 +1158,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Common/src/main/java/de/uol/swp/common/user/User.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
+        <state relative-caret-position="391">
+          <caret line="27" column="13" lean-forward="true" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
           <folding>
             <element signature="e#751#752#0" expanded="true" />
             <element signature="e#775#776#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/user/LoginView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/user/LoginPresenter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="27" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/src/main/java/de/uol/swp/client/user/LoginView.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="172" selection-start-line="8" selection-start-column="172" selection-end-line="8" selection-end-column="172" />
         </state>
       </provider>
     </entry>
