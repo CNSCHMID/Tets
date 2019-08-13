@@ -47,8 +47,8 @@ public class DemoApplication extends Thread implements IConnectionListener {
 
 		delay(2000);
 		// HashCode (so every client has its own username)
-		userName = "test" + hashCode();
-		password = "test" + hashCode();
+		userName = "MGTest" + hashCode();
+		password = "MGTest" + hashCode();
 
 		userService.login(userName, password);
 

@@ -5,6 +5,7 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.uol.swp.client.communication.object.Client;
 import de.uol.swp.client.demo.IConnectionListener;
+import de.uol.swp.client.user.LoginPresenter;
 import de.uol.swp.client.user.UserServiceFactory;
 import de.uol.swp.common.message.ExceptionMessage;
 import de.uol.swp.common.user.IUser;
@@ -18,17 +19,17 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.util.List;
 
 // TODO: MVC
@@ -160,6 +161,10 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 		this.userService = UserServiceFactory.getUserService();
 		// register user service as listener to eventbus
 		eventBus.register(userService);
+
+		// TODO: Replace with better dependency injection with Google Guice --> later
+		LoginPresenter.setUserService(userService);
+
 		showLoginScreen();
 	}
 
@@ -214,39 +219,16 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 			@Override
 			public void run() {
 
-				// first approach: Login Screen with Java Code
 				if (loginScene == null) {
-					GridPane rootPane = new GridPane();
+					Parent rootPane;
+					try {
+						rootPane = FXMLLoader.load(getClass().getResource(LoginPresenter.fxml));
+
+					} catch (IOException e) {
+						throw new RuntimeException("Could not load LoginView!");
+					}
 
 					loginScene = new Scene(rootPane, 600, 200);
-					Label name = new Label("Name:");
-					TextField nameField = new TextField("Bitte Name eingeben");
-					Label password = new Label("Password:");
-					PasswordField passwordField = new PasswordField();
-					rootPane.add(name, 2, 1);
-					rootPane.add(nameField, 3, 1);
-					rootPane.add(password, 2, 2);
-					rootPane.add(passwordField, 3, 2);
-
-					Button login = new Button("Login");
-					login.setOnAction(new EventHandler<ActionEvent>() {
-
-						@Override
-						public void handle(ActionEvent event) {
-							userService.login(nameField.getText(), passwordField.getText());
-						}
-					});
-
-					rootPane.add(login, 2, 3);
-
-					loginScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-						public void handle(KeyEvent event) {
-							if (event.getCode() == KeyCode.ENTER) {
-								userService.login(nameField.getText(), passwordField.getText());
-							}
-						};
-					});
-
 				}
 
 				primaryStage.setScene(loginScene);
