@@ -1,4 +1,6 @@
 package de.uol.swp.common.message;
 
-public interface MessageContext {
+import java.io.Serializable;
+
+public interface MessageContext extends Serializable {
 }

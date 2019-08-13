@@ -17,6 +17,15 @@ public class UserDTO implements User, Comparable<UserDTO> {
         this.eMail = eMail;
     }
 
+    public static UserDTO create(User user) {
+        return new UserDTO(user.getUsername(), user.getPassword(), user.getEMail());
+    }
+
+    public static UserDTO createWithoutPassword(User user) {
+        return new UserDTO(user.getUsername(), null, user.getEMail());
+    }
+
+
     @Override
     public String getUsername() {
         return username;

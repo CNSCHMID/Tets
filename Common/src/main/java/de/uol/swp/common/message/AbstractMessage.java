@@ -34,5 +34,9 @@ abstract public class AbstractMessage implements Message {
 		return session;
 	}
 
-
+	@Override
+	public void initWithMessage(Message otherMessage) {
+		setMessageContext(otherMessage.getMessageContext());
+		setSession(otherMessage.getSession());
+	}
 }

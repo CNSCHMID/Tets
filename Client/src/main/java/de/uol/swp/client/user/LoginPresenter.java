@@ -27,9 +27,6 @@ public class LoginPresenter {
 
     @FXML
     private void onLoginButtonPressed(ActionEvent event) {
-        System.out.println("NUR EIN TEST");
-
-
         userService.login(loginField.getText(), passwordField.getText());
     }
 

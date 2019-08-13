@@ -19,4 +19,5 @@ public interface Message extends Serializable{
 	void setSession(Session session);
 	Session getSession();
 
+	void initWithMessage(Message otherMessage);
 }

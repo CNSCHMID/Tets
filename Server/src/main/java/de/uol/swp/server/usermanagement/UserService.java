@@ -6,9 +6,11 @@ import de.uol.swp.common.user.Session;
 import de.uol.swp.common.user.User;
 import de.uol.swp.common.user.request.LoginRequest;
 import de.uol.swp.common.user.request.LogoutRequest;
+import de.uol.swp.common.user.request.RetrieveAllUsersRequest;
+import de.uol.swp.common.user.response.AllUsersResponse;
 import de.uol.swp.server.message.ClientAuthorizedMessage;
-import de.uol.swp.server.message.ServerInternalMessage;
 import de.uol.swp.server.message.ServerExceptionMessage;
+import de.uol.swp.server.message.ServerInternalMessage;
 import de.uol.swp.server.usermanagement.store.UserStore;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -75,9 +77,23 @@ public class UserService {
 
             userManagement.logout(userToLogOut);
             userSessions.remove(msg.getSession());
+
+            // TODO: post response message
+
         }
+
+
 
     }
 
+    @Subscribe
+    private void onRetrieveAllUsersRequest(RetrieveAllUsersRequest msg){
+        if (LOG.isDebugEnabled()){
+            LOG.debug("New RetrieveAllUsersRequest request");
+        }
+        AllUsersResponse response = new AllUsersResponse(userManagement.retrieveAllUsers());
+        response.initWithMessage(msg);
+        bus.post(response);
+    }
 
 }

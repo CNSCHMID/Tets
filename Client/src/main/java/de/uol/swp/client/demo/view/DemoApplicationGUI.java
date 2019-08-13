@@ -10,9 +10,10 @@ import de.uol.swp.client.user.UserServiceFactory;
 import de.uol.swp.common.message.ExceptionMessage;
 import de.uol.swp.common.user.User;
 import de.uol.swp.common.user.UserService;
+import de.uol.swp.common.user.dto.UserDTO;
 import de.uol.swp.common.user.message.UserLoggedInMessage;
 import de.uol.swp.common.user.message.UserLoggedOutMessage;
-import de.uol.swp.common.user.message.UsersListMessage;
+import de.uol.swp.common.user.response.AllUsersResponse;
 import de.uol.swp.common.user.response.LoginSuccessfulMessage;
 import io.netty.channel.Channel;
 import javafx.application.Application;
@@ -120,23 +121,27 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 
 	@Subscribe
 	public void userLoggedIn(LoginSuccessfulMessage message) {
+		LOG.debug("user logged in sucessfully "+message.getUser().getUsername());
 		this.user = message.getUser();
 		showLobbyScreen();
 	}
 
 	@Subscribe
-	public void newUser(UserLoggedInMessage userName) {
+	public void newUser(UserLoggedInMessage message) {
+		LOG.debug("New user "+message.getUsername()+" logged in");
 		userService.retrieveAllUsers();
 	}
 
 	@Subscribe
-	public void userLeft(UserLoggedOutMessage username) {
+	public void userLeft(UserLoggedOutMessage message) {
+		LOG.debug("User "+message.getUsername()+" logged out");
 		userService.retrieveAllUsers();
 	}
 
 	@Subscribe
-	public void userList(UsersListMessage userList) {
-		updateUsersList(userList.getUsers());
+	public void userList(AllUsersResponse allUsersResponse) {
+		LOG.debug("Update of user list "+allUsersResponse.getUsers());
+		updateUsersList(allUsersResponse.getUsers());
 	}
 
 	@Subscribe
@@ -238,14 +243,14 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 
 	}
 
-	private void updateUsersList(List<String> userList) {
+	private void updateUsersList(List<UserDTO> userList) {
 		// Attention: This must be done on the FX Thread!
 		Platform.runLater(new Runnable() {
 
 			@Override
 			public void run() {
 				users.clear();
-				users.addAll(userList);
+				userList.forEach(u -> users.add(u.getUsername()));
 			}
 		});
 	}
