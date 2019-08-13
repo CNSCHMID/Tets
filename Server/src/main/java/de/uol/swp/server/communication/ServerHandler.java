@@ -4,6 +4,8 @@ import de.uol.swp.common.message.RequestMessage;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandler;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Netty handler for incomming communication
@@ -12,6 +14,8 @@ import io.netty.channel.ChannelInboundHandler;
  */
 @Sharable
 public class ServerHandler implements ChannelInboundHandler {
+
+    private static final Logger LOG = LogManager.getLogger(ServerHandler.class);
 
     private ServerHandlerDelegate delegate;
 
@@ -50,7 +54,7 @@ public class ServerHandler implements ChannelInboundHandler {
         if (msg instanceof RequestMessage) {
             delegate.process(ctx, (RequestMessage) msg);
         } else {
-            System.err.println("Illegal Object read from channel. Ignored!");
+            LOG.error("Illegal Object read from channel. Ignored!");
         }
     }
 
@@ -82,7 +86,7 @@ public class ServerHandler implements ChannelInboundHandler {
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         if (ctx.channel().isActive() || ctx.channel().isOpen()) {
-            System.err.println("Exception caught " + cause);
+            LOG.error("Exception caught " + cause);
         } else {
             delegate.clientDisconnected(ctx);
         }

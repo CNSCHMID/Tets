@@ -4,8 +4,11 @@ import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.uol.swp.client.demo.IConnectionListener;
+import de.uol.swp.common.MyObjectDecoder;
 import de.uol.swp.common.message.ExceptionMessage;
 import de.uol.swp.common.message.Message;
+import de.uol.swp.common.message.ResponseMessage;
+import de.uol.swp.common.message.ServerMessage;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -15,8 +18,9 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.serialization.ClassResolvers;
-import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.net.InetSocketAddress;
 import java.util.List;
@@ -29,6 +33,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 
 public class Client {
+
+	private static final Logger LOG = LogManager.getLogger(Client.class);
+
 	private final String host;
 	private final int port;
 	private List<IConnectionListener> connectionListener = new CopyOnWriteArrayList<>();
@@ -63,7 +70,7 @@ public class Client {
 						protected void initChannel(SocketChannel ch) throws Exception {
 							// Add both Encoder and Decoder to send and receive serializable objects
 							ch.pipeline().addLast(new ObjectEncoder());
-							ch.pipeline().addLast(new ObjectDecoder(ClassResolvers.cacheDisabled(null)));
+							ch.pipeline().addLast(new MyObjectDecoder(ClassResolvers.cacheDisabled(null)));
 							// Add a client handler
 							ch.pipeline().addLast(new ClientHandler(Client.this));
 						}
@@ -96,7 +103,12 @@ public class Client {
 
 
 	public void receivedMessage(Message in) {
-		eventBus.post(in);
+		if (in instanceof ServerMessage || in instanceof ResponseMessage) {
+			LOG.debug("Received message. Post on event bus " + in);
+			eventBus.post(in);
+		}else{
+			LOG.warn("Can only process ServerMessage and ResponseMessage. Received "+in);
+		}
 	}
 
 	@Subscribe
@@ -108,7 +120,7 @@ public class Client {
 
 	@Subscribe
 	private void handleEventBusError(DeadEvent deadEvent){
-		System.err.println("DeadEvent detected "+deadEvent);
+		LOG.warn("DeadEvent detected "+deadEvent);
 	}
 
 	public void process(Throwable message) {

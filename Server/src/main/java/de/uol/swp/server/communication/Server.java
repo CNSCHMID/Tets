@@ -3,10 +3,11 @@ package de.uol.swp.server.communication;
 import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import de.uol.swp.common.MyObjectDecoder;
+import de.uol.swp.common.MyObjectEncoder;
 import de.uol.swp.common.message.*;
 import de.uol.swp.common.user.Session;
 import de.uol.swp.common.user.message.UserLoggedInMessage;
-import de.uol.swp.common.user.message.UserLoggedOutMessage;
 import de.uol.swp.common.user.response.LoginSuccessfulMessage;
 import de.uol.swp.server.message.ClientAuthorizedMessage;
 import de.uol.swp.server.message.ClientDisconnectedMessage;
@@ -20,8 +21,6 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.serialization.ClassResolvers;
-import io.netty.handler.codec.serialization.ObjectDecoder;
-import io.netty.handler.codec.serialization.ObjectEncoder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -88,8 +87,8 @@ public class Server implements ServerHandlerDelegate {
 						protected void initChannel(SocketChannel ch) throws Exception {
 							// Encoder and decoder are both needed! Send and
 							// receive serializable objects
-							ch.pipeline().addLast(new ObjectEncoder());
-							ch.pipeline().addLast(new ObjectDecoder(ClassResolvers.cacheDisabled(null)));
+							ch.pipeline().addLast(new MyObjectEncoder());
+							ch.pipeline().addLast(new MyObjectDecoder(ClassResolvers.cacheDisabled(null)));
 							// must be last in the pipeline else they will not
 							// get encoded/decoded objects but ByteBuf
 							ch.pipeline().addLast(serverHandler);
@@ -108,6 +107,7 @@ public class Server implements ServerHandlerDelegate {
 	// Called from ServerHandler
 	@Override
 	public void process(ChannelHandlerContext ctx, RequestMessage msg) {
+		LOG.debug("Received new message from client "+msg);
 
 		try {
 			msg.setMessageContext(new NettyMessageContext(ctx));
@@ -147,13 +147,13 @@ public class Server implements ServerHandlerDelegate {
 	// -------------------------------------------------------------------------------
 	@Override
 	public void newClientConnected(ChannelHandlerContext ctx) {
-		System.err.println("New client " + ctx + " connected");
+		LOG.debug("New client " + ctx + " connected");
 		connectedClients.add(ctx);
 	}
 
 	@Override
 	public void clientDisconnected(ChannelHandlerContext ctx) {
-		System.err.println("Client disconnected");
+		LOG.debug("Client disconnected");
 		Session session = this.activeSessions.get(ctx);
 		if (session != null) {
 			ClientDisconnectedMessage msg = new ClientDisconnectedMessage();
@@ -165,10 +165,10 @@ public class Server implements ServerHandlerDelegate {
 	}
 
 	// -------------------------------------------------------------------------------
-	// Session Management Events (from event bus)
+	// User Management Events (from event bus)
 	// -------------------------------------------------------------------------------
 	@Subscribe
-	public void onClientAuthorized(ClientAuthorizedMessage msg){
+	private void onClientAuthorized(ClientAuthorizedMessage msg){
 		Optional<ChannelHandlerContext> ctx = getCtx(msg);
 		if (ctx.isPresent()) {
 			putSession(ctx.get(), msg.getSession());
@@ -179,17 +179,40 @@ public class Server implements ServerHandlerDelegate {
 		}
 	}
 
+	// -------------------------------------------------------------------------------
+	// ResponseEvents
+	// -------------------------------------------------------------------------------
+
 	@Subscribe
-	public void onClientLoggedOut(UserLoggedOutMessage msg){
-		// do not send Session to client!
-		sendToAll(new UserLoggedOutMessage(msg.getUsername()));
+	private void onResponseMessage(ResponseMessage msg){
+		Optional<ChannelHandlerContext> ctx = getCtx(msg);
+		if (ctx.isPresent()) {
+			msg.setSession(null);
+			msg.setMessageContext(null);
+			LOG.debug("Send to client "+ctx.get()+" message "+ msg);
+			sendToClient(ctx.get(), msg);
+		}
 	}
+
+	// -------------------------------------------------------------------------------
+	// ServerMessages
+	// -------------------------------------------------------------------------------
+
+	@Subscribe
+	private void onServerMessage(ServerMessage msg){
+		msg.setSession(null);
+		msg.setMessageContext(null);
+		LOG.debug("Send to all "+msg);
+		sendToAll(msg);
+	}
+
 
 	// -------------------------------------------------------------------------------
 	// Session Management (helper methods)
 	// -------------------------------------------------------------------------------
 
 	private void putSession(ChannelHandlerContext ctx, Session newSession) {
+
 		// TODO: check if session is already bound to connection
 		activeSessions.put(ctx, newSession);
 	}
@@ -224,8 +247,11 @@ public class Server implements ServerHandlerDelegate {
 	// -------------------------------------------------------------------------------
 
 	private void sendToClient(ChannelHandlerContext ctx, ResponseMessage message) {
+		LOG.trace("Trying to send to client: "+ctx+" "+message);
 		ctx.writeAndFlush(message);
 	}
+
+
 
 	private void sendToAll(ServerMessage msg) {
 		for (ChannelHandlerContext client : connectedClients) {
