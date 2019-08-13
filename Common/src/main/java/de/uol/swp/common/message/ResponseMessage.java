@@ -7,5 +7,5 @@ package de.uol.swp.common.message;
  * @Author: Marco Grawunder
  */
 
-public interface IResponseMessage extends IMessage {
+public interface ResponseMessage extends Message {
 }

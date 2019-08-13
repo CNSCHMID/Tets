@@ -1,6 +1,6 @@
 package de.uol.swp.common.message;
 
-import de.uol.swp.common.user.ISession;
+import de.uol.swp.common.user.Session;
 
 /**
  * Base class of all messages. Basic handling of session information
@@ -9,28 +9,28 @@ import de.uol.swp.common.user.ISession;
  *
  */
 @SuppressWarnings("serial")
-abstract public class AbstractMessage implements IMessage{
+abstract public class AbstractMessage implements Message {
 
-	IMessageContext messageContext;
-	ISession session = null;
+	MessageContext messageContext;
+	Session session = null;
 
 	@Override
-	public IMessageContext getMessageContext() {
+	public MessageContext getMessageContext() {
 		return messageContext;
 	}
 
 	@Override
-	public void setMessageContext(IMessageContext messageContext) {
+	public void setMessageContext(MessageContext messageContext) {
 		this.messageContext = messageContext;
 	}
 
 	@Override
-	public void setSession(ISession session){
+	public void setSession(Session session){
 		this.session = session;
 	}
 
 	@Override
-	public ISession getSession(){
+	public Session getSession(){
 		return session;
 	}
 

@@ -6,7 +6,7 @@ package de.uol.swp.common.message;
  * @Author: Marco Grawunder
  */
 
-public interface IRequestMessage extends IMessage {
+public interface RequestMessage extends Message {
 
     /**
      * State, if this request can only be used, if

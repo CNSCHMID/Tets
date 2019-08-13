@@ -3,7 +3,7 @@ package de.uol.swp.server.demo;
 import com.google.common.eventbus.EventBus;
 import de.uol.swp.server.communication.Server;
 import de.uol.swp.server.usermanagement.UserService;
-import de.uol.swp.server.usermanagement.store.IUserStore;
+import de.uol.swp.server.usermanagement.store.UserStore;
 import de.uol.swp.server.usermanagement.store.SimpleUserStore;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,7 +30,7 @@ public class ApplicationServer {
 
 		// Create dependencies:
 		EventBus eventBus = new EventBus();
-		IUserStore userStore = new SimpleUserStore();
+		UserStore userStore = new SimpleUserStore();
 		// avoid GC?
 		userService = 	new UserService(eventBus, userStore);
 

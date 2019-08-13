@@ -9,7 +9,7 @@ import java.util.List;
  *
  */
 
-public interface IUserService {
+public interface UserService {
 
 	/**
 	 * Login with username and password
@@ -17,17 +17,17 @@ public interface IUserService {
 	 * @param password the password of the user
 	 * @return a new user object
 	 */
-	IUser login(String username, String password);
+	User login(String username, String password);
 
 	/**
 	 * Login out from server
 	 */
-	void logout(IUser user);
+	void logout(User user);
 
 	/**
 	 * Retrieve the list of all current logged in users
 	 * @return a list of users
 	 */
-	List<IUser> retrieveAllUsers();
+	List<User> retrieveAllUsers();
 
 }

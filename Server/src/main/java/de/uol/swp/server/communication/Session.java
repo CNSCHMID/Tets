@@ -1,28 +1,19 @@
 package de.uol.swp.server.communication;
 
-// FIXME: DO NOT USE COUNTERS FOR SESSIONS!
-import de.uol.swp.common.user.ISession;
+import java.util.UUID;
 
-
-public class Session implements ISession {
+public class Session implements de.uol.swp.common.user.Session {
 
 	private static final long serialVersionUID = -3012502325550415132L;
-	// JUST FOR DEMO. DO NOT USE THIS KINDS OF SESSIONS, THEY CAN BE GUESSED!
-	static long count = 0l;
 	private final String sessionId;
-	public static final Session invalid = new Session(false);
 
 	public Session() {
 		synchronized (Session.class) {
-			this.sessionId = String.valueOf(count++);
+			this.sessionId = String.valueOf(UUID.randomUUID());
 		}
 	}
-	
-	protected Session(boolean state){
-		sessionId = null;
-	}
 
-    public static ISession create() {
+    public static de.uol.swp.common.user.Session create() {
 		return new Session();
     }
 
@@ -31,10 +22,6 @@ public class Session implements ISession {
 		return sessionId;
 	}
 
-	@Override
-	public boolean isValid() {
-		return sessionId != null;
-	}
 
 	@Override
 	public int hashCode() {

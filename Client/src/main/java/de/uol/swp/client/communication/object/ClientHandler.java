@@ -2,7 +2,7 @@ package de.uol.swp.client.communication.object;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import de.uol.swp.common.message.IMessage;
+import de.uol.swp.common.message.Message;
 
 /**
  * Netty handler for incoming connections
@@ -26,8 +26,8 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object in) throws Exception {
-		if (in instanceof IMessage) {
-			client.receivedMessage((IMessage) in);
+		if (in instanceof Message) {
+			client.receivedMessage((Message) in);
 		}else{
 			System.err.println("Illegal Object read from channel. Ignored!");
 		}

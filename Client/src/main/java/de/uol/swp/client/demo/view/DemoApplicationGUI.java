@@ -8,8 +8,8 @@ import de.uol.swp.client.demo.IConnectionListener;
 import de.uol.swp.client.user.LoginPresenter;
 import de.uol.swp.client.user.UserServiceFactory;
 import de.uol.swp.common.message.ExceptionMessage;
-import de.uol.swp.common.user.IUser;
-import de.uol.swp.common.user.IUserService;
+import de.uol.swp.common.user.User;
+import de.uol.swp.common.user.UserService;
 import de.uol.swp.common.user.message.UserLoggedInMessage;
 import de.uol.swp.common.user.message.UserLoggedOutMessage;
 import de.uol.swp.common.user.message.UsersListMessage;
@@ -41,13 +41,13 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 	private String host;
 	private int port;
 
-	private IUserService userService;
+	private UserService userService;
 
 	private Stage primaryStage;
 	private Scene loginScene;
 	private Scene lobbyScene;
 	private ObservableList<String> users;
-	private IUser user;
+	private User user;
 
 	Client clientConnection;
 
@@ -115,7 +115,7 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 	}
 
 	// -----------------------------------------------------
-	// User Management Events
+	// UserDTO Management Events
 	// -----------------------------------------------------
 
 	@Subscribe

@@ -1,7 +1,7 @@
 package de.uol.swp.common.user.response;
 
 import de.uol.swp.common.message.AbstractResponseMessage;
-import de.uol.swp.common.user.IUser;
+import de.uol.swp.common.user.User;
 
 /**
  * A message containing the session (typically for a new logged in user)
@@ -12,13 +12,13 @@ public class LoginSuccessfulMessage extends AbstractResponseMessage {
 
     private static final long serialVersionUID = -9107206137706636541L;
 
-    final IUser user;
+    final User user;
 
-    public LoginSuccessfulMessage(IUser user) {
+    public LoginSuccessfulMessage(User user) {
         this.user = user;
     }
 
-    public IUser getUser() {
+    public User getUser() {
         return user;
     }
 

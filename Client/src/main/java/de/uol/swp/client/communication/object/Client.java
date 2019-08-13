@@ -5,7 +5,7 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.uol.swp.client.demo.IConnectionListener;
 import de.uol.swp.common.message.ExceptionMessage;
-import de.uol.swp.common.message.IMessage;
+import de.uol.swp.common.message.Message;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -95,7 +95,7 @@ public class Client {
 	}
 
 
-	public void receivedMessage(IMessage in) {
+	public void receivedMessage(Message in) {
 		eventBus.post(in);
 	}
 

@@ -1,6 +1,5 @@
 package de.uol.swp.common.user;
 
-public interface ISession {
+public interface Session {
     String getSessionId();
-    boolean isValid();
 }

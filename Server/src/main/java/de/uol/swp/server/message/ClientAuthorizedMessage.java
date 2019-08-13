@@ -1,17 +1,17 @@
 package de.uol.swp.server.message;
 
-import de.uol.swp.common.user.IUser;
+import de.uol.swp.common.user.User;
 
 public class ClientAuthorizedMessage extends AbstractServerInternalMessage {
 
-    private final IUser user;
+    private final User user;
 
-    public ClientAuthorizedMessage(IUser user) {
+    public ClientAuthorizedMessage(User user) {
         super();
         this.user = user;
     }
 
-    public IUser getUser() {
+    public User getUser() {
         return user;
     }
 }

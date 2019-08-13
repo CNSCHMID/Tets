@@ -1,7 +1,6 @@
 package de.uol.swp.client.user;
 
-import de.uol.swp.client.communication.object.UserService;
-import de.uol.swp.common.user.IUserService;
+import de.uol.swp.common.user.UserService;
 import io.netty.channel.Channel;
 
 /**
@@ -12,13 +11,13 @@ import io.netty.channel.Channel;
  */
 public class UserServiceFactory {
 
-	static IUserService userService;
+	static UserService userService;
 
 	public static void init(Channel client){
-		userService = new UserService(client);
+		userService = new de.uol.swp.client.communication.object.UserService(client);
 	}
 
-	public static IUserService getUserService() {
+	public static UserService getUserService() {
 		return userService;
 	}
 

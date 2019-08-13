@@ -1,13 +1,13 @@
 package de.uol.swp.server.usermanagement.store;
 
-import de.uol.swp.common.user.IUser;
 import de.uol.swp.common.user.User;
+import de.uol.swp.common.user.dto.UserDTO;
 
 import java.util.*;
 
-public class SimpleUserStore implements IUserStore {
+public class SimpleUserStore implements UserStore {
 
-    Map<String, IUser> users = new HashMap<>();
+    Map<String, User> users = new HashMap<>();
 
     // FIXME: Remove after registration
     public SimpleUserStore(){
@@ -15,8 +15,8 @@ public class SimpleUserStore implements IUserStore {
     }
 
     @Override
-    public Optional<IUser> findUser(String username, String password) {
-        Optional<IUser> usr = findUser(username);
+    public Optional<User> findUser(String username, String password) {
+        Optional<User> usr = findUser(username);
         if (usr.isPresent() && usr.get().getPassword().equals(password)) {
             return usr;
         }
@@ -24,8 +24,8 @@ public class SimpleUserStore implements IUserStore {
     }
 
     @Override
-    public Optional<IUser> findUser(String username) {
-        IUser usr = users.get(username);
+    public Optional<User> findUser(String username) {
+        User usr = users.get(username);
         if (usr != null) {
             return Optional.of(usr);
         }
@@ -33,20 +33,20 @@ public class SimpleUserStore implements IUserStore {
     }
 
     @Override
-    public IUser createUser(String username, String password, String eMail) {
-        IUser usr = new User(username, password, eMail);
+    public User createUser(String username, String password, String eMail) {
+        User usr = new UserDTO(username, password, eMail);
         users.put(username, usr);
         return usr;
     }
 
     @Override
-    public IUser updateUser(String username, String password, String eMail) {
+    public User updateUser(String username, String password, String eMail) {
         return createUser(username, password, eMail);
     }
 
     @Override
-    public List<IUser> getAllUsers() {
-        List<IUser> retUsers = new ArrayList<>();
+    public List<User> getAllUsers() {
+        List<User> retUsers = new ArrayList<>();
         users.values().stream().forEach(u -> retUsers.add(u.getWithoutPassword()));
         return retUsers;
     }

@@ -3,9 +3,7 @@ package de.uol.swp.common.user.message;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.uol.swp.common.message.AbstractMessage;
 import de.uol.swp.common.message.AbstractServerMessage;
-import de.uol.swp.common.message.IServerMessage;
 
 /**
  * A message containing all current logged in usernames

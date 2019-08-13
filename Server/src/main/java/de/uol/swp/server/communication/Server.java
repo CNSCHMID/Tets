@@ -4,7 +4,7 @@ import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.uol.swp.common.message.*;
-import de.uol.swp.common.user.ISession;
+import de.uol.swp.common.user.Session;
 import de.uol.swp.common.user.message.UserLoggedInMessage;
 import de.uol.swp.common.user.message.UserLoggedOutMessage;
 import de.uol.swp.common.user.response.LoginSuccessfulMessage;
@@ -49,7 +49,7 @@ public class Server implements ServerHandlerDelegate {
 	/**
 	 * Client with logged in sessions
 	 */
-	final private Map<ChannelHandlerContext, ISession> activeSessions = new HashMap<>();
+	final private Map<ChannelHandlerContext, Session> activeSessions = new HashMap<>();
 
 	/**
 	 * For demo reasons the eventBus as part of this class
@@ -107,7 +107,7 @@ public class Server implements ServerHandlerDelegate {
 
 	// Called from ServerHandler
 	@Override
-	public void process(ChannelHandlerContext ctx, IRequestMessage msg) {
+	public void process(ChannelHandlerContext ctx, RequestMessage msg) {
 
 		try {
 			msg.setMessageContext(new NettyMessageContext(ctx));
@@ -154,7 +154,7 @@ public class Server implements ServerHandlerDelegate {
 	@Override
 	public void clientDisconnected(ChannelHandlerContext ctx) {
 		System.err.println("Client disconnected");
-		ISession session = this.activeSessions.get(ctx);
+		Session session = this.activeSessions.get(ctx);
 		if (session != null) {
 			ClientDisconnectedMessage msg = new ClientDisconnectedMessage();
 			msg.setSession(session);
@@ -189,7 +189,7 @@ public class Server implements ServerHandlerDelegate {
 	// Session Management (helper methods)
 	// -------------------------------------------------------------------------------
 
-	private void putSession(ChannelHandlerContext ctx, ISession newSession) {
+	private void putSession(ChannelHandlerContext ctx, Session newSession) {
 		// TODO: check if session is already bound to connection
 		activeSessions.put(ctx, newSession);
 	}
@@ -198,20 +198,20 @@ public class Server implements ServerHandlerDelegate {
 		activeSessions.remove(ctx);
 	}
 
-	private Optional<ISession> getSession(ChannelHandlerContext ctx) {
-		ISession session = activeSessions.get(ctx);
+	private Optional<Session> getSession(ChannelHandlerContext ctx) {
+		Session session = activeSessions.get(ctx);
 		return session != null? Optional.of(session):Optional.empty();
 	}
 
-	private Optional<ChannelHandlerContext> getCtx(IMessage message){
+	private Optional<ChannelHandlerContext> getCtx(Message message){
 		if (message.getMessageContext() instanceof NettyMessageContext){
 			return Optional.of(((NettyMessageContext)message.getMessageContext()).getCtx());
 		}
 		return getCtx(message.getSession());
 	}
 
-	private Optional<ChannelHandlerContext> getCtx(ISession session){
-		for(Map.Entry<ChannelHandlerContext, ISession> e : activeSessions.entrySet()){
+	private Optional<ChannelHandlerContext> getCtx(Session session){
+		for(Map.Entry<ChannelHandlerContext, Session> e : activeSessions.entrySet()){
 			if (e.getValue().equals(session)){
 				return Optional.of(e.getKey());
 			}
@@ -220,14 +220,14 @@ public class Server implements ServerHandlerDelegate {
 	}
 
 	// -------------------------------------------------------------------------------
-	// Help methods: Send only objects of type IMessage
+	// Help methods: Send only objects of type Message
 	// -------------------------------------------------------------------------------
 
-	private void sendToClient(ChannelHandlerContext ctx, IResponseMessage message) {
+	private void sendToClient(ChannelHandlerContext ctx, ResponseMessage message) {
 		ctx.writeAndFlush(message);
 	}
 
-	private void sendToAll(IServerMessage msg) {
+	private void sendToAll(ServerMessage msg) {
 		for (ChannelHandlerContext client : connectedClients) {
 			try {
 				client.writeAndFlush(msg);

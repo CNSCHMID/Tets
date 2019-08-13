@@ -1,6 +1,6 @@
 package de.uol.swp.client.user;
 
-import de.uol.swp.common.user.IUserService;
+import de.uol.swp.common.user.UserService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,9 +10,9 @@ import javafx.scene.control.TextField;
 public class LoginPresenter {
 
     public static final String fxml = "/fxml/LoginView.fxml";
-    private static IUserService userService;
+    private static UserService userService;
 
-    public static void setUserService(IUserService us){
+    public static void setUserService(UserService us){
         userService = us;
     }
 

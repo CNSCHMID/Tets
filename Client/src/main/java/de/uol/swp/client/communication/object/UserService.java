@@ -1,7 +1,6 @@
 package de.uol.swp.client.communication.object;
 
-import de.uol.swp.common.user.IUser;
-import de.uol.swp.common.user.IUserService;
+import de.uol.swp.common.user.User;
 import de.uol.swp.common.user.request.LoginRequest;
 import de.uol.swp.common.user.request.LogoutRequest;
 import de.uol.swp.common.user.request.RetrieveAllUsersRequest;
@@ -18,7 +17,7 @@ import java.util.List;
  *
  */
 
-public class UserService implements IUserService {
+public class UserService implements de.uol.swp.common.user.UserService {
 
 
 	/**
@@ -35,21 +34,21 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public IUser login(String username, String password){
+	public User login(String username, String password){
 		LoginRequest msg = new LoginRequest(username, password);
 		sendMessage(msg);
 		return null; // asynch call
 	}
 
 	@Override
-	public void logout(IUser username){
+	public void logout(User username){
 		LogoutRequest msg = new LogoutRequest();
 		sendMessage(msg);
 	}
 
 
 	@Override
-	public List<IUser> retrieveAllUsers() {
+	public List<User> retrieveAllUsers() {
 		RetrieveAllUsersRequest cmd = new RetrieveAllUsersRequest();
 		sendMessage(cmd);
 		return null; // asynch call
