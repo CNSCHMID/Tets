@@ -59,6 +59,7 @@ public class UserService {
             returnMessage = new ServerExceptionMessage(new LoginException("Cannot login user "+msg.getUsername()));
             returnMessage.setSession(msg.getSession());
         }
+        returnMessage.setMessageContext(msg.getMessageContext());
         bus.post(returnMessage);
     }
 

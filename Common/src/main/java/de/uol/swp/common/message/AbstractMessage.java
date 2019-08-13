@@ -11,7 +11,18 @@ import de.uol.swp.common.user.ISession;
 @SuppressWarnings("serial")
 abstract public class AbstractMessage implements IMessage{
 
+	IMessageContext messageContext;
 	ISession session = null;
+
+	@Override
+	public IMessageContext getMessageContext() {
+		return messageContext;
+	}
+
+	@Override
+	public void setMessageContext(IMessageContext messageContext) {
+		this.messageContext = messageContext;
+	}
 
 	@Override
 	public void setSession(ISession session){

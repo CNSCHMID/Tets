@@ -3,10 +3,7 @@ package de.uol.swp.server.communication;
 import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import de.uol.swp.common.message.ExceptionMessage;
-import de.uol.swp.common.message.IRequestMessage;
-import de.uol.swp.common.message.IResponseMessage;
-import de.uol.swp.common.message.IServerMessage;
+import de.uol.swp.common.message.*;
 import de.uol.swp.common.user.ISession;
 import de.uol.swp.common.user.message.UserLoggedInMessage;
 import de.uol.swp.common.user.message.UserLoggedOutMessage;
@@ -113,15 +110,14 @@ public class Server implements ServerHandlerDelegate {
 	public void process(ChannelHandlerContext ctx, IRequestMessage msg) {
 
 		try {
+			msg.setMessageContext(new NettyMessageContext(ctx));
+
 			// check if msg requires login and append session if available
 			if (msg.authorizationNeeded() ) {
 				if (!getSession(ctx).isPresent()) {
 					throw new SecurityException("Authorization required. Client not logged in!");
 				}
 				msg.setSession(getSession(ctx).get());
-			}else{
-				// In case of exception without session, response channel is needed
-				msg.setSession(new ConnectionWrapper(ctx));
 			}
 			eventBus.post(msg);
 
@@ -173,7 +169,7 @@ public class Server implements ServerHandlerDelegate {
 	// -------------------------------------------------------------------------------
 	@Subscribe
 	public void onClientAuthorized(ClientAuthorizedMessage msg){
-		Optional<ChannelHandlerContext> ctx = getCtx(msg.getSession());
+		Optional<ChannelHandlerContext> ctx = getCtx(msg);
 		if (ctx.isPresent()) {
 			putSession(ctx.get(), msg.getSession());
 			sendToClient(ctx.get(), new LoginSuccessfulMessage(msg.getUser()));
@@ -207,11 +203,14 @@ public class Server implements ServerHandlerDelegate {
 		return session != null? Optional.of(session):Optional.empty();
 	}
 
-	private Optional<ChannelHandlerContext> getCtx(ISession session){
-		if (session instanceof ConnectionWrapper){
-			return Optional.of(((ConnectionWrapper) session).getCtx());
+	private Optional<ChannelHandlerContext> getCtx(IMessage message){
+		if (message.getMessageContext() instanceof NettyMessageContext){
+			return Optional.of(((NettyMessageContext)message.getMessageContext()).getCtx());
 		}
+		return getCtx(message.getSession());
+	}
 
+	private Optional<ChannelHandlerContext> getCtx(ISession session){
 		for(Map.Entry<ChannelHandlerContext, ISession> e : activeSessions.entrySet()){
 			if (e.getValue().equals(session)){
 				return Optional.of(e.getKey());

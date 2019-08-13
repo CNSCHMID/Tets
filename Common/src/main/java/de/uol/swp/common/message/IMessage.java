@@ -13,6 +13,9 @@ import java.io.Serializable;
 
 public interface IMessage extends Serializable{
 
+	void setMessageContext(IMessageContext messageContext);
+	IMessageContext getMessageContext();
+
 	void setSession(ISession session);
 	ISession getSession();
 
