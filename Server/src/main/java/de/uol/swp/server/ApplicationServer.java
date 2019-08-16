@@ -1,4 +1,4 @@
-package de.uol.swp.server.demo;
+package de.uol.swp.server;
 
 import com.google.common.eventbus.EventBus;
 import de.uol.swp.server.communication.Server;
