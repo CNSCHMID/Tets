@@ -4,7 +4,7 @@ import de.uol.swp.common.user.User;
 
 import java.util.Objects;
 
-public class UserDTO implements User, Comparable<UserDTO> {
+public class UserDTO implements User {
 
     private final String username;
     private final String password;
@@ -47,7 +47,7 @@ public class UserDTO implements User, Comparable<UserDTO> {
     }
 
     @Override
-    public int compareTo(UserDTO o) {
-        return this.getUsername().compareTo(o.getUsername());
+    public int compareTo(User o) {
+        return username.compareTo(o.getUsername());
     }
 }

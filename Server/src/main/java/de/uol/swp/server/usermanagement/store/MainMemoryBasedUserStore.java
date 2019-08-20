@@ -5,7 +5,7 @@ import de.uol.swp.common.user.dto.UserDTO;
 
 import java.util.*;
 
-public class SimpleUserStore implements UserStore {
+public class MainMemoryBasedUserStore implements UserStore {
 
     private final Map<String, User> users = new HashMap<>();
 
