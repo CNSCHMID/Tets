@@ -11,7 +11,7 @@ import io.netty.channel.Channel;
  */
 public class UserServiceFactory {
 
-	static UserService userService;
+	private static UserService userService;
 
 	public static void init(Channel client){
 		userService = new de.uol.swp.client.communication.object.UserService(client);

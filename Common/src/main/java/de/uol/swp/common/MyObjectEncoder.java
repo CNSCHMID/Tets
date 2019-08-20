@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 public class MyObjectEncoder extends ObjectEncoder {
 
-    static final Logger LOG = LogManager.getLogger(MyObjectEncoder.class);
+    private static final Logger LOG = LogManager.getLogger(MyObjectEncoder.class);
 
     @Override
     protected void encode(ChannelHandlerContext ctx, Serializable msg, ByteBuf out) throws Exception {

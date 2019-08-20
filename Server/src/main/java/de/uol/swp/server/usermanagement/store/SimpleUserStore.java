@@ -7,12 +7,7 @@ import java.util.*;
 
 public class SimpleUserStore implements UserStore {
 
-    Map<String, User> users = new HashMap<>();
-
-    // FIXME: Remove after registration
-    public SimpleUserStore(){
-        createUser("test","test","test@test.de");
-    }
+    private final Map<String, User> users = new HashMap<>();
 
     @Override
     public Optional<User> findUser(String username, String password) {
@@ -47,7 +42,7 @@ public class SimpleUserStore implements UserStore {
     @Override
     public List<User> getAllUsers() {
         List<User> retUsers = new ArrayList<>();
-        users.values().stream().forEach(u -> retUsers.add(u.getWithoutPassword()));
+        users.values().forEach(u -> retUsers.add(u.getWithoutPassword()));
         return retUsers;
     }
 

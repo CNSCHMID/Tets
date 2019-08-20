@@ -1,5 +1,6 @@
 package de.uol.swp.server.communication;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class Session implements de.uol.swp.common.user.Session {
@@ -7,7 +8,7 @@ public class Session implements de.uol.swp.common.user.Session {
 	private static final long serialVersionUID = -3012502325550415132L;
 	private final String sessionId;
 
-	public Session() {
+	private Session() {
 		synchronized (Session.class) {
 			this.sessionId = String.valueOf(UUID.randomUUID());
 		}
@@ -22,32 +23,19 @@ public class Session implements de.uol.swp.common.user.Session {
 		return sessionId;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Session session = (Session) o;
+		return Objects.equals(sessionId, session.sessionId);
+	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((sessionId == null) ? 0 : sessionId.hashCode());
-		return result;
+		return Objects.hash(sessionId);
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Session other = (Session) obj;
-		if (sessionId == null) {
-			if (other.sessionId != null)
-				return false;
-		} else if (!sessionId.equals(other.sessionId))
-			return false;
-		return true;
-	}
-	
 	@Override
 	public String toString() {
 		return "SessionId: "+sessionId;

@@ -38,7 +38,7 @@ public class Client {
 
 	private final String host;
 	private final int port;
-	private List<IConnectionListener> connectionListener = new CopyOnWriteArrayList<>();
+	private final List<IConnectionListener> connectionListener = new CopyOnWriteArrayList<>();
 	private EventLoopGroup group;
 	private final EventBus eventBus;
 
@@ -67,7 +67,7 @@ public class Client {
 					.handler(new ChannelInitializer<SocketChannel>() {
 
 						@Override
-						protected void initChannel(SocketChannel ch) throws Exception {
+						protected void initChannel(SocketChannel ch) {
 							// Add both Encoder and Decoder to send and receive serializable objects
 							ch.pipeline().addLast(new ObjectEncoder());
 							ch.pipeline().addLast(new MyObjectDecoder(ClassResolvers.cacheDisabled(null)));
@@ -91,7 +91,7 @@ public class Client {
 	}
 
 
-	protected void fireConnectionEstablished(Channel channel) {
+	void fireConnectionEstablished(Channel channel) {
 		for (IConnectionListener listener : connectionListener) {
 			listener.connectionEstablished(channel);
 		}

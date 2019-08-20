@@ -11,10 +11,10 @@ import java.util.TreeSet;
 
 public class UserManagement extends AbstractUserManagement {
 
-    final UserStore userStore;
-    final SortedSet<User> loggedInUsers = new TreeSet<>();
+    private final UserStore userStore;
+    private final SortedSet<User> loggedInUsers = new TreeSet<>();
 
-    public UserManagement(UserStore userStore){
+    UserManagement(UserStore userStore){
         this.userStore = userStore;
     }
 

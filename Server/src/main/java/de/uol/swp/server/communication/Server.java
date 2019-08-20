@@ -33,7 +33,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Server implements ServerHandlerDelegate {
 
-	static final Logger LOG = LogManager.getLogger(Server.class);
+	private static final Logger LOG = LogManager.getLogger(Server.class);
 
 	/**
 	 * Server port
@@ -84,7 +84,7 @@ public class Server implements ServerHandlerDelegate {
 					.localAddress(new InetSocketAddress(port)).childHandler(new ChannelInitializer<SocketChannel>() {
 
 						@Override
-						protected void initChannel(SocketChannel ch) throws Exception {
+						protected void initChannel(SocketChannel ch) {
 							// Encoder and decoder are both needed! Send and
 							// receive serializable objects
 							ch.pipeline().addLast(new MyObjectEncoder());
@@ -114,7 +114,7 @@ public class Server implements ServerHandlerDelegate {
 
 			// check if msg requires login and append session if available
 			if (msg.authorizationNeeded() ) {
-				if (!getSession(ctx).isPresent()) {
+				if (getSession(ctx).isEmpty()) {
 					throw new SecurityException("Authorization required. Client not logged in!");
 				}
 				msg.setSession(getSession(ctx).get());
@@ -131,9 +131,7 @@ public class Server implements ServerHandlerDelegate {
 	private void onServerException(ServerExceptionMessage msg){
 		Optional<ChannelHandlerContext> ctx = getCtx(msg.getSession());
 		LOG.error(msg.getException());
-		if (ctx.isPresent()) {
-			sendToClient(ctx.get(), new ExceptionMessage(msg.getException().getMessage()));
-		}
+		ctx.ifPresent(channelHandlerContext -> sendToClient(channelHandlerContext, new ExceptionMessage(msg.getException().getMessage())));
 	}
 
 	@Subscribe

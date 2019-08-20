@@ -3,7 +3,7 @@ package de.uol.swp.client.communication.object;
 import de.uol.swp.common.user.User;
 import de.uol.swp.common.user.request.LoginRequest;
 import de.uol.swp.common.user.request.LogoutRequest;
-import de.uol.swp.common.user.request.RetrieveAllUsersRequest;
+import de.uol.swp.common.user.request.RetrieveAllOnlineUsersRequest;
 import io.netty.channel.Channel;
 
 import java.io.Serializable;
@@ -23,7 +23,7 @@ public class UserService implements de.uol.swp.common.user.UserService {
 	/**
 	 * The physical connection to the client
 	 */
-	Channel client;
+	private final Channel client;
 
 	/**
 	 * Creates a new Communication object with the connection information
@@ -49,7 +49,7 @@ public class UserService implements de.uol.swp.common.user.UserService {
 
 	@Override
 	public List<User> retrieveAllUsers() {
-		RetrieveAllUsersRequest cmd = new RetrieveAllUsersRequest();
+		RetrieveAllOnlineUsersRequest cmd = new RetrieveAllOnlineUsersRequest();
 		sendMessage(cmd);
 		return null; // asynch call
 	}

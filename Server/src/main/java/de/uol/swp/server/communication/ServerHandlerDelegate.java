@@ -10,7 +10,7 @@ import io.netty.channel.ChannelHandlerContext;
  *
  */
 
-public interface ServerHandlerDelegate {
+interface ServerHandlerDelegate {
 	
 	/**
 	 * Is called when a new client connects

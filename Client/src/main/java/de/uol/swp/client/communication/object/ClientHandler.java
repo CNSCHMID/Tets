@@ -12,24 +12,24 @@ import org.apache.logging.log4j.Logger;
  * @author Marco Grawunder
  *
  */
-public class ClientHandler extends ChannelInboundHandlerAdapter {
+class ClientHandler extends ChannelInboundHandlerAdapter {
 
 	private static final Logger LOG = LogManager.getLogger(ClientHandler.class);
 
-	private Client client;
+	private final Client client;
 
-	public ClientHandler(Client client) {
+	ClientHandler(Client client) {
 		this.client = client;
 	}
 
 	@Override
-	public void channelActive(ChannelHandlerContext ctx) throws Exception {
+	public void channelActive(ChannelHandlerContext ctx) {
 		System.out.println("Connected to server " + ctx);
 		client.fireConnectionEstablished(ctx.channel());
 	}
 
 	@Override
-	public void channelRead(ChannelHandlerContext ctx, Object in) throws Exception {
+	public void channelRead(ChannelHandlerContext ctx, Object in) {
 		if (in instanceof Message) {
 			client.receivedMessage((Message) in);
 		}else{
@@ -38,7 +38,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 	}
 
 	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 		LOG.error(cause);
 		client.process(cause);
 		ctx.close();

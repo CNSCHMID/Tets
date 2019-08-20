@@ -11,6 +11,7 @@ public class LoginPresenter {
 
     public static final String fxml = "/fxml/LoginView.fxml";
     private static UserService userService;
+    public Button registerButton;
 
     public static void setUserService(UserService us){
         userService = us;

@@ -3,16 +3,16 @@ package de.uol.swp.server.communication;
 import de.uol.swp.common.message.MessageContext;
 import io.netty.channel.ChannelHandlerContext;
 
-public class NettyMessageContext implements MessageContext {
+class NettyMessageContext implements MessageContext {
 
 
     private final ChannelHandlerContext ctx;
 
-    public NettyMessageContext(ChannelHandlerContext ctx) {
+    NettyMessageContext(ChannelHandlerContext ctx) {
         this.ctx = ctx;
     }
 
-    public ChannelHandlerContext getCtx() {
+    ChannelHandlerContext getCtx() {
         return ctx;
     }
 }

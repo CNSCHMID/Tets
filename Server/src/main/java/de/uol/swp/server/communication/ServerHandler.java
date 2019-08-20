@@ -13,11 +13,11 @@ import org.apache.logging.log4j.Logger;
  * @author Marco Grawunder
  */
 @Sharable
-public class ServerHandler implements ChannelInboundHandler {
+class ServerHandler implements ChannelInboundHandler {
 
     private static final Logger LOG = LogManager.getLogger(ServerHandler.class);
 
-    private ServerHandlerDelegate delegate;
+    private final ServerHandlerDelegate delegate;
 
     /**
      * Creates a new ServerHandler
@@ -29,27 +29,27 @@ public class ServerHandler implements ChannelInboundHandler {
     }
 
     @Override
-    public void channelRegistered(ChannelHandlerContext channelHandlerContext) throws Exception {
+    public void channelRegistered(ChannelHandlerContext channelHandlerContext) {
 
     }
 
     @Override
-    public void channelUnregistered(ChannelHandlerContext channelHandlerContext) throws Exception {
+    public void channelUnregistered(ChannelHandlerContext channelHandlerContext) {
 
     }
 
     @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+    public void channelActive(ChannelHandlerContext ctx) {
         delegate.newClientConnected(ctx);
     }
 
     @Override
-    public void channelInactive(ChannelHandlerContext channelHandlerContext) throws Exception {
+    public void channelInactive(ChannelHandlerContext channelHandlerContext) {
 
     }
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
         // Server ignores everything but IRequestMessages
         if (msg instanceof RequestMessage) {
             delegate.process(ctx, (RequestMessage) msg);
@@ -59,32 +59,32 @@ public class ServerHandler implements ChannelInboundHandler {
     }
 
     @Override
-    public void channelReadComplete(ChannelHandlerContext channelHandlerContext) throws Exception {
+    public void channelReadComplete(ChannelHandlerContext channelHandlerContext) {
 
     }
 
     @Override
-    public void userEventTriggered(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
+    public void userEventTriggered(ChannelHandlerContext channelHandlerContext, Object o) {
 
     }
 
     @Override
-    public void channelWritabilityChanged(ChannelHandlerContext channelHandlerContext) throws Exception {
+    public void channelWritabilityChanged(ChannelHandlerContext channelHandlerContext) {
 
     }
 
     @Override
-    public void handlerAdded(ChannelHandlerContext channelHandlerContext) throws Exception {
+    public void handlerAdded(ChannelHandlerContext channelHandlerContext) {
 
     }
 
     @Override
-    public void handlerRemoved(ChannelHandlerContext channelHandlerContext) throws Exception {
+    public void handlerRemoved(ChannelHandlerContext channelHandlerContext) {
 
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         if (ctx.channel().isActive() || ctx.channel().isOpen()) {
             LOG.error("Exception caught " + cause);
         } else {

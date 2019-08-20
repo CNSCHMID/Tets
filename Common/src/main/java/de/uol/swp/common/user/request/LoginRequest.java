@@ -12,8 +12,8 @@ import de.uol.swp.common.message.AbstractRequestMessage;
 public class LoginRequest extends AbstractRequestMessage {
 
 	private static final long serialVersionUID = 7793454958390539421L;
-	String username;
-	String password;
+	private String username;
+	private String password;
 	
 	public LoginRequest(String username, String password) {
 		this.username = username;

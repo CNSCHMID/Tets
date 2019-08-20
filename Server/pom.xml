@@ -8,7 +8,6 @@
     </parent>
     <version>1.0.0</version>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>de.uol.swp</groupId>
     <artifactId>server</artifactId>
     <packaging>jar</packaging>
     <name>server</name>

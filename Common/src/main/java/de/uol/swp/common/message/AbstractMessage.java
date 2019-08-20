@@ -11,8 +11,8 @@ import de.uol.swp.common.user.Session;
 @SuppressWarnings("serial")
 abstract public class AbstractMessage implements Message {
 
-	MessageContext messageContext;
-	Session session = null;
+	private MessageContext messageContext;
+	private Session session = null;
 
 	@Override
 	public MessageContext getMessageContext() {

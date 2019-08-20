@@ -5,17 +5,18 @@ import de.uol.swp.common.user.User;
 import de.uol.swp.common.user.dto.UserDTO;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public class AllUsersResponse extends AbstractResponseMessage {
+public class AllOnlineUsersResponse extends AbstractResponseMessage {
 
     private ArrayList<UserDTO> users = new ArrayList<>();
 
-    public AllUsersResponse(){
-        // neeed for serialization
+    public AllOnlineUsersResponse(){
+        // needed for serialization
     }
 
-    public AllUsersResponse(List<User> users) {
+    public AllOnlineUsersResponse(Collection<User> users) {
         for (User user : users) {
             this.users.add(UserDTO.createWithoutPassword(user));
         }

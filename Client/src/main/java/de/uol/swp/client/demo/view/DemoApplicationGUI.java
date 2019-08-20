@@ -13,7 +13,7 @@ import de.uol.swp.common.user.UserService;
 import de.uol.swp.common.user.dto.UserDTO;
 import de.uol.swp.common.user.message.UserLoggedInMessage;
 import de.uol.swp.common.user.message.UserLoggedOutMessage;
-import de.uol.swp.common.user.response.AllUsersResponse;
+import de.uol.swp.common.user.response.AllOnlineUsersResponse;
 import de.uol.swp.common.user.response.LoginSuccessfulMessage;
 import io.netty.channel.Channel;
 import javafx.application.Application;
@@ -50,16 +50,16 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 	private ObservableList<String> users;
 	private User user;
 
-	Client clientConnection;
+	private Client clientConnection;
 
-	final EventBus eventBus = new EventBus();
+	private final EventBus eventBus = new EventBus();
 
 	// -----------------------------------------------------
 	// Java FX Methods
 	// ----------------------------------------------------
 
 	@Override
-	public void init() throws Exception {
+	public void init() {
 		Parameters p = getParameters();
 		List<String> args = p.getRaw();
 
@@ -79,7 +79,7 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 	}
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		primaryStage.setTitle("SWP Demo Application");
 		clientConnection = new Client(host, port, eventBus);
@@ -87,21 +87,19 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 		// Register this class for events (e.g. for exceptions)
 		eventBus.register(this);
 		// JavaFX Thread should not be blocked to long!
-		Thread t = new Thread() {
-			public void run() {
-				try {
-					clientConnection.start();
-				} catch (Exception e) {
-					exceptionOccured(e.getMessage());
-				}
-			};
-		};
+		Thread t = new Thread(() -> {
+			try {
+				clientConnection.start();
+			} catch (Exception e) {
+				exceptionOccured(e.getMessage());
+			}
+		});
 		t.setDaemon(true);
 		t.start();
 	}
 
 	@Override
-	public void stop() throws Exception {
+	public void stop() {
 		if (userService != null && user != null) {
 			userService.logout(user);
 			user = null;
@@ -139,7 +137,7 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 	}
 
 	@Subscribe
-	public void userList(AllUsersResponse allUsersResponse) {
+	public void userList(AllOnlineUsersResponse allUsersResponse) {
 		LOG.debug("Update of user list "+allUsersResponse.getUsers());
 		updateUsersList(allUsersResponse.getUsers());
 	}
@@ -177,44 +175,33 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 	// JavFX Help methods
 	// -----------------------------------------------------
 
-	public void showServerError(String e) {
-		Platform.runLater(new Runnable() {
-
-			@Override
-			public void run() {
-				Alert a = new Alert(Alert.AlertType.ERROR, "Server returned an error:\n" + e);
-				a.showAndWait();
-			}
+	private void showServerError(String e) {
+		Platform.runLater(() -> {
+			Alert a = new Alert(Alert.AlertType.ERROR, "Server returned an error:\n" + e);
+			a.showAndWait();
 		});
 	}
 
 	private void showLoginErrorScreen() {
-		Platform.runLater(new Runnable() {
-
-			@Override
-			public void run() {
-				Alert alert = new Alert(Alert.AlertType.ERROR, "Error logging in to server");
-				alert.showAndWait();
-				showLoginScreen();
-			}
+		Platform.runLater(() -> {
+			Alert alert = new Alert(Alert.AlertType.ERROR, "Error logging in to server");
+			alert.showAndWait();
+			showLoginScreen();
 		});
 	}
 
 	private void showLobbyScreen() {
 		// Show lobby window
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				primaryStage.setTitle("SWP Demo Application for " + user);
-				if (lobbyScene == null) {
-					GridPane rootPane = new GridPane();
-					lobbyScene = new Scene(rootPane, 800, 600);
-					users = FXCollections.observableArrayList();
-					ListView<String> usersView = new ListView<String>(users);
-					rootPane.add(usersView, 1, 1);
-				}
-				primaryStage.setScene(lobbyScene);
+		Platform.runLater(() -> {
+			primaryStage.setTitle("SWP Demo Application for " + user);
+			if (lobbyScene == null) {
+				GridPane rootPane = new GridPane();
+				lobbyScene = new Scene(rootPane, 800, 600);
+				users = FXCollections.observableArrayList();
+				ListView<String> usersView = new ListView<>(users);
+				rootPane.add(usersView, 1, 1);
 			}
+			primaryStage.setScene(lobbyScene);
 		});
 
 	}
@@ -245,13 +232,9 @@ public class DemoApplicationGUI extends Application implements IConnectionListen
 
 	private void updateUsersList(List<UserDTO> userList) {
 		// Attention: This must be done on the FX Thread!
-		Platform.runLater(new Runnable() {
-
-			@Override
-			public void run() {
-				users.clear();
-				userList.forEach(u -> users.add(u.getUsername()));
-			}
+		Platform.runLater(() -> {
+			users.clear();
+			userList.forEach(u -> users.add(u.getUsername()));
 		});
 	}
 

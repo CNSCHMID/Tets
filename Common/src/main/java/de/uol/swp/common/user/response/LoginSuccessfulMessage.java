@@ -12,7 +12,7 @@ public class LoginSuccessfulMessage extends AbstractResponseMessage {
 
     private static final long serialVersionUID = -9107206137706636541L;
 
-    final User user;
+    private final User user;
 
     public LoginSuccessfulMessage(User user) {
         this.user = user;

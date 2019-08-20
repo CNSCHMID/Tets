@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 public class MyObjectDecoder extends ObjectDecoder {
 
-    static final Logger LOG = LogManager.getLogger(MyObjectDecoder.class);
+    private static final Logger LOG = LogManager.getLogger(MyObjectDecoder.class);
 
     public MyObjectDecoder(ClassResolver classResolver) {
         super(classResolver);
