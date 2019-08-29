@@ -25,7 +25,8 @@ public class UserService implements de.uol.swp.common.user.UserService {
 
 	public UserService(EventBus bus) {
 		this.bus = bus;
-		bus.register(this);
+		// Currently not need, will only post on bus
+		//bus.register(this);
 	}
 
 	@Override
