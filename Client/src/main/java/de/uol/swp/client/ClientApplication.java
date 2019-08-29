@@ -138,11 +138,11 @@ public class ClientApplication extends Application implements IConnectionListene
 		}
 		// Important: Close connection so connection thread can terminate
 		// else client application will not stop
-		System.err.println("Shutting down client ...");
+		LOG.trace("Trying to shutting down client ...");
 		if (clientConnection != null) {
 			clientConnection.close();
 		}
-		System.err.println("Shutting down client done");
+		LOG.info("Client shutdown");
 	}
 
 
