@@ -1,4 +1,4 @@
-package de.uol.swp.client.communication.object;
+package de.uol.swp.client;
 
 import de.uol.swp.common.message.Message;
 import io.netty.channel.ChannelHandlerContext;
@@ -24,7 +24,7 @@ class ClientHandler extends ChannelInboundHandlerAdapter {
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) {
-		System.out.println("Connected to server " + ctx);
+		LOG.debug("Connected to server " + ctx);
 		client.fireConnectionEstablished(ctx.channel());
 	}
 

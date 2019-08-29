@@ -1,14 +1,11 @@
-package de.uol.swp.client.communication.object;
+package de.uol.swp.client;
 
 import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.uol.swp.client.demo.IConnectionListener;
 import de.uol.swp.common.MyObjectDecoder;
-import de.uol.swp.common.message.ExceptionMessage;
-import de.uol.swp.common.message.Message;
-import de.uol.swp.common.message.ResponseMessage;
-import de.uol.swp.common.message.ServerMessage;
+import de.uol.swp.common.message.*;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -41,6 +38,7 @@ public class Client {
 	private final List<IConnectionListener> connectionListener = new CopyOnWriteArrayList<>();
 	private EventLoopGroup group;
 	private final EventBus eventBus;
+	private Channel channel;
 
 	/**
 	 * Create a new connection to a specific port on the given host
@@ -95,6 +93,7 @@ public class Client {
 		for (IConnectionListener listener : connectionListener) {
 			listener.connectionEstablished(channel);
 		}
+		this.channel = channel;
 	}
 
 	public void addConnectionListener(IConnectionListener listener) {
@@ -108,6 +107,16 @@ public class Client {
 			eventBus.post(in);
 		}else{
 			LOG.warn("Can only process ServerMessage and ResponseMessage. Received "+in);
+		}
+	}
+
+	@Subscribe
+	public void sendToServer(RequestMessage message){
+		if (channel != null){
+			channel.writeAndFlush(message);
+		}else{
+			LOG.warn("Some tries to send a message, but server is not connected");
+			// TODO: may create stack trace?
 		}
 	}
 

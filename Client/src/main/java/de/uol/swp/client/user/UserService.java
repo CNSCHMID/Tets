@@ -1,12 +1,13 @@
-package de.uol.swp.client.communication.object;
+package de.uol.swp.client.user;
 
+import com.google.common.eventbus.EventBus;
 import de.uol.swp.common.user.User;
 import de.uol.swp.common.user.request.LoginRequest;
 import de.uol.swp.common.user.request.LogoutRequest;
 import de.uol.swp.common.user.request.RetrieveAllOnlineUsersRequest;
-import io.netty.channel.Channel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -19,43 +20,36 @@ import java.util.List;
 
 public class UserService implements de.uol.swp.common.user.UserService {
 
+	private static final Logger LOG = LogManager.getLogger(UserService.class);
+	private final EventBus bus;
 
-	/**
-	 * The physical connection to the client
-	 */
-	private final Channel client;
-
-	/**
-	 * Creates a new Communication object with the connection information
-	 * @param client
-	 */
-	public UserService(Channel client) {
-		this.client = client;
+	public UserService(EventBus bus) {
+		this.bus = bus;
+		bus.register(this);
 	}
 
 	@Override
 	public User login(String username, String password){
 		LoginRequest msg = new LoginRequest(username, password);
-		sendMessage(msg);
+		bus.post(msg);
 		return null; // asynch call
 	}
 
 	@Override
 	public void logout(User username){
 		LogoutRequest msg = new LogoutRequest();
-		sendMessage(msg);
+		bus.post(msg);
 	}
 
 
 	@Override
 	public List<User> retrieveAllUsers() {
 		RetrieveAllOnlineUsersRequest cmd = new RetrieveAllOnlineUsersRequest();
-		sendMessage(cmd);
+		bus.post(cmd);
 		return null; // asynch call
 	}
 
-	private void sendMessage(Serializable msg) {
-		client.writeAndFlush(msg);
-	}
+
+
 
 }
