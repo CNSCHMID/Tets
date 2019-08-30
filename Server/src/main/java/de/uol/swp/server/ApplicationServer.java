@@ -2,6 +2,8 @@ package de.uol.swp.server;
 
 import com.google.common.eventbus.EventBus;
 import de.uol.swp.server.communication.Server;
+import de.uol.swp.server.usermanagement.AuthenticationService;
+import de.uol.swp.server.usermanagement.UserManagement;
 import de.uol.swp.server.usermanagement.UserService;
 import de.uol.swp.server.usermanagement.store.UserStore;
 import de.uol.swp.server.usermanagement.store.MainMemoryBasedUserStore;
@@ -36,8 +38,10 @@ public class ApplicationServer {
 		userStore.createUser("test2","test2","test2@test.de");
 		userStore.createUser("test3","test3","test3@test.de");
 
-		// create components (linked by eventBus)
-		new UserService(eventBus, userStore);
+		// create components
+		UserManagement userManagement = new UserManagement(userStore);
+		new AuthenticationService(eventBus, userManagement);
+		new UserService(eventBus, userManagement);
 		new Server(port, eventBus).start();
 	}
 	

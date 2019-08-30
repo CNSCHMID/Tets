@@ -14,7 +14,7 @@ public class UserManagement extends AbstractUserManagement {
     private final UserStore userStore;
     private final SortedSet<User> loggedInUsers = new TreeSet<>();
 
-    UserManagement(UserStore userStore){
+    public UserManagement(UserStore userStore){
         this.userStore = userStore;
     }
 

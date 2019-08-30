@@ -28,72 +28,11 @@ import java.util.Map;
  */
 public class UserService {
 
-    private static final Logger LOG = LogManager.getLogger(UserService.class);
-
-    private final EventBus bus;
-
-    /**
-     * The list of current logged in users
-     */
-    final private Map<Session, User> userSessions = new HashMap<>();
-
+    private final EventBus eventBus;
     private final UserManagement userManagement;
 
-    public UserService(EventBus bus, UserStore userStore) {
-        this.userManagement = new UserManagement(userStore);
-        this.bus = bus;
-        bus.register(this);
+    public UserService(EventBus eventBus, UserManagement userManagement) {
+        this.eventBus = eventBus;
+        this.userManagement = userManagement;
     }
-
-    @Subscribe
-    private void onLoginRequest(LoginRequest msg) {
-        if (LOG.isDebugEnabled()){
-            LOG.debug("Got new login message with " + msg.getUsername() + " " + msg.getPassword());
-        }
-        ServerInternalMessage returnMessage;
-        try {
-            User newUser = userManagement.login(msg.getUsername(), msg.getPassword());
-            returnMessage = new ClientAuthorizedMessage(newUser);
-            Session newSession = de.uol.swp.server.communication.Session.create();
-            userSessions.put(newSession,newUser);
-            returnMessage.setSession(newSession);
-        }catch (Exception e){
-            LOG.error(e);
-            returnMessage = new ServerExceptionMessage(new LoginException("Cannot login user "+msg.getUsername()));
-            returnMessage.setSession(msg.getSession());
-        }
-        returnMessage.setMessageContext(msg.getMessageContext());
-        bus.post(returnMessage);
-    }
-
-    @Subscribe
-    private void onLogoutRequest(LogoutRequest msg) {
-        User userToLogOut = userSessions.get(msg.getSession());
-
-        // Could be already logged out
-        if (userToLogOut != null){
-
-            if (LOG.isDebugEnabled()){
-                LOG.debug("Logging out user " + userToLogOut.getUsername());
-            }
-
-            userManagement.logout(userToLogOut);
-            userSessions.remove(msg.getSession());
-
-            // TODO: do we need to handle this message in Server, too?
-            ServerMessage returnMessage = new UserLoggedOutMessage(userToLogOut.getUsername());
-            bus.post(returnMessage);
-        }
-
-
-
-    }
-
-    @Subscribe
-    private void onRetrieveAllOnlineUsersRequest(RetrieveAllOnlineUsersRequest msg){
-        AllOnlineUsersResponse response = new AllOnlineUsersResponse(userSessions.values());
-        response.initWithMessage(msg);
-        bus.post(response);
-    }
-
 }

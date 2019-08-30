@@ -46,5 +46,11 @@
             <version>11</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.jfoenix</groupId>
+            <artifactId>jfoenix</artifactId>
+            <version>9.0.8</version>
+        </dependency>
+
     </dependencies>
 </project>
