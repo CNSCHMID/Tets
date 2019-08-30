@@ -1,9 +1,9 @@
 package de.uol.swp.common.user.message;
 
+import de.uol.swp.common.message.AbstractServerMessage;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import de.uol.swp.common.message.AbstractServerMessage;
 
 /**
  * A message containing all current logged in usernames
