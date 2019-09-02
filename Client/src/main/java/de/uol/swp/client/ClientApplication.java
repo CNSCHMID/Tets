@@ -4,7 +4,7 @@ import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.uol.swp.client.demo.IConnectionListener;
-import de.uol.swp.client.user.LobbyPresenter;
+import de.uol.swp.client.user.MainPresenter;
 import de.uol.swp.client.user.LoginPresenter;
 import de.uol.swp.common.message.ExceptionMessage;
 import de.uol.swp.common.user.User;
@@ -118,7 +118,7 @@ public class ClientApplication extends Application implements IConnectionListene
 
 	private void initLobbyView() {
 		if (lobbyScene == null) {
-			Parent rootPane = initPresenter(LobbyPresenter.fxml);
+			Parent rootPane = initPresenter(MainPresenter.fxml);
 			lobbyScene = new Scene(rootPane, 800, 600);
 		}
 	}

@@ -17,11 +17,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-public class LobbyPresenter extends AbstractPresenter {
+public class MainPresenter extends AbstractPresenter {
 
-    public static final String fxml = "/fxml/LobbyView.fxml";
+    public static final String fxml = "/fxml/MainView.fxml";
 
-    private static final Logger LOG = LogManager.getLogger(LobbyPresenter.class);
+    private static final Logger LOG = LogManager.getLogger(MainPresenter.class);
 
     private EventBus eventBus;
     private ObservableList<String> users;
