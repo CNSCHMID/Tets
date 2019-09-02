@@ -2,9 +2,7 @@ package de.uol.swp.client.user;
 
 import com.google.common.eventbus.EventBus;
 import de.uol.swp.common.user.User;
-import de.uol.swp.common.user.request.LoginRequest;
-import de.uol.swp.common.user.request.LogoutRequest;
-import de.uol.swp.common.user.request.RetrieveAllOnlineUsersRequest;
+import de.uol.swp.common.user.request.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,6 +38,19 @@ public class UserService implements de.uol.swp.common.user.UserService {
 	public void logout(User username){
 		LogoutRequest msg = new LogoutRequest();
 		bus.post(msg);
+	}
+
+	@Override
+	public User createUser(User user) {
+		RegisterUserRequest request = new RegisterUserRequest(user);
+		bus.post(request);
+		return null;
+	}
+
+	@Override
+	public User updateUser(User user) {
+		UpdateUserRequest request = new UpdateUserRequest(user);
+		return null;
 	}
 
 

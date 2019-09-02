@@ -29,6 +29,7 @@ public class UserManagement extends AbstractUserManagement {
         }
     }
 
+    @Override
     public User createUser(User userToCreate){
         Optional<User> user = userStore.findUser(userToCreate.getUsername());
         if (user.isPresent()){
@@ -37,6 +38,7 @@ public class UserManagement extends AbstractUserManagement {
         return userStore.createUser(userToCreate.getUsername(), userToCreate.getPassword(), userToCreate.getEMail());
     }
 
+    @Override
     public User updateUser(User userToUpdate){
         Optional<User> user = userStore.findUser(userToUpdate.getUsername());
         if (user.isEmpty()){

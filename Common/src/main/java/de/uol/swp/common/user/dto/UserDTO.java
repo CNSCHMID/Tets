@@ -50,4 +50,17 @@ public class UserDTO implements User {
     public int compareTo(User o) {
         return username.compareTo(o.getUsername());
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (! (obj instanceof UserDTO)){
+            return false;
+        }
+        return Objects.equals(this.username, ((UserDTO)obj).username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(username);
+    }
 }

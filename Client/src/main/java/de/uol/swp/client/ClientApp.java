@@ -4,12 +4,17 @@ import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.uol.swp.client.demo.IConnectionListener;
-import de.uol.swp.client.user.MainPresenter;
 import de.uol.swp.client.user.LoginPresenter;
+import de.uol.swp.client.user.MainPresenter;
+import de.uol.swp.client.user.RegistrationPresenter;
 import de.uol.swp.common.message.ExceptionMessage;
 import de.uol.swp.common.user.User;
 import de.uol.swp.common.user.UserService;
+import de.uol.swp.common.user.exception.RegistrationExceptionMessage;
 import de.uol.swp.common.user.response.LoginSuccessfulMessage;
+import de.uol.swp.common.user.response.RegistrationSuccessfulEvent;
+import events.ShowLoginViewEvent;
+import events.ShowRegistrationViewEvent;
 import io.netty.channel.Channel;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -26,9 +31,9 @@ import java.util.List;
 
 // TODO: MVC
 
-public class ClientApplication extends Application implements IConnectionListener {
+public class ClientApp extends Application implements IConnectionListener {
 
-	private static final Logger LOG = LogManager.getLogger(ClientApplication.class);
+	private static final Logger LOG = LogManager.getLogger(ClientApp.class);
 
 	private String host;
 	private int port;
@@ -37,7 +42,8 @@ public class ClientApplication extends Application implements IConnectionListene
 
 	private Stage primaryStage;
 	private Scene loginScene;
-	private Scene lobbyScene;
+	private Scene registrationScene;
+	private Scene mainScene;
 	private User user;
 
 	private Client clientConnection;
@@ -99,7 +105,8 @@ public class ClientApplication extends Application implements IConnectionListene
 
 	private void initViews() {
 		initLoginView();
-		initLobbyView();
+		initMainView();
+		initRegistrationView();
 	}
 
 	private Parent initPresenter(String fxmlFile) {
@@ -116,17 +123,24 @@ public class ClientApplication extends Application implements IConnectionListene
 		return rootPane;
 	}
 
-	private void initLobbyView() {
-		if (lobbyScene == null) {
+	private void initMainView() {
+		if (mainScene == null) {
 			Parent rootPane = initPresenter(MainPresenter.fxml);
-			lobbyScene = new Scene(rootPane, 800, 600);
+			mainScene = new Scene(rootPane, 800, 600);
 		}
 	}
 
 	private void initLoginView() {
 		if (loginScene == null) {
 			Parent rootPane = initPresenter(LoginPresenter.fxml);
-			loginScene = new Scene(rootPane, 600, 200);
+			loginScene = new Scene(rootPane, 400, 200);
+		}
+	}
+
+	private void initRegistrationView(){
+		if (registrationScene == null){
+			Parent rootPane = initPresenter(RegistrationPresenter.fxml);
+			registrationScene = new Scene(rootPane, 400,200);
 		}
 	}
 
@@ -147,13 +161,35 @@ public class ClientApplication extends Application implements IConnectionListene
 
 
 	@Subscribe
-	public void userLoggedIn(LoginSuccessfulMessage message) {
-		LOG.debug("user logged in sucessfully "+message.getUser().getUsername());
-		this.user = message.getUser();
-		showLobbyScreen();
+	public void onShowRegistrationViewEvent(ShowRegistrationViewEvent event){
+		showRegistrationScreen();
 	}
 
 	@Subscribe
+	public void onShowLoginViewEvent(ShowLoginViewEvent event){
+		showLoginScreen();
+	}
+
+	//
+	@Subscribe
+	public void userLoggedIn(LoginSuccessfulMessage message) {
+		LOG.debug("user logged in sucessfully "+message.getUser().getUsername());
+		this.user = message.getUser();
+		showMainScreen();
+	}
+
+	@Subscribe
+	public void onRegistrationExceptionMessage(RegistrationExceptionMessage message){
+		LOG.error("Registation error "+message);
+	}
+
+	@Subscribe
+	public void onRegistrationSuccessfulMessage(RegistrationSuccessfulEvent message){
+		LOG.info("Registration successful.");
+		showLoginScreen();
+	}
+
+											   @Subscribe
 	public void serverException(ExceptionMessage message){
 		showServerError(message.getException());
 	}
@@ -189,11 +225,11 @@ public class ClientApplication extends Application implements IConnectionListene
 		});
 	}
 
-	private void showLobbyScreen() {
+	private void showMainScreen() {
 		// Show lobby window
 		Platform.runLater(() -> {
 			primaryStage.setTitle("SWP Demo Application for " + user.getUsername());
-			primaryStage.setScene(lobbyScene);
+			primaryStage.setScene(mainScene);
 		});
 
 	}
@@ -206,8 +242,18 @@ public class ClientApplication extends Application implements IConnectionListene
 				primaryStage.show();
 			}
 		});
-
 	}
+
+	private void showRegistrationScreen() {
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				primaryStage.setScene(registrationScene);
+				primaryStage.show();
+			}
+		});
+	}
+
 
 	public static void main(String[] args) {
 		launch(args);

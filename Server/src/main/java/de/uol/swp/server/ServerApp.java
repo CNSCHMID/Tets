@@ -11,9 +11,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @SuppressWarnings("UnstableApiUsage")
-public class ApplicationServer {
+public class ServerApp {
 
-	private static final Logger LOG = LogManager.getLogger(ApplicationServer.class);
+	private static final Logger LOG = LogManager.getLogger(ServerApp.class);
 	
 	public static void main(String[] args) throws Exception {
 		int port = - 1;

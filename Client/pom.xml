@@ -21,7 +21,7 @@
                         <source>11</source>
                         <target>11</target>
                         <release>11</release>
-                        <mainClass>de.uol.swp.client.ClientApplication</mainClass>
+                        <mainClass>de.uol.swp.client.ClientApp</mainClass>
                     </configuration>
                 </plugin>
         </plugins>

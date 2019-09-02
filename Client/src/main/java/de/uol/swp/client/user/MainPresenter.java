@@ -1,6 +1,5 @@
 package de.uol.swp.client.user;
 
-import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.uol.swp.client.AbstractPresenter;
 import de.uol.swp.common.user.dto.UserDTO;
@@ -23,7 +22,6 @@ public class MainPresenter extends AbstractPresenter {
 
     private static final Logger LOG = LogManager.getLogger(MainPresenter.class);
 
-    private EventBus eventBus;
     private ObservableList<String> users;
 
     @FXML

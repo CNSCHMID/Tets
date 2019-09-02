@@ -25,6 +25,22 @@ public interface UserService {
 	void logout(User user);
 
 	/**
+	 * Create a new persistent user
+	 * @param user The user to create
+	 * @return the new created user
+	 */
+	User createUser(User user);
+
+	/**
+	 * Update a user
+	 * @param user the user object containing all infos to
+	 *             update, if some values are not set (e.g. password)
+	 *             these fields are not updated
+	 * @return the updated user object
+	 */
+	User updateUser(User user);
+
+	/**
 	 * Retrieve the list of all current logged in users
 	 * @return a list of users
 	 */

@@ -1,9 +1,9 @@
 package de.uol.swp.client.user;
 
 import de.uol.swp.client.AbstractPresenter;
+import events.ShowRegistrationViewEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.apache.logging.log4j.LogManager;
@@ -14,10 +14,8 @@ public class LoginPresenter extends AbstractPresenter {
     private static final Logger LOG = LogManager.getLogger(LoginPresenter.class);
 
     public static final String fxml = "/fxml/LoginView.fxml";
-    public Button registerButton;
 
-    @FXML
-    private Button loginButton;
+    private static final ShowRegistrationViewEvent showRegViewMessage = new ShowRegistrationViewEvent();
 
     @FXML
     private PasswordField passwordField;
@@ -32,6 +30,6 @@ public class LoginPresenter extends AbstractPresenter {
 
     @FXML
     private void onRegisterButtonPressed(ActionEvent event) {
-
+        eventBus.post(showRegViewMessage);
     }
 }
