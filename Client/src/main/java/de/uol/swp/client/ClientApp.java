@@ -4,29 +4,18 @@ import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.uol.swp.client.demo.IConnectionListener;
-import de.uol.swp.client.user.LoginPresenter;
-import de.uol.swp.client.user.MainPresenter;
-import de.uol.swp.client.user.RegistrationPresenter;
 import de.uol.swp.common.message.ExceptionMessage;
 import de.uol.swp.common.user.User;
 import de.uol.swp.common.user.UserService;
 import de.uol.swp.common.user.exception.RegistrationExceptionMessage;
 import de.uol.swp.common.user.response.LoginSuccessfulMessage;
 import de.uol.swp.common.user.response.RegistrationSuccessfulEvent;
-import events.ShowLoginViewEvent;
-import events.ShowRegistrationViewEvent;
 import io.netty.channel.Channel;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
 import java.util.List;
 
 // TODO: MVC
@@ -40,15 +29,13 @@ public class ClientApp extends Application implements IConnectionListener {
 
 	private UserService userService;
 
-	private Stage primaryStage;
-	private Scene loginScene;
-	private Scene registrationScene;
-	private Scene mainScene;
 	private User user;
 
 	private Client clientConnection;
 
 	private final EventBus eventBus = new EventBus();
+
+	private SceneManager sceneManager;
 
 	// -----------------------------------------------------
 	// Java FX Methods
@@ -70,8 +57,6 @@ public class ClientApp extends Application implements IConnectionListener {
 		}
 
 		this.userService = new de.uol.swp.client.user.UserService(eventBus);
-		// init views after userService is available
-		initViews();
 
 		// do not establish connection here
 		// if connection is established in this stage, no GUI is shown and
@@ -80,11 +65,10 @@ public class ClientApp extends Application implements IConnectionListener {
 
 	@Override
 	public void start(Stage primaryStage) {
-		this.primaryStage = primaryStage;
-		primaryStage.setTitle("SWP Demo Application");
+		this.sceneManager = new SceneManager(primaryStage, eventBus, userService);
 		clientConnection = new Client(host, port, eventBus);
 		clientConnection.addConnectionListener(this);
-		// Register this class for events (e.g. for exceptions)
+		// Register this class for de.uol.swp.client.events (e.g. for exceptions)
 		eventBus.register(this);
 		// JavaFX Thread should not be blocked to long!
 		Thread t = new Thread(() -> {
@@ -100,49 +84,10 @@ public class ClientApp extends Application implements IConnectionListener {
 
 	@Override
 	public void connectionEstablished(Channel ch) {
-		showLoginScreen();
+		sceneManager.showLoginScreen();
 	}
 
-	private void initViews() {
-		initLoginView();
-		initMainView();
-		initRegistrationView();
-	}
 
-	private Parent initPresenter(String fxmlFile) {
-		Parent rootPane;
-		FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-		try {
-			rootPane = loader.load();
-		} catch (IOException e) {
-			throw new RuntimeException("Could not load View!");
-		}
-		AbstractPresenter presenter = loader.getController();
-		presenter.setEventBus(eventBus);
-		presenter.setUserService(userService);
-		return rootPane;
-	}
-
-	private void initMainView() {
-		if (mainScene == null) {
-			Parent rootPane = initPresenter(MainPresenter.fxml);
-			mainScene = new Scene(rootPane, 800, 600);
-		}
-	}
-
-	private void initLoginView() {
-		if (loginScene == null) {
-			Parent rootPane = initPresenter(LoginPresenter.fxml);
-			loginScene = new Scene(rootPane, 400, 200);
-		}
-	}
-
-	private void initRegistrationView(){
-		if (registrationScene == null){
-			Parent rootPane = initPresenter(RegistrationPresenter.fxml);
-			registrationScene = new Scene(rootPane, 400,200);
-		}
-	}
 
 	@Override
 	public void stop() {
@@ -159,39 +104,29 @@ public class ClientApp extends Application implements IConnectionListener {
 		LOG.info("Client shutdown");
 	}
 
-
-	@Subscribe
-	public void onShowRegistrationViewEvent(ShowRegistrationViewEvent event){
-		showRegistrationScreen();
-	}
-
-	@Subscribe
-	public void onShowLoginViewEvent(ShowLoginViewEvent event){
-		showLoginScreen();
-	}
-
 	//
 	@Subscribe
 	public void userLoggedIn(LoginSuccessfulMessage message) {
 		LOG.debug("user logged in sucessfully "+message.getUser().getUsername());
 		this.user = message.getUser();
-		showMainScreen();
+		sceneManager.showMainScreen(user);
 	}
 
 	@Subscribe
 	public void onRegistrationExceptionMessage(RegistrationExceptionMessage message){
+		sceneManager.showServerError("Registation error "+message);
 		LOG.error("Registation error "+message);
 	}
 
 	@Subscribe
 	public void onRegistrationSuccessfulMessage(RegistrationSuccessfulEvent message){
 		LOG.info("Registration successful.");
-		showLoginScreen();
+		sceneManager.showLoginScreen();
 	}
 
 											   @Subscribe
 	public void serverException(ExceptionMessage message){
-		showServerError(message.getException());
+		sceneManager.showServerError(message.getException());
 	}
 
 	@Subscribe
@@ -201,7 +136,7 @@ public class ClientApp extends Application implements IConnectionListener {
 
 	@Override
 	public void exceptionOccured(String e) {
-		showServerError(e);
+		sceneManager.showServerError(e);
 	}
 
 
@@ -209,50 +144,6 @@ public class ClientApp extends Application implements IConnectionListener {
 	// -----------------------------------------------------
 	// JavFX Help methods
 	// -----------------------------------------------------
-
-	private void showServerError(String e) {
-		Platform.runLater(() -> {
-			Alert a = new Alert(Alert.AlertType.ERROR, "Server returned an error:\n" + e);
-			a.showAndWait();
-		});
-	}
-
-	private void showLoginErrorScreen() {
-		Platform.runLater(() -> {
-			Alert alert = new Alert(Alert.AlertType.ERROR, "Error logging in to server");
-			alert.showAndWait();
-			showLoginScreen();
-		});
-	}
-
-	private void showMainScreen() {
-		// Show lobby window
-		Platform.runLater(() -> {
-			primaryStage.setTitle("SWP Demo Application for " + user.getUsername());
-			primaryStage.setScene(mainScene);
-		});
-
-	}
-
-	private void showLoginScreen() {
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				primaryStage.setScene(loginScene);
-				primaryStage.show();
-			}
-		});
-	}
-
-	private void showRegistrationScreen() {
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				primaryStage.setScene(registrationScene);
-				primaryStage.show();
-			}
-		});
-	}
 
 
 	public static void main(String[] args) {
