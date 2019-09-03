@@ -1,4 +1,4 @@
-package de.uol.swp.client.user;
+package de.uol.swp.client.main;
 
 import com.google.common.eventbus.Subscribe;
 import de.uol.swp.client.AbstractPresenter;

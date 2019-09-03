@@ -1,4 +1,4 @@
-package de.uol.swp.client.demo;
+package de.uol.swp.client;
 
 import io.netty.channel.Channel;
 

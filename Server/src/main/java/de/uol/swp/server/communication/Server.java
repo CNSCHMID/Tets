@@ -112,7 +112,7 @@ public class Server implements ServerHandlerDelegate {
 		try {
 			msg.setMessageContext(new NettyMessageContext(ctx));
 
-			// check if msg requires login and append session if available
+			// check if msg requires auth and append session if available
 			if (msg.authorizationNeeded() ) {
 				if (getSession(ctx).isEmpty()) {
 					throw new SecurityException("Authorization required. Client not logged in!");

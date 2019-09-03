@@ -1,4 +1,4 @@
-package de.uol.swp.client.events;
+package de.uol.swp.client.register.event;
 
 public class RegistrationCanceledEvent {
 }

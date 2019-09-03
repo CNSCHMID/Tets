@@ -1,9 +1,9 @@
-package de.uol.swp.client.user;
+package de.uol.swp.client.register;
 
 import com.google.common.base.Strings;
 import de.uol.swp.client.AbstractPresenter;
-import de.uol.swp.client.events.RegistationErrorEvent;
-import de.uol.swp.client.events.RegistrationCanceledEvent;
+import de.uol.swp.client.register.event.RegistationErrorEvent;
+import de.uol.swp.client.register.event.RegistrationCanceledEvent;
 import de.uol.swp.common.user.dto.UserDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -46,7 +46,7 @@ public class AuthenticationService {
     @Subscribe
     public void onLoginRequest(LoginRequest msg) {
         if (LOG.isDebugEnabled()){
-            LOG.debug("Got new login message with " + msg.getUsername() + " " + msg.getPassword());
+            LOG.debug("Got new auth message with " + msg.getUsername() + " " + msg.getPassword());
         }
         ServerInternalMessage returnMessage;
         try {
@@ -57,7 +57,7 @@ public class AuthenticationService {
             returnMessage.setSession(newSession);
         }catch (Exception e){
             LOG.error(e);
-            returnMessage = new ServerExceptionMessage(new LoginException("Cannot login user "+msg.getUsername()));
+            returnMessage = new ServerExceptionMessage(new LoginException("Cannot auth user " + msg.getUsername()));
             returnMessage.setSession(msg.getSession());
         }
         returnMessage.setMessageContext(msg.getMessageContext());

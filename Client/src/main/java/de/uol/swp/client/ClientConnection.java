@@ -3,7 +3,6 @@ package de.uol.swp.client;
 import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import de.uol.swp.client.demo.ConnectionListener;
 import de.uol.swp.common.MyObjectDecoder;
 import de.uol.swp.common.message.*;
 import io.netty.bootstrap.Bootstrap;

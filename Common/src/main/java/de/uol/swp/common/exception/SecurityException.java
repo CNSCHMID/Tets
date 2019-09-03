@@ -1,7 +1,7 @@
 package de.uol.swp.common.exception;
 
 /**
- * Exception to state e.g. that a login is required
+ * Exception to state e.g. that a auth is required
  * @author Marco Grawunder
  *
  */

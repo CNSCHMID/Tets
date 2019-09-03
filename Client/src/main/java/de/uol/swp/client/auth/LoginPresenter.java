@@ -1,7 +1,7 @@
-package de.uol.swp.client.user;
+package de.uol.swp.client.auth;
 
 import de.uol.swp.client.AbstractPresenter;
-import de.uol.swp.client.events.ShowRegistrationViewEvent;
+import de.uol.swp.client.register.event.ShowRegistrationViewEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;

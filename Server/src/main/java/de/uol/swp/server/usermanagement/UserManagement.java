@@ -25,7 +25,7 @@ public class UserManagement extends AbstractUserManagement {
             this.loggedInUsers.add(user.get());
             return user.get();
         }else{
-            throw new SecurityException("Cannot login user "+username);
+            throw new SecurityException("Cannot auth user " + username);
         }
     }
 
