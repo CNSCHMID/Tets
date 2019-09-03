@@ -2,7 +2,7 @@ package de.uol.swp.client.demo;
 
 import io.netty.channel.Channel;
 
-public interface IConnectionListener {
+public interface ConnectionListener {
 
 	/**
 	 * Is called when the connection to the server has been established

@@ -8,9 +8,9 @@
     </parent>
     <version>project.parent.version</version>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>client</artifactId>
+    <artifactId>clientConnection</artifactId>
     <packaging>jar</packaging>
-    <name>client</name>
+    <name>clientConnection</name>
     <build>
         <plugins>
                  <plugin>
@@ -21,7 +21,7 @@
                         <source>11</source>
                         <target>11</target>
                         <release>11</release>
-                        <mainClass>de.uol.swp.client.ClientApp</mainClass>
+                        <mainClass>de.uol.swp.clientConnection.ClientApp</mainClass>
                     </configuration>
                 </plugin>
         </plugins>

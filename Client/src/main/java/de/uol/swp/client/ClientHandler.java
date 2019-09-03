@@ -16,22 +16,22 @@ class ClientHandler extends ChannelInboundHandlerAdapter {
 
 	private static final Logger LOG = LogManager.getLogger(ClientHandler.class);
 
-	private final Client client;
+	private final ClientConnection clientConnection;
 
-	ClientHandler(Client client) {
-		this.client = client;
+	ClientHandler(ClientConnection clientConnection) {
+		this.clientConnection = clientConnection;
 	}
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) {
 		LOG.debug("Connected to server " + ctx);
-		client.fireConnectionEstablished(ctx.channel());
+		clientConnection.fireConnectionEstablished(ctx.channel());
 	}
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object in) {
 		if (in instanceof Message) {
-			client.receivedMessage((Message) in);
+			clientConnection.receivedMessage((Message) in);
 		}else{
 			LOG.error("Illegal Object read from channel. Ignored!");
 		}
@@ -40,7 +40,7 @@ class ClientHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 		LOG.error(cause);
-		client.process(cause);
+		clientConnection.process(cause);
 		ctx.close();
 	}
 }

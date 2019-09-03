@@ -3,7 +3,7 @@ package de.uol.swp.client;
 import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import de.uol.swp.client.demo.IConnectionListener;
+import de.uol.swp.client.demo.ConnectionListener;
 import de.uol.swp.common.MyObjectDecoder;
 import de.uol.swp.common.message.*;
 import io.netty.bootstrap.Bootstrap;
@@ -24,18 +24,18 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * The Client Connection class
+ * The ClientConnection Connection class
  * @author Marco Grawunder
  *
  */
 
-class Client {
+class ClientConnection {
 
-	private static final Logger LOG = LogManager.getLogger(Client.class);
+	private static final Logger LOG = LogManager.getLogger(ClientConnection.class);
 
 	private final String host;
 	private final int port;
-	private final List<IConnectionListener> connectionListener = new CopyOnWriteArrayList<>();
+	private final List<ConnectionListener> connectionListener = new CopyOnWriteArrayList<>();
 	private EventLoopGroup group;
 	private final EventBus eventBus;
 	private Channel channel;
@@ -46,7 +46,7 @@ class Client {
 	 * @param port The server port to connect to
 	 * @param eventBus for handling messages
 	 */
-	public Client(String host, int port, EventBus eventBus) {
+	public ClientConnection(String host, int port, EventBus eventBus) {
 		this.host = host;
 		this.port = port;
 		this.eventBus = eventBus;
@@ -70,7 +70,7 @@ class Client {
 							ch.pipeline().addLast(new ObjectEncoder());
 							ch.pipeline().addLast(new MyObjectDecoder(ClassResolvers.cacheDisabled(null)));
 							// Add a client handler
-							ch.pipeline().addLast(new ClientHandler(Client.this));
+							ch.pipeline().addLast(new ClientHandler(ClientConnection.this));
 						}
 					});
 			ChannelFuture f = b.connect().sync();
@@ -90,13 +90,13 @@ class Client {
 
 
 	void fireConnectionEstablished(Channel channel) {
-		for (IConnectionListener listener : connectionListener) {
+		for (ConnectionListener listener : connectionListener) {
 			listener.connectionEstablished(channel);
 		}
 		this.channel = channel;
 	}
 
-	public void addConnectionListener(IConnectionListener listener) {
+	public void addConnectionListener(ConnectionListener listener) {
 		this.connectionListener.add(listener);
 	}
 
@@ -122,7 +122,7 @@ class Client {
 
 	@Subscribe
 	public void process(ExceptionMessage message) {
-		for (IConnectionListener l:connectionListener){
+		for (ConnectionListener l : connectionListener) {
 			l.exceptionOccured(message.getException());
 		}
 	}
@@ -133,7 +133,7 @@ class Client {
 	}
 
 	public void process(Throwable message) {
-		for (IConnectionListener l:connectionListener){
+		for (ConnectionListener l : connectionListener) {
 			l.exceptionOccured(message.getMessage());
 		}
 	}

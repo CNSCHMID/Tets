@@ -3,7 +3,7 @@ package de.uol.swp.client;
 import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import de.uol.swp.client.demo.IConnectionListener;
+import de.uol.swp.client.demo.ConnectionListener;
 import de.uol.swp.common.user.User;
 import de.uol.swp.common.user.UserService;
 import de.uol.swp.common.user.exception.RegistrationExceptionMessage;
@@ -17,7 +17,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-public class ClientApp extends Application implements IConnectionListener {
+public class ClientApp extends Application implements ConnectionListener {
 
 	private static final Logger LOG = LogManager.getLogger(ClientApp.class);
 
@@ -28,7 +28,7 @@ public class ClientApp extends Application implements IConnectionListener {
 
 	private User user;
 
-	private Client clientConnection;
+	private ClientConnection clientConnection;
 
 	private final EventBus eventBus = new EventBus();
 
@@ -46,7 +46,7 @@ public class ClientApp extends Application implements IConnectionListener {
 		if (args.size() != 2) {
 			host = "localhost";
 			port = 8889;
-			System.err.println("Usage: " + Client.class.getSimpleName() + " host port");
+			System.err.println("Usage: " + ClientConnection.class.getSimpleName() + " host port");
 			System.err.println("Using default port " + port + " on " + host);
 		} else {
 			host = args.get(0);
@@ -63,7 +63,7 @@ public class ClientApp extends Application implements IConnectionListener {
 	@Override
 	public void start(Stage primaryStage) {
 		this.sceneManager = new SceneManager(primaryStage, eventBus, userService);
-		clientConnection = new Client(host, port, eventBus);
+		clientConnection = new ClientConnection(host, port, eventBus);
 		clientConnection.addConnectionListener(this);
 		// Register this class for de.uol.swp.client.events (e.g. for exceptions)
 		eventBus.register(this);
@@ -98,7 +98,7 @@ public class ClientApp extends Application implements IConnectionListener {
 		if (clientConnection != null) {
 			clientConnection.close();
 		}
-		LOG.info("Client shutdown");
+		LOG.info("ClientConnection shutdown");
 	}
 
 	//

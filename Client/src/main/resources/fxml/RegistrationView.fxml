@@ -3,7 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="196.0" prefWidth="407.0"
-            xmlns="http://javafx.com/javafx/11.0.1" fx:controller="de.uol.swp.client.user.RegistrationPresenter">
+            xmlns="http://javafx.com/javafx/11.0.1"
+            fx:controller="de.uol.swp.client.user.RegistrationPresenter">
     <Label layoutX="43.0" layoutY="17.0" text="Login"/>
     <TextField id="loginField" fx:id="loginField" layoutX="142.0" layoutY="12.0" promptText="Enter Login">
         <tooltip>
