@@ -47,6 +47,7 @@ class MainMemoryBasedUserStoreTest {
         // assert
         assertTrue(userFound.isPresent());
         assertEquals(userToCreate, userFound.get());
+        assertNull(userFound.get().getPassword());
     }
 
     @Test
@@ -69,6 +70,7 @@ class MainMemoryBasedUserStoreTest {
 
         assertTrue(userFound.isPresent());
         assertEquals(userToCreate, userFound.get());
+        assertNull(userFound.get().getPassword());
     }
 
     @Test
