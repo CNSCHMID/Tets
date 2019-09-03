@@ -9,8 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MainMemoryBasedUserStoreTest {
 
@@ -119,8 +118,9 @@ class MainMemoryBasedUserStoreTest {
         List<UserDTO> allUsers = getDefaultUsers();
 
         List<User> allUsersFromStore = store.getAllUsers();
-        Collections.sort(allUsersFromStore);
 
+        assertNull(allUsers.get(0).getPassword());
+        Collections.sort(allUsersFromStore);
         assertEquals(allUsers, allUsersFromStore);
     }
 }
