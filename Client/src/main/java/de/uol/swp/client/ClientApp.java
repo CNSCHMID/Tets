@@ -4,7 +4,6 @@ import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.uol.swp.client.demo.IConnectionListener;
-import de.uol.swp.common.message.ExceptionMessage;
 import de.uol.swp.common.user.User;
 import de.uol.swp.common.user.UserService;
 import de.uol.swp.common.user.exception.RegistrationExceptionMessage;
@@ -17,8 +16,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
-
-// TODO: MVC
 
 public class ClientApp extends Application implements IConnectionListener {
 
@@ -122,11 +119,6 @@ public class ClientApp extends Application implements IConnectionListener {
 	public void onRegistrationSuccessfulMessage(RegistrationSuccessfulEvent message){
 		LOG.info("Registration successful.");
 		sceneManager.showLoginScreen();
-	}
-
-											   @Subscribe
-	public void serverException(ExceptionMessage message){
-		sceneManager.showServerError(message.getException());
 	}
 
 	@Subscribe

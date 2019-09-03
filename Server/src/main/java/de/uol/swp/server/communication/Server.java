@@ -129,7 +129,7 @@ public class Server implements ServerHandlerDelegate {
 
 	@Subscribe
 	private void onServerException(ServerExceptionMessage msg){
-		Optional<ChannelHandlerContext> ctx = getCtx(msg.getSession());
+		Optional<ChannelHandlerContext> ctx = getCtx(msg);
 		LOG.error(msg.getException());
 		ctx.ifPresent(channelHandlerContext -> sendToClient(channelHandlerContext, new ExceptionMessage(msg.getException().getMessage())));
 	}
