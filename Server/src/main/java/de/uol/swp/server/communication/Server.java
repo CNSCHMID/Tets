@@ -173,7 +173,7 @@ public class Server implements ServerHandlerDelegate {
 			sendToClient(ctx.get(), new LoginSuccessfulMessage(msg.getUser()));
 			sendToAll(new UserLoggedInMessage(msg.getUser().getUsername()));
 		}else{
-			// TODO: Warning
+			LOG.warn("No context for "+msg);
 		}
 	}
 

@@ -13,9 +13,9 @@
     <PasswordField id="passwordField" fx:id="passwordField1" layoutX="142.0" layoutY="48.0" promptText="Enter Password"/>
     <PasswordField id="passwordField" fx:id="passwordField2" layoutX="142.0" layoutY="85.0"
                    promptText="Repeat Password"/>
-    <Button id="registerButton" fx:id="registerButton" defaultButton="true"  layoutX="112.0" layoutY="133.0" mnemonicParsing="false"
+    <Button id="registerButton" defaultButton="true"  layoutX="112.0" layoutY="133.0" mnemonicParsing="false"
             onAction="#onRegisterButtonPressed" text="Register"/>
-    <Button id="cancelButton" fx:id="cancelButton" layoutX="203.0" layoutY="133.0"
+    <Button id="cancelButton" layoutX="203.0" layoutY="133.0"
             mnemonicParsing="false" onAction="#onCancelButtonPressed" text="Cancel"/>
 
     <Label layoutX="44.0" layoutY="53.0" text="Password"/>

@@ -29,7 +29,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  *
  */
 
-public class Client {
+class Client {
 
 	private static final Logger LOG = LogManager.getLogger(Client.class);
 
@@ -128,7 +128,7 @@ public class Client {
 	}
 
 	@Subscribe
-	private void handleEventBusError(DeadEvent deadEvent){
+	public void handleEventBusError(DeadEvent deadEvent){
 		LOG.warn("DeadEvent detected "+deadEvent);
 	}
 

@@ -9,7 +9,7 @@ package de.uol.swp.common.message;
 public class ExceptionMessage extends AbstractResponseMessage{
 
 	private static final long serialVersionUID = -7739395567707525535L;
-	private String exception;
+	private final String exception;
 	
 	public ExceptionMessage(String message){
 		this.exception = message;

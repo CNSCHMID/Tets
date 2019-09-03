@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class SceneManager {
+class SceneManager {
 
     final private Stage primaryStage;
     final private EventBus eventBus;
@@ -122,12 +122,9 @@ public class SceneManager {
     private void showScene(final Scene scene){
         this.lastScene = currentScene;
         this.currentScene = scene;
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                primaryStage.setScene(scene);
-                primaryStage.show();
-            }
+        Platform.runLater(() -> {
+            primaryStage.setScene(scene);
+            primaryStage.show();
         });
     }
 
@@ -141,6 +138,9 @@ public class SceneManager {
 
     public void showMainScreen(User currentUser) {
         this.currentUser = currentUser;
+        Platform.runLater(() -> {
+            primaryStage.setTitle("Welcome "+currentUser.getUsername());
+        });
         showScene(mainScene);
     }
 

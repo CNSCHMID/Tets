@@ -44,7 +44,7 @@ public class AuthenticationService {
     }
 
     @Subscribe
-    private void onLoginRequest(LoginRequest msg) {
+    public void onLoginRequest(LoginRequest msg) {
         if (LOG.isDebugEnabled()){
             LOG.debug("Got new login message with " + msg.getUsername() + " " + msg.getPassword());
         }
@@ -65,7 +65,7 @@ public class AuthenticationService {
     }
 
     @Subscribe
-    private void onLogoutRequest(LogoutRequest msg) {
+    public void onLogoutRequest(LogoutRequest msg) {
         User userToLogOut = userSessions.get(msg.getSession());
 
         // Could be already logged out
@@ -86,7 +86,7 @@ public class AuthenticationService {
     }
 
     @Subscribe
-    private void onRetrieveAllOnlineUsersRequest(RetrieveAllOnlineUsersRequest msg){
+    public void onRetrieveAllOnlineUsersRequest(RetrieveAllOnlineUsersRequest msg){
         AllOnlineUsersResponse response = new AllOnlineUsersResponse(userSessions.values());
         response.initWithMessage(msg);
         bus.post(response);

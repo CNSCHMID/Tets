@@ -10,7 +10,7 @@ import java.util.List;
 
 public class AllOnlineUsersResponse extends AbstractResponseMessage {
 
-    private ArrayList<UserDTO> users = new ArrayList<>();
+    final private ArrayList<UserDTO> users = new ArrayList<>();
 
     public AllOnlineUsersResponse(){
         // needed for serialization
@@ -26,7 +26,4 @@ public class AllOnlineUsersResponse extends AbstractResponseMessage {
         return users;
     }
 
-    public void setUsers(ArrayList<UserDTO> users) {
-        this.users = users;
-    }
 }

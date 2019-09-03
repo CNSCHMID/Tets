@@ -4,7 +4,7 @@ import de.uol.swp.common.message.AbstractResponseMessage;
 
 public class RegistrationExceptionMessage extends AbstractResponseMessage {
 
-    final String message;
+    private final String message;
 
     public RegistrationExceptionMessage(String message){
         this.message = message;
