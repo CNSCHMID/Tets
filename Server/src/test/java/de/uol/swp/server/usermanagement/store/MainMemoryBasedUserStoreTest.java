@@ -141,7 +141,7 @@ class MainMemoryBasedUserStoreTest {
     void createEmptyUser(){
         MainMemoryBasedUserStore store = getDefaultStore();
 
-        Throwable exception = assertThrows(IllegalArgumentException.class,
+        assertThrows(IllegalArgumentException.class,
                 () -> store.createUser("","","")
                 );
     }
