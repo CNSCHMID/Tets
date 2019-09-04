@@ -83,7 +83,6 @@ class UserManagementTest {
 
     }
 
-
     @Test
     void createUser() {
         UserManagement management = getDefaultManagement();
@@ -152,6 +151,12 @@ class UserManagementTest {
         management.login(updatedUser.getUsername(), updatedUser.getPassword());
         assertTrue(management.isLoggedIn(updatedUser));
 
+    }
+
+    @Test
+    void updateUnknownUser(){
+        UserManagement management = getDefaultManagement();
+        assertThrows(UserManagementException.class, ()-> management.updateUser(userNotInStore));
     }
 
     @Test
