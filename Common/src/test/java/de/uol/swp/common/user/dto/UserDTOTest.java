@@ -18,6 +18,11 @@ class UserDTOTest {
     }
 
     @Test
+    void createUserWithEmptyPassword() {
+        assertThrows(AssertionError.class, () -> new UserDTO("", null, ""));
+    }
+
+    @Test
     void createWithExistingUser() {
 
         User newUser = UserDTO.create(defaultUser);

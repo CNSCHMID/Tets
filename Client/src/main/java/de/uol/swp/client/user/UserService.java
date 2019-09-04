@@ -34,6 +34,11 @@ public class UserService implements de.uol.swp.common.user.UserService {
 		return null; // asynch call
 	}
 
+    @Override
+    public boolean isLoggedIn(User user) {
+        throw new UnsupportedOperationException("Currently, not implemented");
+    }
+
 	@Override
 	public void logout(User username){
 		LogoutRequest msg = new LogoutRequest();

@@ -47,7 +47,7 @@ class MainMemoryBasedUserStoreTest {
         // assert
         assertTrue(userFound.isPresent());
         assertEquals(userToCreate, userFound.get());
-        assertNull(userFound.get().getPassword());
+        assertEquals(userFound.get().getPassword(), "");
     }
 
     @Test
@@ -70,7 +70,7 @@ class MainMemoryBasedUserStoreTest {
 
         assertTrue(userFound.isPresent());
         assertEquals(userToCreate, userFound.get());
-        assertNull(userFound.get().getPassword());
+        assertEquals(userFound.get().getPassword(), "");
     }
 
     @Test
@@ -153,7 +153,7 @@ class MainMemoryBasedUserStoreTest {
 
         List<User> allUsersFromStore = store.getAllUsers();
 
-        assertNull(allUsersFromStore.get(0).getPassword());
+        allUsersFromStore.forEach(u -> assertEquals(u.getPassword(), ""));
         Collections.sort(allUsersFromStore);
         assertEquals(allUsers, allUsersFromStore);
     }

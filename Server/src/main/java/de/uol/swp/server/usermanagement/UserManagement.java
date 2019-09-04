@@ -6,13 +6,13 @@ import de.uol.swp.server.usermanagement.store.UserStore;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class UserManagement extends AbstractUserManagement {
 
     private final UserStore userStore;
-    private final SortedSet<User> loggedInUsers = new TreeSet<>();
+    private final SortedMap<String, User> loggedInUsers = new TreeMap<>();
 
     public UserManagement(UserStore userStore){
         this.userStore = userStore;
@@ -22,11 +22,16 @@ public class UserManagement extends AbstractUserManagement {
     public User login(String username, String password) {
         Optional<User> user = userStore.findUser(username, password);
         if (user.isPresent()){
-            this.loggedInUsers.add(user.get());
+            this.loggedInUsers.put(username, user.get());
             return user.get();
         }else{
             throw new SecurityException("Cannot auth user " + username);
         }
+    }
+
+    @Override
+    public boolean isLoggedIn(User username) {
+        return loggedInUsers.containsKey(username.getUsername());
     }
 
     @Override
@@ -57,8 +62,7 @@ public class UserManagement extends AbstractUserManagement {
 
     @Override
     public void logout(User user) {
-        boolean loggedOut = loggedInUsers.remove(user);
-        // TODO: Should there be an exception in case of unsuccessful logout?
+        loggedInUsers.remove(user.getUsername());
     }
 
     @Override

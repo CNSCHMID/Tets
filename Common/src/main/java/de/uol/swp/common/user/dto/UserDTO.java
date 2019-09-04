@@ -12,6 +12,7 @@ public class UserDTO implements User {
 
     public UserDTO(String username, String password, String eMail) {
         assert Objects.nonNull(username);
+        assert Objects.nonNull(password);
         this.username = username;
         this.password = password;
         this.eMail = eMail;
@@ -22,7 +23,7 @@ public class UserDTO implements User {
     }
 
     public static UserDTO createWithoutPassword(User user) {
-        return new UserDTO(user.getUsername(), null, user.getEMail());
+        return new UserDTO(user.getUsername(), "", user.getEMail());
     }
 
 
@@ -43,7 +44,7 @@ public class UserDTO implements User {
 
     @Override
     public User getWithoutPassword() {
-        return new UserDTO(username, null, eMail);
+        return new UserDTO(username, "", eMail);
     }
 
     @Override

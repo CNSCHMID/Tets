@@ -19,6 +19,15 @@ public interface UserService {
 	 */
 	User login(String username, String password);
 
+
+	/**
+	 * Test, if given user is logged in
+	 *
+	 * @param user
+	 * @return
+	 */
+	boolean isLoggedIn(User user);
+
 	/**
 	 * Login out from server
 	 */
@@ -34,7 +43,7 @@ public interface UserService {
 	/**
 	 * Update a user
 	 * @param user the user object containing all infos to
-	 *             update, if some values are not set (e.g. password)
+	 *             update, if some values are not set, (e.g. password is "")
 	 *             these fields are not updated
 	 * @return the updated user object
 	 */
