@@ -1,19 +1,26 @@
 package de.uol.swp.server.usermanagement.store;
 
+import com.google.common.base.Strings;
 import de.uol.swp.common.user.User;
 import de.uol.swp.common.user.dto.UserDTO;
 
 import java.util.*;
 
-public class MainMemoryBasedUserStore implements UserStore {
+/**
+ * This is a user store.
+ *
+ * Important: This store will never return the password of a user
+ */
+
+public class MainMemoryBasedUserStore extends AbstractUserStore implements UserStore {
 
     private final Map<String, User> users = new HashMap<>();
 
     @Override
     public Optional<User> findUser(String username, String password) {
-        Optional<User> usr = findUser(username);
-        if (usr.isPresent() && usr.get().getPassword().equals(password)) {
-            return usr;
+        User usr = users.get(username);
+        if (usr != null && Objects.equals(usr.getPassword(),hash(password))) {
+            return Optional.of(usr.getWithoutPassword());
         }
         return Optional.empty();
     }
@@ -22,14 +29,17 @@ public class MainMemoryBasedUserStore implements UserStore {
     public Optional<User> findUser(String username) {
         User usr = users.get(username);
         if (usr != null) {
-            return Optional.of(usr);
+            return Optional.of(usr.getWithoutPassword());
         }
         return Optional.empty();
     }
 
     @Override
     public User createUser(String username, String password, String eMail) {
-        User usr = new UserDTO(username, password, eMail);
+        if (Strings.isNullOrEmpty(username)){
+            throw new IllegalArgumentException("Username must not be null");
+        }
+        User usr = new UserDTO(username, hash(password), eMail);
         users.put(username, usr);
         return usr;
     }
@@ -45,6 +55,5 @@ public class MainMemoryBasedUserStore implements UserStore {
         users.values().forEach(u -> retUsers.add(u.getWithoutPassword()));
         return retUsers;
     }
-
 
 }
