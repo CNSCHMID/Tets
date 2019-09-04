@@ -19,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 import javax.security.auth.login.LoginException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Mapping vom authentication event bus calls to user management calls
@@ -41,6 +42,11 @@ public class AuthenticationService {
         this.userManagement = userManagement;
         this.bus = bus;
         bus.register(this);
+    }
+
+    public Optional<Session> getSession(User user) {
+        Optional<Map.Entry<Session, User>> entry = userSessions.entrySet().stream().filter(e -> e.getValue().equals(user)).findFirst();
+        return entry.map(Map.Entry::getKey);
     }
 
     @Subscribe
