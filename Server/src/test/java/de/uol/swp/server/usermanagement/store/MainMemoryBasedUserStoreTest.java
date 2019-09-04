@@ -83,6 +83,15 @@ class MainMemoryBasedUserStoreTest {
         assertTrue(userFound.isEmpty());
     }
 
+    @Test
+    void findUserByNameAndPassword_EmptyUser_NotFound() {
+        MainMemoryBasedUserStore store = getDefaultStore();
+
+        Optional<User> userFound = store.findUser(null, "");
+
+        assertTrue(userFound.isEmpty());
+    }
+
 
     @Test
     void overwriteUser() {
@@ -105,13 +114,36 @@ class MainMemoryBasedUserStoreTest {
         MainMemoryBasedUserStore store = getDefaultStore();
         User userToUpdate = getDefaultUsers().get(2);
 
-        store.updateUser(userToUpdate.getUsername(), userToUpdate.getPassword() + "#21", userToUpdate.getEMail());
+        store.updateUser(userToUpdate.getUsername(), userToUpdate.getPassword() , userToUpdate.getEMail()+"@TESTING");
 
         Optional<User> userFound = store.findUser(userToUpdate.getUsername());
 
         assertTrue(userFound.isPresent());
-        assertEquals(userFound.get().getPassword(), userToUpdate.getPassword() + "#21");
+        assertEquals(userFound.get().getEMail(), userToUpdate.getEMail() + "@TESTING");
 
+    }
+
+    @Test
+    void changePassword() {
+        MainMemoryBasedUserStore store = getDefaultStore();
+        User userToUpdate = getDefaultUsers().get(2);
+
+        store.updateUser(userToUpdate.getUsername(), userToUpdate.getPassword() +"_NEWPASS", userToUpdate.getEMail());
+
+        Optional<User> userFound = store.findUser(userToUpdate.getUsername(), userToUpdate.getPassword() +"_NEWPASS");
+
+        assertTrue(userFound.isPresent());
+        assertEquals(userFound.get().getEMail(), userToUpdate.getEMail() );
+
+    }
+
+    @Test
+    void createEmptyUser(){
+        MainMemoryBasedUserStore store = getDefaultStore();
+
+        Throwable exception = assertThrows(IllegalArgumentException.class,
+                () -> store.createUser("","","")
+                );
     }
 
     @Test
@@ -121,7 +153,7 @@ class MainMemoryBasedUserStoreTest {
 
         List<User> allUsersFromStore = store.getAllUsers();
 
-        assertNull(allUsers.get(0).getPassword());
+        assertNull(allUsersFromStore.get(0).getPassword());
         Collections.sort(allUsersFromStore);
         assertEquals(allUsers, allUsersFromStore);
     }
