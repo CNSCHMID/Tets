@@ -60,12 +60,11 @@ class UserDTOTest {
 
     @Test
     void usersNotEquals_User() {
-        assertFalse(defaultUser.equals(secondsUser));
+        assertNotEquals(defaultUser, secondsUser);
     }
 
     @Test
-    void usersNotEquals_String() {
-        assertFalse(defaultUser.equals("Test"));
+    void usersNotEquals_String() {assertNotEquals(defaultUser,"Test");
     }
 
     @Test

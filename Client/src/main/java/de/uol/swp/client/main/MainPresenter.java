@@ -32,7 +32,7 @@ public class MainPresenter extends AbstractPresenter {
     private ListView<String> usersView;
 
     @Subscribe
-    public void loginSucessful(LoginSuccessfulMessage message) {
+    public void loginSuccessful(LoginSuccessfulMessage message) {
         this.loggedInUser = message.getUser();
         userService.retrieveAllUsers();
     }

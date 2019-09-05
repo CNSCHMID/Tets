@@ -7,11 +7,10 @@
 		<artifactId>SWPBaseProject</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <version>project.parent.version</version>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>clientConnection</artifactId>
+    <artifactId>client</artifactId>
     <packaging>jar</packaging>
-    <name>clientConnection</name>
+    <name>client</name>
     <build>
         <plugins>
                  <plugin>
@@ -25,6 +24,32 @@
                         <mainClass>de.uol.swp.clientConnection.ClientApp</mainClass>
                     </configuration>
                 </plugin>
+
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>de.uol.swp.client.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
     <dependencies>
@@ -51,6 +76,27 @@
             <groupId>com.jfoenix</groupId>
             <artifactId>jfoenix</artifactId>
             <version>9.0.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics </artifactId>
+            <version>11</version>
+            <classifier>win</classifier>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics </artifactId>
+            <version>11</version>
+            <classifier>linux</classifier>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics </artifactId>
+            <version>11</version>
+            <classifier>mac</classifier>
         </dependency>
 
     </dependencies>
