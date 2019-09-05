@@ -4,10 +4,12 @@ SWP Basissystem
 Der folgende Code sollte als Basis für das Software Projekt verwendet werden.
 
 
-TODO:
+WIP
+===
+
 
 Maven
-=====
+-----
 Das Projekt kann mit Maven gebaut werden. 
 
 Dazu auf der Hauptebene zunächst
