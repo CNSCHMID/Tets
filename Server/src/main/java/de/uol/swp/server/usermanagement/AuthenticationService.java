@@ -10,6 +10,7 @@ import de.uol.swp.common.user.request.LoginRequest;
 import de.uol.swp.common.user.request.LogoutRequest;
 import de.uol.swp.common.user.request.RetrieveAllOnlineUsersRequest;
 import de.uol.swp.common.user.response.AllOnlineUsersResponse;
+import de.uol.swp.server.communication.UUIDSession;
 import de.uol.swp.server.message.ClientAuthorizedMessage;
 import de.uol.swp.server.message.ServerExceptionMessage;
 import de.uol.swp.server.message.ServerInternalMessage;
@@ -58,7 +59,7 @@ public class AuthenticationService {
         try {
             User newUser = userManagement.login(msg.getUsername(), msg.getPassword());
             returnMessage = new ClientAuthorizedMessage(newUser);
-            Session newSession = de.uol.swp.server.communication.Session.create();
+            Session newSession = UUIDSession.create();
             userSessions.put(newSession,newUser);
             returnMessage.setSession(newSession);
         }catch (Exception e){

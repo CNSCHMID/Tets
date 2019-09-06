@@ -108,22 +108,22 @@ public class Server implements ServerHandlerDelegate {
 	@Override
 	public void process(ChannelHandlerContext ctx, RequestMessage msg) {
 		LOG.debug("Received new message from client "+msg);
-
 		try {
 			msg.setMessageContext(new NettyMessageContext(ctx));
-
-			// check if msg requires auth and append session if available
-			if (msg.authorizationNeeded() ) {
-				if (getSession(ctx).isEmpty()) {
-					throw new SecurityException("Authorization required. Client not logged in!");
-				}
-				msg.setSession(getSession(ctx).get());
-			}
+			checkIfMessageNeedsAuthorization(ctx, msg);
 			eventBus.post(msg);
-
 		} catch (Exception e) {
 			LOG.error("ServerException " + e.getClass().getName() + " " + e.getMessage());
 			sendToClient(ctx, new ExceptionMessage(e.getMessage()));
+		}
+	}
+
+	private void checkIfMessageNeedsAuthorization(ChannelHandlerContext ctx, RequestMessage msg) {
+		if (msg.authorizationNeeded() ) {
+			if (getSession(ctx).isEmpty()) {
+				throw new SecurityException("Authorization required. Client not logged in!");
+			}
+			msg.setSession(getSession(ctx).get());
 		}
 	}
 
