@@ -110,7 +110,7 @@ class ClientConnection {
 	}
 
 	@Subscribe
-	public void sendToServer(RequestMessage message){
+	public void onRequestMessage(RequestMessage message){
 		if (channel != null){
 			channel.writeAndFlush(message);
 		}else{
@@ -120,14 +120,14 @@ class ClientConnection {
 	}
 
 	@Subscribe
-	public void process(ExceptionMessage message) {
+	public void onExceptionMessage(ExceptionMessage message) {
 		for (ConnectionListener l : connectionListener) {
 			l.exceptionOccured(message.getException());
 		}
 	}
 
 	@Subscribe
-	public void handleEventBusError(DeadEvent deadEvent){
+	public void onDeadEvent(DeadEvent deadEvent){
 		LOG.warn("DeadEvent detected "+deadEvent);
 	}
 
