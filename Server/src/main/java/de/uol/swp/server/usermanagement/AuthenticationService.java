@@ -66,7 +66,7 @@ public class AuthenticationService {
             LOG.error(e);
             returnMessage = new ServerExceptionMessage(new LoginException("Cannot auth user " + msg.getUsername()));
         }
-        returnMessage.setMessageContext(msg.getMessageContext());
+        returnMessage.setMessageContext(msg.getMessageContext().get());
         bus.post(returnMessage);
     }
 

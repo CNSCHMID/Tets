@@ -2,6 +2,8 @@ package de.uol.swp.common.message;
 
 import de.uol.swp.common.user.Session;
 
+import java.util.Optional;
+
 /**
  * Base class of all messages. Basic handling of session information
  *
@@ -15,8 +17,8 @@ abstract public class AbstractMessage implements Message {
 	private Session session = null;
 
 	@Override
-	public MessageContext getMessageContext() {
-		return messageContext;
+	public Optional<MessageContext> getMessageContext() {
+		return messageContext!=null? Optional.of(messageContext):Optional.empty();
 	}
 
 	@Override
@@ -30,13 +32,13 @@ abstract public class AbstractMessage implements Message {
 	}
 
 	@Override
-	public Session getSession(){
-		return session;
+	public Optional<Session> getSession(){
+		return session!=null?Optional.of(session):Optional.empty();
 	}
 
 	@Override
 	public void initWithMessage(Message otherMessage) {
-		setMessageContext(otherMessage.getMessageContext());
-		setSession(otherMessage.getSession());
+		otherMessage.getMessageContext().ifPresent(this::setMessageContext);
+		otherMessage.getSession().ifPresent(this::setSession);
 	}
 }

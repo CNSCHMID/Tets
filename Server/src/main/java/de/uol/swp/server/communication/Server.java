@@ -169,7 +169,7 @@ public class Server implements ServerHandlerDelegate {
 	private void onClientAuthorized(ClientAuthorizedMessage msg){
 		Optional<ChannelHandlerContext> ctx = getCtx(msg);
 		if (ctx.isPresent()) {
-			putSession(ctx.get(), msg.getSession());
+			putSession(ctx.get(), msg.getSession().get());
 			sendToClient(ctx.get(), new LoginSuccessfulMessage(msg.getUser()));
 			sendToAll(new UserLoggedInMessage(msg.getUser().getUsername()));
 		}else{
@@ -225,10 +225,13 @@ public class Server implements ServerHandlerDelegate {
 	}
 
 	private Optional<ChannelHandlerContext> getCtx(Message message){
-		if (message.getMessageContext() instanceof NettyMessageContext){
-			return Optional.of(((NettyMessageContext)message.getMessageContext()).getCtx());
+		if (message.getMessageContext().isPresent() && message.getMessageContext().get() instanceof NettyMessageContext){
+			return Optional.of(((NettyMessageContext) message.getMessageContext().get()).getCtx());
 		}
-		return getCtx(message.getSession());
+		if (message.getSession().isPresent()){
+			return getCtx(message.getSession().get());
+		}
+		return Optional.empty();
 	}
 
 	private Optional<ChannelHandlerContext> getCtx(Session session){
