@@ -40,9 +40,9 @@ public class UserService {
         }catch (Exception e){
             LOG.error(e);
             returnMessage = new RegistrationExceptionMessage("Cannot create user "+msg.getUser()+" "+e.getMessage());
-            returnMessage.setSession(msg.getSession());
+            returnMessage.setSession(msg.getSession().get());
         }
-        returnMessage.setMessageContext(msg.getMessageContext());
+        returnMessage.setMessageContext(msg.getMessageContext().get());
         eventBus.post(returnMessage);
     }
 }
