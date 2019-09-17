@@ -26,6 +26,7 @@ class SceneManager {
     final private EventBus eventBus;
     final private UserService userService;
     private Scene loginScene;
+    private String lastTitle;
     private Scene registrationScene;
     private Scene mainScene;
     private Scene lastScene = null;
@@ -95,7 +96,7 @@ class SceneManager {
 
     @Subscribe
     public void onRegistrationCanceledEvent(RegistrationCanceledEvent event){
-        showScene(lastScene);
+        showScene(lastScene, lastTitle);
     }
 
     @Subscribe
@@ -119,10 +120,12 @@ class SceneManager {
         showError("Error:\n" , e);
     }
 
-    private void showScene(final Scene scene){
+    private void showScene(final Scene scene, final String title) {
         this.lastScene = currentScene;
+        this.lastTitle = primaryStage.getTitle();
         this.currentScene = scene;
         Platform.runLater(() -> {
+            primaryStage.setTitle(title);
             primaryStage.setScene(scene);
             primaryStage.show();
         });
@@ -138,18 +141,15 @@ class SceneManager {
 
     public void showMainScreen(User currentUser) {
         this.currentUser = currentUser;
-        Platform.runLater(() -> {
-            primaryStage.setTitle("Welcome "+currentUser.getUsername());
-        });
-        showScene(mainScene);
+        showScene(mainScene, "Welcome " + currentUser.getUsername());
     }
 
 
     public void showLoginScreen() {
-        showScene(loginScene);
+        showScene(loginScene, "Login");
     }
 
     public void showRegistrationScreen() {
-    showScene(registrationScene);
+        showScene(registrationScene, "Registration");
     }
 }
