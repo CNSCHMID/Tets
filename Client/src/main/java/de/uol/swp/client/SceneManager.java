@@ -4,7 +4,7 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import de.uol.swp.client.auth.LoginPresenter;
 import de.uol.swp.client.auth.events.ShowLoginViewEvent;
-import de.uol.swp.client.main.MainPresenter;
+import de.uol.swp.client.main.MainMenuPresenter;
 import de.uol.swp.client.register.RegistrationPresenter;
 import de.uol.swp.client.register.event.RegistationErrorEvent;
 import de.uol.swp.client.register.event.RegistrationCanceledEvent;
@@ -64,7 +64,7 @@ class SceneManager {
 
     private void initMainView() {
         if (mainScene == null) {
-            Parent rootPane = initPresenter(MainPresenter.fxml);
+            Parent rootPane = initPresenter(MainMenuPresenter.fxml);
             mainScene = new Scene(rootPane, 800, 600);
         }
     }
