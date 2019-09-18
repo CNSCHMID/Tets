@@ -55,8 +55,6 @@ public class ClientApp extends Application implements ConnectionListener {
 			port = Integer.parseInt(args.get(1));
 		}
 
-		this.userService = new de.uol.swp.client.user.UserService(eventBus);
-
 		// do not establish connection here
 		// if connection is established in this stage, no GUI is shown and
 		// exceptions are only visible in console!
@@ -77,6 +75,8 @@ public class ClientApp extends Application implements ConnectionListener {
 		this.sceneManager = injector.getInstance(SceneManager.class);
 		this.sceneManager.setPrimaryStage(primaryStage);
 		this.sceneManager.initViews();
+
+        this.userService = injector.getInstance(UserService.class);
 
 		// TODO: inject event bus with guice
 		clientConnection = new ClientConnection(host, port, eventBus);
