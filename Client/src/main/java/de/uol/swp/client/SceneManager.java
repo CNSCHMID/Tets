@@ -2,6 +2,8 @@ package de.uol.swp.client;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
 import de.uol.swp.client.auth.LoginPresenter;
 import de.uol.swp.client.auth.events.ShowLoginViewEvent;
 import de.uol.swp.client.main.MainMenuPresenter;
@@ -17,12 +19,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
+import java.net.URL;
 
 class SceneManager {
 
-    final private Stage primaryStage;
+    static final Logger LOG = LogManager.getLogger(SceneManager.class);
+
+    private Stage primaryStage;
     final private EventBus eventBus;
     final private UserService userService;
     private Scene loginScene;
@@ -33,17 +39,25 @@ class SceneManager {
     private Scene currentScene = null;
 
     private User currentUser;
+    @Inject
+    Injector injector;
 
-
-    public SceneManager(Stage primaryStage, EventBus eventBus, UserService userService){
-        this.primaryStage = primaryStage;
+    @Inject
+    public SceneManager(EventBus eventBus, UserService userService) {
         this.eventBus = eventBus;
         this.eventBus.register(this);
         this.userService = userService;
-        initViews();
     }
 
-    private void initViews() {
+    public void setPrimaryStage(Stage primaryStage) {
+        if (this.primaryStage == null) {
+            this.primaryStage = primaryStage;
+        } else {
+            throw new IllegalArgumentException("Primary stage already set!");
+        }
+    }
+
+    public void initViews() {
         initLoginView();
         initMainView();
         initRegistrationView();
@@ -51,15 +65,18 @@ class SceneManager {
 
     private Parent initPresenter(String fxmlFile) {
         Parent rootPane;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+        FXMLLoader loader = injector.getInstance(FXMLLoader.class);
         try {
+            URL url = getClass().getResource(fxmlFile);
+            LOG.debug("Loading " + url);
+            loader.setLocation(url);
             rootPane = loader.load();
-        } catch (IOException e) {
-            throw new RuntimeException("Could not load View!");
+        } catch (Exception e) {
+            throw new RuntimeException("Could not load View!" + e.getMessage(), e);
         }
-        AbstractPresenter presenter = loader.getController();
-        presenter.setEventBus(eventBus);
-        presenter.setUserService(userService);
+//        AbstractPresenter presenter = loader.getController();
+//        presenter.setEventBus(eventBus);
+//        presenter.setUserService(userService);
         return rootPane;
     }
 

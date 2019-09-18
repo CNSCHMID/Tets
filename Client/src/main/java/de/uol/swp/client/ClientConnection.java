@@ -36,18 +36,21 @@ class ClientConnection {
 	private final int port;
 	private final List<ConnectionListener> connectionListener = new CopyOnWriteArrayList<>();
 	private EventLoopGroup group;
-	private final EventBus eventBus;
+	private EventBus eventBus;
 	private Channel channel;
 
 	/**
 	 * Create a new connection to a specific port on the given host
 	 * @param host The server name to connect to
 	 * @param port The server port to connect to
-	 * @param eventBus for handling messages
 	 */
 	public ClientConnection(String host, int port, EventBus eventBus) {
 		this.host = host;
 		this.port = port;
+		setEventBus(eventBus);
+	}
+
+	public void setEventBus(EventBus eventBus) {
 		this.eventBus = eventBus;
 		eventBus.register(this);
 	}

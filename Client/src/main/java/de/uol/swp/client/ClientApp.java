@@ -3,6 +3,9 @@ package de.uol.swp.client;
 import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import de.uol.swp.client.di.ClientModule;
 import de.uol.swp.common.user.User;
 import de.uol.swp.common.user.UserService;
 import de.uol.swp.common.user.exception.RegistrationExceptionMessage;
@@ -29,7 +32,7 @@ public class ClientApp extends Application implements ConnectionListener {
 
 	private ClientConnection clientConnection;
 
-	private final EventBus eventBus = new EventBus();
+	private EventBus eventBus;
 
 	private SceneManager sceneManager;
 
@@ -59,13 +62,25 @@ public class ClientApp extends Application implements ConnectionListener {
 		// exceptions are only visible in console!
 	}
 
+
 	@Override
 	public void start(Stage primaryStage) {
-		this.sceneManager = new SceneManager(primaryStage, eventBus, userService);
-		clientConnection = new ClientConnection(host, port, eventBus);
-		clientConnection.addConnectionListener(this);
+		Injector injector = Guice.createInjector(new ClientModule());
+
+		// get event bus from guice
+		eventBus = injector.getInstance(EventBus.class);
 		// Register this class for de.uol.swp.client.events (e.g. for exceptions)
 		eventBus.register(this);
+
+
+		// Replace with injected
+		this.sceneManager = injector.getInstance(SceneManager.class);
+		this.sceneManager.setPrimaryStage(primaryStage);
+		this.sceneManager.initViews();
+
+		// TODO: inject event bus with guice
+		clientConnection = new ClientConnection(host, port, eventBus);
+		clientConnection.addConnectionListener(this);
 		// JavaFX Thread should not be blocked to long!
 		Thread t = new Thread(() -> {
 			try {
