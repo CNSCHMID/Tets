@@ -2,12 +2,12 @@ package de.uol.swp.server;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import de.uol.swp.common.user.UserService;
 import de.uol.swp.common.user.dto.UserDTO;
 import de.uol.swp.server.communication.Server;
 import de.uol.swp.server.di.ServerModule;
 import de.uol.swp.server.usermanagement.AuthenticationService;
 import de.uol.swp.server.usermanagement.UserManagement;
+import de.uol.swp.server.usermanagement.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
