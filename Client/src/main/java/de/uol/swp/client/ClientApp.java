@@ -63,9 +63,15 @@ public class ClientApp extends Application implements ConnectionListener {
 
 	@Override
 	public void start(Stage primaryStage) {
+
+        // Client app is created by java, so injection must
+        // be handled here manually
 		Injector injector = Guice.createInjector(new ClientModule());
 
-		// get event bus from guice
+        // get user service from guice, is needed for logout
+        this.userService = injector.getInstance(UserService.class);
+
+        // get event bus from guice
 		eventBus = injector.getInstance(EventBus.class);
 		// Register this class for de.uol.swp.client.events (e.g. for exceptions)
 		eventBus.register(this);
@@ -75,8 +81,6 @@ public class ClientApp extends Application implements ConnectionListener {
 		this.sceneManager = injector.getInstance(SceneManager.class);
 		this.sceneManager.setPrimaryStage(primaryStage);
 		this.sceneManager.initViews();
-
-        this.userService = injector.getInstance(UserService.class);
 
 		// TODO: inject event bus with guice
 		clientConnection = new ClientConnection(host, port, eventBus);
