@@ -3,6 +3,7 @@ package de.uol.swp.server.communication;
 import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import com.google.inject.Inject;
 import de.uol.swp.common.MyObjectDecoder;
 import de.uol.swp.common.MyObjectEncoder;
 import de.uol.swp.common.message.*;
@@ -36,11 +37,6 @@ public class Server implements ServerHandlerDelegate {
 	private static final Logger LOG = LogManager.getLogger(Server.class);
 
 	/**
-	 * Server port
-	 */
-	final private int port;
-
-	/**
 	 * Clients that are connected
 	 */
 	final private List<ChannelHandlerContext> connectedClients = new CopyOnWriteArrayList<>();
@@ -51,30 +47,25 @@ public class Server implements ServerHandlerDelegate {
 	final private Map<ChannelHandlerContext, Session> activeSessions = new HashMap<>();
 
 	/**
-	 * For demo reasons the eventBus as part of this class
+     * Event bus (injected)
 	 */
 	final private EventBus eventBus;
 
 	/**
-	 * Creates a new Server Object and start listening on given port
-	 *
-	 * @param port
-	 *            The port the server should listen for new connection
-
+     * Creates a new Server Object
 	 */
-	public Server(int port, EventBus eventBus) {
-		this.port = port;
-		// TODO: Ping clients
+    @Inject
+    public Server(EventBus eventBus) {
 		this.eventBus = eventBus;
 		eventBus.register(this);
 	}
 
 	/**
-	 * Initialize netty
+     * Start a new server on given port
 	 *
 	 * @throws Exception
 	 */
-	public void start() throws Exception {
+    public void start(int port) throws Exception {
 		final ServerHandler serverHandler = new ServerHandler(this);
 		EventLoopGroup bossGroup = new NioEventLoopGroup(1);
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
