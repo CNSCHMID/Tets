@@ -4,6 +4,7 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.google.inject.assistedinject.Assisted;
 import de.uol.swp.client.auth.LoginPresenter;
 import de.uol.swp.client.auth.events.ShowLoginViewEvent;
 import de.uol.swp.client.main.MainMenuPresenter;
@@ -24,11 +25,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.net.URL;
 
-class SceneManager {
+public class SceneManager {
 
     static final Logger LOG = LogManager.getLogger(SceneManager.class);
 
-    private Stage primaryStage;
+    final private Stage primaryStage;
     final private EventBus eventBus;
     final private UserService userService;
     private Scene loginScene;
@@ -39,25 +40,20 @@ class SceneManager {
     private Scene currentScene = null;
 
     private User currentUser;
-    @Inject
-    Injector injector;
+
+    private Injector injector;
 
     @Inject
-    public SceneManager(EventBus eventBus, UserService userService) {
+    public SceneManager(EventBus eventBus, UserService userService, Injector injected, @Assisted Stage primaryStage) {
         this.eventBus = eventBus;
         this.eventBus.register(this);
         this.userService = userService;
+        this.primaryStage = primaryStage;
+        this.injector = injected;
+        initViews();
     }
 
-    public void setPrimaryStage(Stage primaryStage) {
-        if (this.primaryStage == null) {
-            this.primaryStage = primaryStage;
-        } else {
-            throw new IllegalArgumentException("Primary stage already set!");
-        }
-    }
-
-    public void initViews() {
+    private void initViews() {
         initLoginView();
         initMainView();
         initRegistrationView();

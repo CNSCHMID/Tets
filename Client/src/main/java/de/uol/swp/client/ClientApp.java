@@ -76,14 +76,13 @@ public class ClientApp extends Application implements ConnectionListener {
 		// Register this class for de.uol.swp.client.events (e.g. for exceptions)
 		eventBus.register(this);
 
+		// Client app is created by java, so injection must
+		// be handled here manually
+		SceneManagerFactory sceneManagerFactory = injector.getInstance(SceneManagerFactory.class);
+		this.sceneManager = sceneManagerFactory.create(primaryStage);
 
-		// Replace with injected
-		this.sceneManager = injector.getInstance(SceneManager.class);
-		this.sceneManager.setPrimaryStage(primaryStage);
-		this.sceneManager.initViews();
-
-		// TODO: inject event bus with guice
-		clientConnection = new ClientConnection(host, port, eventBus);
+		ClientConnectionFactory connectionFactory = injector.getInstance(ClientConnectionFactory.class);
+		clientConnection = connectionFactory.create(host, port);
 		clientConnection.addConnectionListener(this);
 		// JavaFX Thread should not be blocked to long!
 		Thread t = new Thread(() -> {

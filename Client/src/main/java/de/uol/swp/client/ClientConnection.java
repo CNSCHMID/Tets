@@ -3,6 +3,8 @@ package de.uol.swp.client;
 import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 import de.uol.swp.common.MyObjectDecoder;
 import de.uol.swp.common.message.*;
 import io.netty.bootstrap.Bootstrap;
@@ -28,7 +30,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  *
  */
 
-class ClientConnection {
+public class ClientConnection {
 
 	private static final Logger LOG = LogManager.getLogger(ClientConnection.class);
 
@@ -44,7 +46,8 @@ class ClientConnection {
 	 * @param host The server name to connect to
 	 * @param port The server port to connect to
 	 */
-	public ClientConnection(String host, int port, EventBus eventBus) {
+	@Inject
+	public ClientConnection(@Assisted String host, @Assisted int port, EventBus eventBus) {
 		this.host = host;
 		this.port = port;
 		setEventBus(eventBus);
