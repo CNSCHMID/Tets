@@ -119,6 +119,14 @@ class SceneManager {
         showError("Error:\n" , e);
     }
 
+    public void showLoginScreen() {
+        showScene(loginScene);
+    }
+
+    public void showRegistrationScreen() {
+        showScene(registrationScene);
+    }
+
     private void showScene(final Scene scene){
         this.lastScene = currentScene;
         this.currentScene = scene;
@@ -145,11 +153,5 @@ class SceneManager {
     }
 
 
-    public void showLoginScreen() {
-        showScene(loginScene);
-    }
 
-    public void showRegistrationScreen() {
-    showScene(registrationScene);
-    }
 }
