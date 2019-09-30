@@ -2,6 +2,7 @@ package de.uol.swp.server.usermanagement;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import com.google.inject.Inject;
 import de.uol.swp.common.message.ResponseMessage;
 import de.uol.swp.common.user.User;
 import de.uol.swp.common.user.exception.RegistrationExceptionMessage;
@@ -22,6 +23,7 @@ public class UserService {
     private final EventBus eventBus;
     private final UserManagement userManagement;
 
+    @Inject
     public UserService(EventBus eventBus, UserManagement userManagement) {
         this.eventBus = eventBus;
         this.userManagement = userManagement;

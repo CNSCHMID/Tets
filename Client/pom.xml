@@ -21,7 +21,7 @@
                         <source>11</source>
                         <target>11</target>
                         <release>11</release>
-                        <mainClass>de.uol.swp.clientConnection.ClientApp</mainClass>
+                        <mainClass>de.uol.swp.client.Main</mainClass>
                     </configuration>
                 </plugin>
 
@@ -98,6 +98,13 @@
             <version>11</version>
             <classifier>mac</classifier>
         </dependency>
+
+        <dependency>
+            <groupId>com.gluonhq</groupId>
+            <artifactId>ignite-guice</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
 
     </dependencies>
 </project>

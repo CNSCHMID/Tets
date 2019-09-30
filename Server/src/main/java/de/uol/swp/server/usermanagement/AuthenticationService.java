@@ -2,6 +2,7 @@ package de.uol.swp.server.usermanagement;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import com.google.inject.Inject;
 import de.uol.swp.common.message.ServerMessage;
 import de.uol.swp.common.user.Session;
 import de.uol.swp.common.user.User;
@@ -39,6 +40,7 @@ public class AuthenticationService {
 
     private final UserManagement userManagement;
 
+    @Inject
     public AuthenticationService(EventBus bus, UserManagement userManagement) {
         this.userManagement = userManagement;
         this.bus = bus;

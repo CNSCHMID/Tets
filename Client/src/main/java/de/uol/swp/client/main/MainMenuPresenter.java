@@ -18,11 +18,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-public class MainPresenter extends AbstractPresenter {
+public class MainMenuPresenter extends AbstractPresenter {
 
-    public static final String fxml = "/fxml/MainView.fxml";
+    public static final String fxml = "/fxml/MainMenuView.fxml";
 
-    private static final Logger LOG = LogManager.getLogger(MainPresenter.class);
+    private static final Logger LOG = LogManager.getLogger(MainMenuPresenter.class);
 
     private ObservableList<String> users;
 
