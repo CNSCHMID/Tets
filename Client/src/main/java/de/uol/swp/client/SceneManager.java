@@ -163,10 +163,10 @@ public class SceneManager {
 
 
     public void showLoginScreen() {
-        showScene(loginScene, "Login");
+        showScene(loginScene);
     }
 
     public void showRegistrationScreen() {
-        showScene(registrationScene, "Registration");
+    showScene(registrationScene);
     }
 }
