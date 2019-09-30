@@ -28,6 +28,7 @@ import java.net.URL;
 public class SceneManager {
 
     static final Logger LOG = LogManager.getLogger(SceneManager.class);
+    static final String styleSheet = "css/swp.css";
 
     final private Stage primaryStage;
     final private EventBus eventBus;
@@ -80,6 +81,7 @@ public class SceneManager {
         if (mainScene == null) {
             Parent rootPane = initPresenter(MainMenuPresenter.fxml);
             mainScene = new Scene(rootPane, 800, 600);
+            mainScene.getStylesheets().add(styleSheet);
         }
     }
 
@@ -87,6 +89,7 @@ public class SceneManager {
         if (loginScene == null) {
             Parent rootPane = initPresenter(LoginPresenter.fxml);
             loginScene = new Scene(rootPane, 400, 200);
+            loginScene.getStylesheets().add(styleSheet);
         }
     }
 
@@ -94,6 +97,7 @@ public class SceneManager {
         if (registrationScene == null){
             Parent rootPane = initPresenter(RegistrationPresenter.fxml);
             registrationScene = new Scene(rootPane, 400,200);
+            registrationScene.getStylesheets().add(styleSheet);
         }
     }
 
