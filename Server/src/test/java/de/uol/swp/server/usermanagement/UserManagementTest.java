@@ -48,7 +48,7 @@ class UserManagementTest {
     }
 
     @Test
-    void loginUserWrongPassword() {
+    void loginUserEmptyPassword() {
         UserManagement management = getDefaultManagement();
         User userToLogIn = users.get(0);
 
@@ -58,7 +58,7 @@ class UserManagementTest {
     }
 
     @Test
-    void loginUserWrongButExistingPassword() {
+    void loginUserWrongPassword() {
         UserManagement management = getDefaultManagement();
         User userToLogIn = users.get(0);
         User secondUser = users.get(1);
