@@ -2,7 +2,7 @@ package de.uol.swp.common.lobby;
 
 import de.uol.swp.common.user.User;
 
-import java.util.List;
+import java.util.Set;
 
 public interface Lobby {
 
@@ -16,6 +16,6 @@ public interface Lobby {
 
     void leaveUser(User user);
 
-    List<User> getUsers();
+    Set<User> getUsers();
 
 }
