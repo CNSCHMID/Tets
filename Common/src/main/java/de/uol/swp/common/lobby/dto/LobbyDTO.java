@@ -3,15 +3,15 @@ package de.uol.swp.common.lobby.dto;
 import de.uol.swp.common.lobby.Lobby;
 import de.uol.swp.common.user.User;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class LobbyDTO implements Lobby {
 
     private final String name;
     private User owner;
-    private List<User> users = new ArrayList<>();
+    private Set<User> users = new TreeSet<>();
 
     public LobbyDTO(String name, User creator) {
         this.name = name;
@@ -37,7 +37,7 @@ public class LobbyDTO implements Lobby {
         if (users.contains(user)) {
             this.users.remove(user);
             if (this.owner.equals(user)) {
-                updateOwner(users.get(0));
+                updateOwner(users.iterator().next());
             }
         }
     }
@@ -56,8 +56,8 @@ public class LobbyDTO implements Lobby {
     }
 
     @Override
-    public List<User> getUsers() {
-        return Collections.unmodifiableList(users);
+    public Set<User> getUsers() {
+        return Collections.unmodifiableSet(users);
     }
 
 }
