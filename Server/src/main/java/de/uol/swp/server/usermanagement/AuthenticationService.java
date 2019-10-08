@@ -11,6 +11,7 @@ import de.uol.swp.common.user.request.LoginRequest;
 import de.uol.swp.common.user.request.LogoutRequest;
 import de.uol.swp.common.user.request.RetrieveAllOnlineUsersRequest;
 import de.uol.swp.common.user.response.AllOnlineUsersResponse;
+import de.uol.swp.server.AbstractService;
 import de.uol.swp.server.communication.UUIDSession;
 import de.uol.swp.server.message.ClientAuthorizedMessage;
 import de.uol.swp.server.message.ServerExceptionMessage;
@@ -19,19 +20,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.security.auth.login.LoginException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Mapping vom authentication event bus calls to user management calls
  *
  * @author Marco Grawunder
  */
-public class AuthenticationService {
+public class AuthenticationService extends AbstractService {
     private static final Logger LOG = LogManager.getLogger(AuthenticationService.class);
-
-    private final EventBus bus;
 
     /**
      * The list of current logged in users
@@ -42,9 +39,8 @@ public class AuthenticationService {
 
     @Inject
     public AuthenticationService(EventBus bus, UserManagement userManagement) {
+        super(bus);
         this.userManagement = userManagement;
-        this.bus = bus;
-        bus.register(this);
     }
 
     public Optional<Session> getSession(User user) {
@@ -52,9 +48,18 @@ public class AuthenticationService {
         return entry.map(Map.Entry::getKey);
     }
 
+    public List<Session> getSessions(List<User> users) {
+        List<Session> sessions = new ArrayList<>();
+        users.forEach(u -> {
+            Optional<Session> session = getSession(u);
+            if (session.isPresent()) sessions.add(session.get());
+        });
+        return sessions;
+    }
+
     @Subscribe
     public void onLoginRequest(LoginRequest msg) {
-        if (LOG.isDebugEnabled()){
+        if (LOG.isDebugEnabled()) {
             LOG.debug("Got new auth message with " + msg.getUsername() + " " + msg.getPassword());
         }
         ServerInternalMessage returnMessage;
@@ -62,16 +67,16 @@ public class AuthenticationService {
             User newUser = userManagement.login(msg.getUsername(), msg.getPassword());
             returnMessage = new ClientAuthorizedMessage(newUser);
             Session newSession = UUIDSession.create();
-            userSessions.put(newSession,newUser);
+            userSessions.put(newSession, newUser);
             returnMessage.setSession(newSession);
-        }catch (Exception e){
+        } catch (Exception e) {
             LOG.error(e);
             returnMessage = new ServerExceptionMessage(new LoginException("Cannot auth user " + msg.getUsername()));
         }
         if (msg.getMessageContext().isPresent()) {
             returnMessage.setMessageContext(msg.getMessageContext().get());
         }
-        bus.post(returnMessage);
+        post(returnMessage);
     }
 
     @Subscribe
@@ -79,9 +84,9 @@ public class AuthenticationService {
         User userToLogOut = userSessions.get(msg.getSession().get());
 
         // Could be already logged out
-        if (userToLogOut != null){
+        if (userToLogOut != null) {
 
-            if (LOG.isDebugEnabled()){
+            if (LOG.isDebugEnabled()) {
                 LOG.debug("Logging out user " + userToLogOut.getUsername());
             }
 
@@ -89,17 +94,17 @@ public class AuthenticationService {
             userSessions.remove(msg.getSession());
 
             ServerMessage returnMessage = new UserLoggedOutMessage(userToLogOut.getUsername());
-            bus.post(returnMessage);
+            post(returnMessage);
 
         }
 
     }
 
     @Subscribe
-    public void onRetrieveAllOnlineUsersRequest(RetrieveAllOnlineUsersRequest msg){
+    public void onRetrieveAllOnlineUsersRequest(RetrieveAllOnlineUsersRequest msg) {
         AllOnlineUsersResponse response = new AllOnlineUsersResponse(userSessions.values());
         response.initWithMessage(msg);
-        bus.post(response);
+        post(response);
     }
 
 
