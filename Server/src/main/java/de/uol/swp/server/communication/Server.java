@@ -9,6 +9,7 @@ import de.uol.swp.common.MyObjectEncoder;
 import de.uol.swp.common.message.*;
 import de.uol.swp.common.user.Session;
 import de.uol.swp.common.user.message.UserLoggedInMessage;
+import de.uol.swp.common.user.message.UserLoggedOutMessage;
 import de.uol.swp.common.user.response.LoginSuccessfulMessage;
 import de.uol.swp.server.message.ClientAuthorizedMessage;
 import de.uol.swp.server.message.ClientDisconnectedMessage;
@@ -168,6 +169,15 @@ public class Server implements ServerHandlerDelegate {
 		}
 	}
 
+	@Subscribe
+	private void onUserLoggedOutMessage(UserLoggedOutMessage msg){
+		Optional<ChannelHandlerContext> ctx = getCtx(msg);
+		if (ctx.isPresent()){
+			removeSession(ctx.get());
+		}
+		sendToAll(msg);
+	}
+
 	// -------------------------------------------------------------------------------
 	// ResponseEvents
 	// -------------------------------------------------------------------------------
@@ -243,10 +253,8 @@ public class Server implements ServerHandlerDelegate {
 		ctx.writeAndFlush(message);
 	}
 
-
-
-	private void sendToAll(ServerMessage msg) {
-		for (ChannelHandlerContext client : connectedClients) {
+	private void sendToMany(List<ChannelHandlerContext> sendTo, ServerMessage msg){
+		for (ChannelHandlerContext client : sendTo) {
 			try {
 				client.writeAndFlush(msg);
 			} catch (Exception e) {
@@ -254,6 +262,10 @@ public class Server implements ServerHandlerDelegate {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	private void sendToAll(ServerMessage msg) {
+		sendToMany(connectedClients,msg);
 	}
 
 }
