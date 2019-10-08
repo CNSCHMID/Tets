@@ -1,6 +1,7 @@
 package de.uol.swp.client.user;
 
 import com.google.common.eventbus.EventBus;
+import com.google.inject.Inject;
 import de.uol.swp.common.user.User;
 import de.uol.swp.common.user.request.*;
 import org.apache.logging.log4j.LogManager;
@@ -21,6 +22,7 @@ public class UserService implements de.uol.swp.common.user.UserService {
 	private static final Logger LOG = LogManager.getLogger(UserService.class);
 	private final EventBus bus;
 
+	@Inject
 	public UserService(EventBus bus) {
 		this.bus = bus;
 		// Currently not need, will only post on bus
@@ -55,6 +57,7 @@ public class UserService implements de.uol.swp.common.user.UserService {
 	@Override
 	public User updateUser(User user) {
 		UpdateUserRequest request = new UpdateUserRequest(user);
+		bus.post(request);
 		return null;
 	}
 

@@ -3,11 +3,13 @@ package de.uol.swp.server.communication;
 import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import com.google.inject.Inject;
 import de.uol.swp.common.MyObjectDecoder;
 import de.uol.swp.common.MyObjectEncoder;
 import de.uol.swp.common.message.*;
 import de.uol.swp.common.user.Session;
 import de.uol.swp.common.user.message.UserLoggedInMessage;
+import de.uol.swp.common.user.message.UserLoggedOutMessage;
 import de.uol.swp.common.user.response.LoginSuccessfulMessage;
 import de.uol.swp.server.message.ClientAuthorizedMessage;
 import de.uol.swp.server.message.ClientDisconnectedMessage;
@@ -36,11 +38,6 @@ public class Server implements ServerHandlerDelegate {
 	private static final Logger LOG = LogManager.getLogger(Server.class);
 
 	/**
-	 * Server port
-	 */
-	final private int port;
-
-	/**
 	 * Clients that are connected
 	 */
 	final private List<ChannelHandlerContext> connectedClients = new CopyOnWriteArrayList<>();
@@ -51,30 +48,25 @@ public class Server implements ServerHandlerDelegate {
 	final private Map<ChannelHandlerContext, Session> activeSessions = new HashMap<>();
 
 	/**
-	 * For demo reasons the eventBus as part of this class
+     * Event bus (injected)
 	 */
 	final private EventBus eventBus;
 
 	/**
-	 * Creates a new Server Object and start listening on given port
-	 *
-	 * @param port
-	 *            The port the server should listen for new connection
-
+     * Creates a new Server Object
 	 */
-	public Server(int port, EventBus eventBus) {
-		this.port = port;
-		// TODO: Ping clients
+    @Inject
+    public Server(EventBus eventBus) {
 		this.eventBus = eventBus;
 		eventBus.register(this);
 	}
 
 	/**
-	 * Initialize netty
+     * Start a new server on given port
 	 *
 	 * @throws Exception
 	 */
-	public void start() throws Exception {
+    public void start(int port) throws Exception {
 		final ServerHandler serverHandler = new ServerHandler(this);
 		EventLoopGroup bossGroup = new NioEventLoopGroup(1);
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
@@ -169,12 +161,21 @@ public class Server implements ServerHandlerDelegate {
 	private void onClientAuthorized(ClientAuthorizedMessage msg){
 		Optional<ChannelHandlerContext> ctx = getCtx(msg);
 		if (ctx.isPresent()) {
-			putSession(ctx.get(), msg.getSession());
+			putSession(ctx.get(), msg.getSession().get());
 			sendToClient(ctx.get(), new LoginSuccessfulMessage(msg.getUser()));
 			sendToAll(new UserLoggedInMessage(msg.getUser().getUsername()));
 		}else{
 			LOG.warn("No context for "+msg);
 		}
+	}
+
+	@Subscribe
+	private void onUserLoggedOutMessage(UserLoggedOutMessage msg){
+		Optional<ChannelHandlerContext> ctx = getCtx(msg);
+		if (ctx.isPresent()){
+			removeSession(ctx.get());
+		}
+		sendToAll(msg);
 	}
 
 	// -------------------------------------------------------------------------------
@@ -225,10 +226,13 @@ public class Server implements ServerHandlerDelegate {
 	}
 
 	private Optional<ChannelHandlerContext> getCtx(Message message){
-		if (message.getMessageContext() instanceof NettyMessageContext){
-			return Optional.of(((NettyMessageContext)message.getMessageContext()).getCtx());
+		if (message.getMessageContext().isPresent() && message.getMessageContext().get() instanceof NettyMessageContext){
+			return Optional.of(((NettyMessageContext) message.getMessageContext().get()).getCtx());
 		}
-		return getCtx(message.getSession());
+		if (message.getSession().isPresent()){
+			return getCtx(message.getSession().get());
+		}
+		return Optional.empty();
 	}
 
 	private Optional<ChannelHandlerContext> getCtx(Session session){
@@ -249,10 +253,8 @@ public class Server implements ServerHandlerDelegate {
 		ctx.writeAndFlush(message);
 	}
 
-
-
-	private void sendToAll(ServerMessage msg) {
-		for (ChannelHandlerContext client : connectedClients) {
+	private void sendToMany(List<ChannelHandlerContext> sendTo, ServerMessage msg){
+		for (ChannelHandlerContext client : sendTo) {
 			try {
 				client.writeAndFlush(msg);
 			} catch (Exception e) {
@@ -260,6 +262,10 @@ public class Server implements ServerHandlerDelegate {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	private void sendToAll(ServerMessage msg) {
+		sendToMany(connectedClients,msg);
 	}
 
 }

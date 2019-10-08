@@ -2,6 +2,7 @@ package de.uol.swp.server.usermanagement;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import com.google.inject.Inject;
 import de.uol.swp.common.message.ResponseMessage;
 import de.uol.swp.common.user.User;
 import de.uol.swp.common.user.exception.RegistrationExceptionMessage;
@@ -22,6 +23,7 @@ public class UserService {
     private final EventBus eventBus;
     private final UserManagement userManagement;
 
+    @Inject
     public UserService(EventBus eventBus, UserManagement userManagement) {
         this.eventBus = eventBus;
         this.userManagement = userManagement;
@@ -40,9 +42,13 @@ public class UserService {
         }catch (Exception e){
             LOG.error(e);
             returnMessage = new RegistrationExceptionMessage("Cannot create user "+msg.getUser()+" "+e.getMessage());
-            returnMessage.setSession(msg.getSession());
+            if (msg.getSession().isPresent()) {
+                returnMessage.setSession(msg.getSession().get());
+            }
         }
-        returnMessage.setMessageContext(msg.getMessageContext());
+        if (msg.getMessageContext().isPresent()) {
+            returnMessage.setMessageContext(msg.getMessageContext().get());
+        }
         eventBus.post(returnMessage);
     }
 }

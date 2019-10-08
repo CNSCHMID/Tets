@@ -42,7 +42,7 @@ class UserDTOTest {
 
         // Test every attribute
         assertEquals(newUser.getUsername(), defaultUser.getUsername());
-        assertEquals(newUser.getPassword(),"");
+        assertEquals(newUser.getPassword(), "");
         assertEquals(newUser.getEMail(), defaultUser.getEMail());
 
         // Test with equals method
@@ -51,11 +51,11 @@ class UserDTOTest {
 
     @Test
     void getWithoutPassword() {
-        User userWithoutPasswort = defaultUser.getWithoutPassword();
+        User userWithoutPassword = defaultUser.getWithoutPassword();
 
-        assertEquals(userWithoutPasswort.getUsername(), defaultUser.getPassword());
-        assertEquals(userWithoutPasswort.getPassword(),"");
-        assertEquals(userWithoutPasswort.getUsername(), defaultUser.getUsername());
+        assertEquals(userWithoutPassword.getUsername(), defaultUser.getPassword());
+        assertEquals(userWithoutPassword.getPassword(), "");
+        assertEquals(userWithoutPassword.getUsername(), defaultUser.getUsername());
     }
 
     @Test
@@ -64,7 +64,8 @@ class UserDTOTest {
     }
 
     @Test
-    void usersNotEquals_String() {assertNotEquals(defaultUser,"Test");
+    void usersNotEquals_String() {
+        assertNotEquals(defaultUser, "Test");
     }
 
     @Test

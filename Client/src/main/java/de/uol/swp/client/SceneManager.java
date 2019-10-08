@@ -2,6 +2,9 @@ package de.uol.swp.client;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.google.inject.assistedinject.Assisted;
 import de.uol.swp.client.auth.LoginPresenter;
 import de.uol.swp.client.auth.events.ShowLoginViewEvent;
 import de.uol.swp.client.main.MainMenuPresenter;
@@ -17,10 +20,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
+import java.net.URL;
 
-class SceneManager {
+public class SceneManager {
+
+    static final Logger LOG = LogManager.getLogger(SceneManager.class);
+    static final String styleSheet = "css/swp.css";
 
     final private Stage primaryStage;
     final private EventBus eventBus;
@@ -34,12 +42,15 @@ class SceneManager {
 
     private User currentUser;
 
+    private Injector injector;
 
-    public SceneManager(Stage primaryStage, EventBus eventBus, UserService userService){
-        this.primaryStage = primaryStage;
+    @Inject
+    public SceneManager(EventBus eventBus, UserService userService, Injector injected, @Assisted Stage primaryStage) {
         this.eventBus = eventBus;
         this.eventBus.register(this);
         this.userService = userService;
+        this.primaryStage = primaryStage;
+        this.injector = injected;
         initViews();
     }
 
@@ -51,15 +62,18 @@ class SceneManager {
 
     private Parent initPresenter(String fxmlFile) {
         Parent rootPane;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+        FXMLLoader loader = injector.getInstance(FXMLLoader.class);
         try {
+            URL url = getClass().getResource(fxmlFile);
+            LOG.debug("Loading " + url);
+            loader.setLocation(url);
             rootPane = loader.load();
-        } catch (IOException e) {
-            throw new RuntimeException("Could not load View!");
+        } catch (Exception e) {
+            throw new RuntimeException("Could not load View!" + e.getMessage(), e);
         }
-        AbstractPresenter presenter = loader.getController();
-        presenter.setEventBus(eventBus);
-        presenter.setUserService(userService);
+//        AbstractPresenter presenter = loader.getController();
+//        presenter.setEventBus(eventBus);
+//        presenter.setUserService(userService);
         return rootPane;
     }
 
@@ -67,6 +81,7 @@ class SceneManager {
         if (mainScene == null) {
             Parent rootPane = initPresenter(MainMenuPresenter.fxml);
             mainScene = new Scene(rootPane, 800, 600);
+            mainScene.getStylesheets().add(styleSheet);
         }
     }
 
@@ -74,6 +89,7 @@ class SceneManager {
         if (loginScene == null) {
             Parent rootPane = initPresenter(LoginPresenter.fxml);
             loginScene = new Scene(rootPane, 400, 200);
+            loginScene.getStylesheets().add(styleSheet);
         }
     }
 
@@ -81,6 +97,7 @@ class SceneManager {
         if (registrationScene == null){
             Parent rootPane = initPresenter(RegistrationPresenter.fxml);
             registrationScene = new Scene(rootPane, 400,200);
+            registrationScene.getStylesheets().add(styleSheet);
         }
     }
 
@@ -146,10 +163,10 @@ class SceneManager {
 
 
     public void showLoginScreen() {
-        showScene(loginScene, "Login");
+        showScene(loginScene,"Login");
     }
 
     public void showRegistrationScreen() {
-        showScene(registrationScene, "Registration");
+    showScene(registrationScene,"Registration");
     }
 }

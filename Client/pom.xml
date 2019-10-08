@@ -99,5 +99,12 @@
             <classifier>mac</classifier>
         </dependency>
 
+        <dependency>
+            <groupId>com.gluonhq</groupId>
+            <artifactId>ignite-guice</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+
     </dependencies>
 </project>

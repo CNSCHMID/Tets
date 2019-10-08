@@ -2,6 +2,7 @@ package de.uol.swp.server.usermanagement;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import com.google.inject.Inject;
 import de.uol.swp.common.message.ServerMessage;
 import de.uol.swp.common.user.Session;
 import de.uol.swp.common.user.User;
@@ -39,6 +40,7 @@ public class AuthenticationService {
 
     private final UserManagement userManagement;
 
+    @Inject
     public AuthenticationService(EventBus bus, UserManagement userManagement) {
         this.userManagement = userManagement;
         this.bus = bus;
@@ -66,13 +68,15 @@ public class AuthenticationService {
             LOG.error(e);
             returnMessage = new ServerExceptionMessage(new LoginException("Cannot auth user " + msg.getUsername()));
         }
-        returnMessage.setMessageContext(msg.getMessageContext());
+        if (msg.getMessageContext().isPresent()) {
+            returnMessage.setMessageContext(msg.getMessageContext().get());
+        }
         bus.post(returnMessage);
     }
 
     @Subscribe
     public void onLogoutRequest(LogoutRequest msg) {
-        User userToLogOut = userSessions.get(msg.getSession());
+        User userToLogOut = userSessions.get(msg.getSession().get());
 
         // Could be already logged out
         if (userToLogOut != null){
@@ -84,9 +88,9 @@ public class AuthenticationService {
             userManagement.logout(userToLogOut);
             userSessions.remove(msg.getSession());
 
-            // TODO: do we need to handle this message in Server, too?
             ServerMessage returnMessage = new UserLoggedOutMessage(userToLogOut.getUsername());
             bus.post(returnMessage);
+
         }
 
     }

@@ -3,6 +3,9 @@ package de.uol.swp.client;
 import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import de.uol.swp.client.di.ClientModule;
 import de.uol.swp.common.user.User;
 import de.uol.swp.common.user.UserService;
 import de.uol.swp.common.user.exception.RegistrationExceptionMessage;
@@ -29,7 +32,7 @@ public class ClientApp extends Application implements ConnectionListener {
 
 	private ClientConnection clientConnection;
 
-	private final EventBus eventBus = new EventBus();
+	private EventBus eventBus;
 
 	private SceneManager sceneManager;
 
@@ -52,20 +55,35 @@ public class ClientApp extends Application implements ConnectionListener {
 			port = Integer.parseInt(args.get(1));
 		}
 
-		this.userService = new de.uol.swp.client.user.UserService(eventBus);
-
 		// do not establish connection here
 		// if connection is established in this stage, no GUI is shown and
 		// exceptions are only visible in console!
 	}
 
+
 	@Override
 	public void start(Stage primaryStage) {
-		this.sceneManager = new SceneManager(primaryStage, eventBus, userService);
-		clientConnection = new ClientConnection(host, port, eventBus);
-		clientConnection.addConnectionListener(this);
+
+        // Client app is created by java, so injection must
+        // be handled here manually
+		Injector injector = Guice.createInjector(new ClientModule());
+
+        // get user service from guice, is needed for logout
+        this.userService = injector.getInstance(UserService.class);
+
+        // get event bus from guice
+		eventBus = injector.getInstance(EventBus.class);
 		// Register this class for de.uol.swp.client.events (e.g. for exceptions)
 		eventBus.register(this);
+
+		// Client app is created by java, so injection must
+		// be handled here manually
+		SceneManagerFactory sceneManagerFactory = injector.getInstance(SceneManagerFactory.class);
+		this.sceneManager = sceneManagerFactory.create(primaryStage);
+
+		ClientConnectionFactory connectionFactory = injector.getInstance(ClientConnectionFactory.class);
+		clientConnection = connectionFactory.create(host, port);
+		clientConnection.addConnectionListener(this);
 		// JavaFX Thread should not be blocked to long!
 		Thread t = new Thread(() -> {
 			try {
