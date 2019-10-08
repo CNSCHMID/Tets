@@ -8,6 +8,7 @@ import de.uol.swp.common.user.User;
 import de.uol.swp.common.user.exception.RegistrationExceptionMessage;
 import de.uol.swp.common.user.request.RegisterUserRequest;
 import de.uol.swp.common.user.response.RegistrationSuccessfulEvent;
+import de.uol.swp.server.AbstractService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,18 +17,16 @@ import org.apache.logging.log4j.Logger;
  *
  * @author Marco Grawunder
  */
-public class UserService {
+public class UserService extends AbstractService {
 
     private static final Logger LOG = LogManager.getLogger(UserService.class);
 
-    private final EventBus eventBus;
     private final UserManagement userManagement;
 
     @Inject
     public UserService(EventBus eventBus, UserManagement userManagement) {
-        this.eventBus = eventBus;
+        super(eventBus);
         this.userManagement = userManagement;
-        this.eventBus.register(this);
     }
 
     @Subscribe
@@ -49,6 +48,6 @@ public class UserService {
         if (msg.getMessageContext().isPresent()) {
             returnMessage.setMessageContext(msg.getMessageContext().get());
         }
-        eventBus.post(returnMessage);
+        post(returnMessage);
     }
 }

@@ -27,10 +27,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.net.InetSocketAddress;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Server implements ServerHandlerDelegate {
@@ -163,7 +160,7 @@ public class Server implements ServerHandlerDelegate {
 		if (ctx.isPresent()) {
 			putSession(ctx.get(), msg.getSession().get());
 			sendToClient(ctx.get(), new LoginSuccessfulMessage(msg.getUser()));
-			sendToAll(new UserLoggedInMessage(msg.getUser().getUsername()));
+			sendMessage(new UserLoggedInMessage(msg.getUser().getUsername()));
 		}else{
 			LOG.warn("No context for "+msg);
 		}
@@ -175,7 +172,7 @@ public class Server implements ServerHandlerDelegate {
 		if (ctx.isPresent()){
 			removeSession(ctx.get());
 		}
-		sendToAll(msg);
+		sendMessage(msg);
 	}
 
 	// -------------------------------------------------------------------------------
@@ -201,8 +198,10 @@ public class Server implements ServerHandlerDelegate {
 	private void onServerMessage(ServerMessage msg){
 		msg.setSession(null);
 		msg.setMessageContext(null);
-		LOG.debug("Send to all "+msg);
-		sendToAll(msg);
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("Send " + msg + " to " + (msg.getReceiver().isEmpty() ? "all" : msg.getReceiver()));
+		}
+		sendMessage(msg);
 	}
 
 
@@ -244,13 +243,33 @@ public class Server implements ServerHandlerDelegate {
 		return Optional.empty();
 	}
 
+	private List<ChannelHandlerContext> getCtx(List<Session> receiver) {
+		List<ChannelHandlerContext> ctxs = new ArrayList<>();
+		receiver.forEach(r -> {
+			Optional<ChannelHandlerContext> s = getCtx(r);
+			if (s.isPresent()) {
+				ctxs.add(s.get());
+			}
+		});
+		return ctxs;
+	}
+
+
 	// -------------------------------------------------------------------------------
 	// Help methods: Send only objects of type Message
 	// -------------------------------------------------------------------------------
 
 	private void sendToClient(ChannelHandlerContext ctx, ResponseMessage message) {
-		LOG.trace("Trying to send to client: "+ctx+" "+message);
+		LOG.trace("Trying to sendMessage to client: " + ctx + " " + message);
 		ctx.writeAndFlush(message);
+	}
+
+	private void sendMessage(ServerMessage msg) {
+		if (msg.getReceiver().isEmpty()) {
+			sendToMany(connectedClients, msg);
+		} else {
+			sendToMany(getCtx(msg.getReceiver()), msg);
+		}
 	}
 
 	private void sendToMany(List<ChannelHandlerContext> sendTo, ServerMessage msg){
@@ -264,8 +283,5 @@ public class Server implements ServerHandlerDelegate {
 		}
 	}
 
-	private void sendToAll(ServerMessage msg) {
-		sendToMany(connectedClients,msg);
-	}
 
 }
