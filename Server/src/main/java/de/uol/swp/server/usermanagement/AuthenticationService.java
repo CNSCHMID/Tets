@@ -68,13 +68,15 @@ public class AuthenticationService {
             LOG.error(e);
             returnMessage = new ServerExceptionMessage(new LoginException("Cannot auth user " + msg.getUsername()));
         }
-        returnMessage.setMessageContext(msg.getMessageContext().get());
+        if (msg.getMessageContext().isPresent()) {
+            returnMessage.setMessageContext(msg.getMessageContext().get());
+        }
         bus.post(returnMessage);
     }
 
     @Subscribe
     public void onLogoutRequest(LogoutRequest msg) {
-        User userToLogOut = userSessions.get(msg.getSession());
+        User userToLogOut = userSessions.get(msg.getSession().get());
 
         // Could be already logged out
         if (userToLogOut != null){
@@ -86,9 +88,9 @@ public class AuthenticationService {
             userManagement.logout(userToLogOut);
             userSessions.remove(msg.getSession());
 
-            // TODO: do we need to handle this message in Server, too?
             ServerMessage returnMessage = new UserLoggedOutMessage(userToLogOut.getUsername());
             bus.post(returnMessage);
+
         }
 
     }
