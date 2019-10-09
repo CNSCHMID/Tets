@@ -48,7 +48,7 @@ public class AuthenticationService extends AbstractService {
         return entry.map(Map.Entry::getKey);
     }
 
-    public List<Session> getSessions(List<User> users) {
+    public List<Session> getSessions(Set<User> users) {
         List<Session> sessions = new ArrayList<>();
         users.forEach(u -> {
             Optional<Session> session = getSession(u);
