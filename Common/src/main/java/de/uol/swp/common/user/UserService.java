@@ -40,6 +40,13 @@ public interface UserService {
 	 */
 	User createUser(User user);
 
+    /**
+     * Removes a user from the sore
+     *
+     * @param user The user to remove
+     */
+    void dropUser(User user);
+
 	/**
 	 * Update a user
 	 * @param user the user object containing all infos to

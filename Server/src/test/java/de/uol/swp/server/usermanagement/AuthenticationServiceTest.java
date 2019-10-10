@@ -60,6 +60,7 @@ class AuthenticationServiceTest {
         assertTrue(userManagement.isLoggedIn(user));
         // is message send
         assertTrue(event instanceof ClientAuthorizedMessage);
+        userManagement.dropUser(user);
     }
 
 
@@ -79,6 +80,7 @@ class AuthenticationServiceTest {
         lock.await(1000, TimeUnit.MILLISECONDS);
         assertFalse(userManagement.isLoggedIn(user));
         assertTrue(event instanceof ServerExceptionMessage);
+        userManagement.dropUser(user);
     }
 
     @Test
@@ -104,6 +106,7 @@ class AuthenticationServiceTest {
         bus.post(loginRequest);
 
         assertTrue(userManagement.isLoggedIn(userToLogin));
+        userManagement.dropUser(userToLogin);
     }
 
     @Test

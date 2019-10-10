@@ -56,6 +56,16 @@ public class UserManagement extends AbstractUserManagement {
 
     }
 
+    @Override
+    public void dropUser(User userToDrop) {
+        Optional<User> user = userStore.findUser(userToDrop.getUsername());
+        if (user.isEmpty()) {
+            throw new UserManagementException("Username unknown!");
+        }
+        userStore.removeUser(userToDrop.getUsername());
+
+    }
+
     private String firstNotNull(String firstValue, String secondValue) {
         return Strings.isNullOrEmpty(firstValue)?secondValue:firstValue;
     }
