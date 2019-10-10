@@ -15,6 +15,7 @@ class UserManagementTest {
 
     private static final int NO_USERS = 10;
     private static final List<UserDTO> users;
+    private static final User userNotInStore = new UserDTO("marco" + NO_USERS, "marco" + NO_USERS, "marco" + NO_USERS + "@grawunder.de");
 
     static {
         users = new ArrayList<>();
@@ -23,8 +24,6 @@ class UserManagementTest {
         }
         Collections.sort(users);
     }
-
-    private static final User userNotInStore = new UserDTO("marco" + NO_USERS, "marco" + NO_USERS, "marco" + NO_USERS + "@grawunder.de");
 
     List<UserDTO> getDefaultUsers() {
         return Collections.unmodifiableList(users);
@@ -99,6 +98,24 @@ class UserManagementTest {
     }
 
     @Test
+    void dropUser() {
+        UserManagement management = getDefaultManagement();
+        management.createUser(userNotInStore);
+
+        management.dropUser(userNotInStore);
+
+        assertThrows(SecurityException.class,
+                () -> management.login(userNotInStore.getUsername(), userNotInStore.getPassword()));
+    }
+
+    @Test
+    void dropUserNotExisting() {
+        UserManagement management = getDefaultManagement();
+        assertThrows(UserManagementException.class,
+                () -> management.dropUser(userNotInStore));
+    }
+
+    @Test
     void createUserAlreadyExisting() {
         UserManagement management = getDefaultManagement();
         User userToCreate = users.get(0);
@@ -154,9 +171,9 @@ class UserManagementTest {
     }
 
     @Test
-    void updateUnknownUser(){
+    void updateUnknownUser() {
         UserManagement management = getDefaultManagement();
-        assertThrows(UserManagementException.class, ()-> management.updateUser(userNotInStore));
+        assertThrows(UserManagementException.class, () -> management.updateUser(userNotInStore));
     }
 
     @Test

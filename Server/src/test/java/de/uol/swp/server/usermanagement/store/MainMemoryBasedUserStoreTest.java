@@ -138,6 +138,18 @@ class MainMemoryBasedUserStoreTest {
     }
 
     @Test
+    void dropUser() {
+        MainMemoryBasedUserStore store = getDefaultStore();
+        User userToRemove = getDefaultUsers().get(3);
+
+        store.removeUser(userToRemove.getUsername());
+
+        Optional<User> userFound = store.findUser(userToRemove.getUsername());
+
+        assertTrue(userFound.isEmpty());
+    }
+
+    @Test
     void createEmptyUser(){
         MainMemoryBasedUserStore store = getDefaultStore();
 
