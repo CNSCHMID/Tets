@@ -40,8 +40,16 @@ class AuthenticationServiceTest {
     final AuthenticationService authService = new AuthenticationService(bus, userManagement);
     private Object event;
 
+    @Subscribe
+    void handle(DeadEvent e) {
+        this.event = e.getEvent();
+        System.out.print(e.getEvent());
+        lock.countDown();
+    }
+
     @BeforeEach
     void registerBus() {
+        event = null;
         bus.register(this);
     }
 
@@ -60,14 +68,6 @@ class AuthenticationServiceTest {
         // is message send
         assertTrue(event instanceof ClientAuthorizedMessage);
         userManagement.dropUser(user);
-    }
-
-
-    @Subscribe
-    void handle(DeadEvent e) {
-        this.event = e.getEvent();
-        System.out.print(e.getEvent());
-        lock.countDown();
     }
 
     @Test
