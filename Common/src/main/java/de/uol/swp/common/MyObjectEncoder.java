@@ -14,7 +14,9 @@ public class MyObjectEncoder extends ObjectEncoder {
 
     @Override
     protected void encode(ChannelHandlerContext ctx, Serializable msg, ByteBuf out) throws Exception {
-        LOG.trace("Trying to encode "+msg);
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Trying to encode " + msg);
+        }
         try {
             super.encode(ctx, msg, out);
         }catch (Exception e){
@@ -22,6 +24,8 @@ public class MyObjectEncoder extends ObjectEncoder {
             e.printStackTrace();
             throw e;
         }
-        LOG.trace(msg+" "+out);
+        if (LOG.isTraceEnabled()) {
+            LOG.trace(msg + " " + out);
+        }
     }
 }

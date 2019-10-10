@@ -17,9 +17,13 @@ public class MyObjectDecoder extends ObjectDecoder {
 
     @Override
     protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
-        LOG.trace("Trying to decode "+in);
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Trying to decode " + in);
+        }
         Object decoded = super.decode(ctx, in);
-        LOG.trace(in+" "+decoded);
+        if (LOG.isTraceEnabled()) {
+            LOG.trace(in + " " + decoded);
+        }
         return decoded;
     }
 }
