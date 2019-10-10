@@ -19,10 +19,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -34,6 +31,8 @@ class AuthenticationServiceTest {
 
     final User user = new UserDTO("name", "password", "email@test.de");
     final User user2 = new UserDTO("name2", "password2", "email@test.de2");
+    final User user3 = new UserDTO("name3", "password3", "email@test.de3");
+
 
     final UserStore userStore = new MainMemoryBasedUserStore();
     final EventBus bus = new EventBus();
@@ -60,6 +59,7 @@ class AuthenticationServiceTest {
         assertTrue(userManagement.isLoggedIn(user));
         // is message send
         assertTrue(event instanceof ClientAuthorizedMessage);
+        userManagement.dropUser(user);
     }
 
 
@@ -79,6 +79,7 @@ class AuthenticationServiceTest {
         lock.await(1000, TimeUnit.MILLISECONDS);
         assertFalse(userManagement.isLoggedIn(user));
         assertTrue(event instanceof ServerExceptionMessage);
+        userManagement.dropUser(user);
     }
 
     @Test
@@ -104,6 +105,7 @@ class AuthenticationServiceTest {
         bus.post(loginRequest);
 
         assertTrue(userManagement.isLoggedIn(userToLogin));
+        userManagement.dropUser(userToLogin);
     }
 
     @Test
@@ -157,6 +159,34 @@ class AuthenticationServiceTest {
         assertTrue(event instanceof AllOnlineUsersResponse);
 
         assertTrue(((AllOnlineUsersResponse) event).getUsers().isEmpty());
+
+    }
+
+    @Test
+    void getSessionsForUsersTest() {
+        loginUser(user);
+        loginUser(user2);
+        loginUser(user3);
+        Set<User> users = new TreeSet<>();
+        users.add(user);
+        users.add(user2);
+        users.add(user3);
+
+
+        Optional<Session> session1 = authService.getSession(user);
+        Optional<Session> session2 = authService.getSession(user2);
+        Optional<Session> session3 = authService.getSession(user2);
+
+        assertTrue(session1.isPresent());
+        assertTrue(session2.isPresent());
+        assertTrue(session3.isPresent());
+
+        List<Session> sessions = authService.getSessions(users);
+
+        assertEquals(sessions.size(), 3);
+        assertTrue(sessions.contains(session1.get()));
+        assertTrue(sessions.contains(session2.get()));
+        assertTrue(sessions.contains(session3.get()));
 
     }
 

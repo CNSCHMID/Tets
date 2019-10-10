@@ -50,6 +50,11 @@ public class MainMemoryBasedUserStore extends AbstractUserStore implements UserS
     }
 
     @Override
+    public void removeUser(String username) {
+        users.remove(username);
+    }
+
+    @Override
     public List<User> getAllUsers() {
         List<User> retUsers = new ArrayList<>();
         users.values().forEach(u -> retUsers.add(u.getWithoutPassword()));

@@ -54,6 +54,10 @@ public class UserService implements de.uol.swp.common.user.UserService {
 		return null;
 	}
 
+    public void dropUser(User user) {
+        //TODO: Implement me
+    }
+
 	@Override
 	public User updateUser(User user) {
 		UpdateUserRequest request = new UpdateUserRequest(user);
