@@ -3,6 +3,8 @@ package de.uol.swp.server.usermanagement;
 import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import de.uol.swp.common.message.Message;
+import de.uol.swp.common.message.MessageContext;
 import de.uol.swp.common.user.Session;
 import de.uol.swp.common.user.User;
 import de.uol.swp.common.user.dto.UserDTO;
@@ -24,6 +26,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class AuthenticationServiceTest {
 
@@ -39,6 +42,8 @@ class AuthenticationServiceTest {
     final UserManagement userManagement = new UserManagement(userStore);
     final AuthenticationService authService = new AuthenticationService(bus, userManagement);
     private Object event;
+
+    private MessageContext emptyMessageContext = mock(MessageContext.class);
 
     @Subscribe
     void handle(DeadEvent e) {
@@ -62,6 +67,7 @@ class AuthenticationServiceTest {
     void loginTest() throws InterruptedException {
         userManagement.createUser(user);
         final LoginRequest loginRequest = new LoginRequest(user.getUsername(), user.getPassword());
+        loginRequest.setMessageContext(emptyMessageContext);
         bus.post(loginRequest);
         lock.await(1000, TimeUnit.MILLISECONDS);
         assertTrue(userManagement.isLoggedIn(user));
@@ -74,6 +80,7 @@ class AuthenticationServiceTest {
     void loginTestFail() throws InterruptedException {
         userManagement.createUser(user);
         final LoginRequest loginRequest = new LoginRequest(user.getUsername(), user.getPassword() + "äüö");
+        loginRequest.setMessageContext(emptyMessageContext);
         bus.post(loginRequest);
 
         lock.await(1000, TimeUnit.MILLISECONDS);

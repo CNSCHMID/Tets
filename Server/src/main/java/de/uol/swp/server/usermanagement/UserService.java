@@ -42,9 +42,7 @@ public class UserService extends AbstractService {
             LOG.error(e);
             returnMessage = new RegistrationExceptionMessage("Cannot create user "+msg.getUser()+" "+e.getMessage());
         }
-        if (msg.getMessageContext().isPresent()) {
-            returnMessage.setMessageContext(msg.getMessageContext().get());
-        }
+        returnMessage.setMessageContext(msg.getMessageContext().get());
         post(returnMessage);
     }
 }

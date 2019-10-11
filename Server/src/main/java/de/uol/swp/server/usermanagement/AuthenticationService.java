@@ -73,9 +73,9 @@ public class AuthenticationService extends AbstractService {
             LOG.error(e);
             returnMessage = new ServerExceptionMessage(new LoginException("Cannot auth user " + msg.getUsername()));
         }
-        if (msg.getMessageContext().isPresent()) {
+//        if (msg.getMessageContext().isPresent()) {
             returnMessage.setMessageContext(msg.getMessageContext().get());
-        }
+//        }
         post(returnMessage);
     }
 

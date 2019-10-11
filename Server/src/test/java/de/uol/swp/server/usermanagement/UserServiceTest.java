@@ -1,6 +1,7 @@
 package de.uol.swp.server.usermanagement;
 
 import com.google.common.eventbus.EventBus;
+import de.uol.swp.common.message.MessageContext;
 import de.uol.swp.common.user.User;
 import de.uol.swp.common.user.dto.UserDTO;
 import de.uol.swp.common.user.request.RegisterUserRequest;
@@ -8,6 +9,7 @@ import de.uol.swp.server.usermanagement.store.MainMemoryBasedUserStore;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 class UserServiceTest {
 
@@ -18,9 +20,12 @@ class UserServiceTest {
     final UserManagement userManagement = new UserManagement(new MainMemoryBasedUserStore());
     final UserService userService = new UserService(bus, userManagement);
 
+    private MessageContext emptyMessageContext = mock(MessageContext.class);
+
     @Test
     void registerUserTest() {
         final RegisterUserRequest request = new RegisterUserRequest(userToRegister);
+        request.setMessageContext(emptyMessageContext);
 
         // The post will lead to a call of a UserService function
         bus.post(request);
@@ -35,7 +40,9 @@ class UserServiceTest {
     @Test
     void registerSecondUserWithSameName() {
         final RegisterUserRequest request = new RegisterUserRequest(userToRegister);
+        request.setMessageContext(emptyMessageContext);
         final RegisterUserRequest request2 = new RegisterUserRequest(userWithSameName);
+        request2.setMessageContext(emptyMessageContext);
 
         bus.post(request);
         bus.post(request2);

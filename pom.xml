@@ -80,6 +80,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
         <!-- Google guava dependency -->
         <dependency>
             <groupId>com.google.guava</groupId>
