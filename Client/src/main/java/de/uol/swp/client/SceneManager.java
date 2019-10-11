@@ -9,8 +9,8 @@ import de.uol.swp.client.auth.LoginPresenter;
 import de.uol.swp.client.auth.events.ShowLoginViewEvent;
 import de.uol.swp.client.main.MainMenuPresenter;
 import de.uol.swp.client.register.RegistrationPresenter;
-import de.uol.swp.client.register.event.RegistationErrorEvent;
 import de.uol.swp.client.register.event.RegistrationCanceledEvent;
+import de.uol.swp.client.register.event.RegistrationErrorEvent;
 import de.uol.swp.client.register.event.ShowRegistrationViewEvent;
 import de.uol.swp.common.user.User;
 import de.uol.swp.common.user.UserService;
@@ -117,7 +117,7 @@ public class SceneManager {
     }
 
     @Subscribe
-    public void onRegistrationErrorEvent(RegistationErrorEvent event){
+    public void onRegistrationErrorEvent(RegistrationErrorEvent event) {
         showError(event.getMessage());
     }
 

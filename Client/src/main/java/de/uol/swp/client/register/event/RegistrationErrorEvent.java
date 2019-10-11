@@ -1,9 +1,9 @@
 package de.uol.swp.client.register.event;
 
-public class RegistationErrorEvent {
+public class RegistrationErrorEvent {
     private final String message;
 
-    public RegistationErrorEvent(String message) {
+    public RegistrationErrorEvent(String message) {
         this.message = message;
     }
 
