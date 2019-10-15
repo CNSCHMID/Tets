@@ -5,5 +5,5 @@ import de.uol.swp.common.message.AbstractResponseMessage;
 /**
  * A response, that the user registration was successful
  */
-public class RegistrationSuccessfulEvent extends AbstractResponseMessage {
+public class RegistrationSuccessfulResponse extends AbstractResponseMessage {
 }

@@ -9,8 +9,8 @@ import de.uol.swp.client.di.ClientModule;
 import de.uol.swp.common.user.User;
 import de.uol.swp.common.user.UserService;
 import de.uol.swp.common.user.exception.RegistrationExceptionMessage;
-import de.uol.swp.common.user.response.LoginSuccessfulMessage;
-import de.uol.swp.common.user.response.RegistrationSuccessfulEvent;
+import de.uol.swp.common.user.response.LoginSuccessfulResponse;
+import de.uol.swp.common.user.response.RegistrationSuccessfulResponse;
 import io.netty.channel.Channel;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -120,7 +120,7 @@ public class ClientApp extends Application implements ConnectionListener {
 
 	//
 	@Subscribe
-	public void userLoggedIn(LoginSuccessfulMessage message) {
+	public void userLoggedIn(LoginSuccessfulResponse message) {
 		LOG.debug("user logged in sucessfully "+message.getUser().getUsername());
 		this.user = message.getUser();
 		sceneManager.showMainScreen(user);
@@ -133,7 +133,7 @@ public class ClientApp extends Application implements ConnectionListener {
 	}
 
 	@Subscribe
-	public void onRegistrationSuccessfulMessage(RegistrationSuccessfulEvent message){
+	public void onRegistrationSuccessfulMessage(RegistrationSuccessfulResponse message) {
 		LOG.info("Registration successful.");
 		sceneManager.showLoginScreen();
 	}

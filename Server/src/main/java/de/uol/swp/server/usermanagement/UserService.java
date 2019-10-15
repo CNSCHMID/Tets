@@ -7,7 +7,7 @@ import de.uol.swp.common.message.ResponseMessage;
 import de.uol.swp.common.user.User;
 import de.uol.swp.common.user.exception.RegistrationExceptionMessage;
 import de.uol.swp.common.user.request.RegisterUserRequest;
-import de.uol.swp.common.user.response.RegistrationSuccessfulEvent;
+import de.uol.swp.common.user.response.RegistrationSuccessfulResponse;
 import de.uol.swp.server.AbstractService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,7 +37,7 @@ public class UserService extends AbstractService {
         ResponseMessage returnMessage;
         try {
             User newUser = userManagement.createUser(msg.getUser());
-            returnMessage = new RegistrationSuccessfulEvent();
+            returnMessage = new RegistrationSuccessfulResponse();
         }catch (Exception e){
             LOG.error(e);
             returnMessage = new RegistrationExceptionMessage("Cannot create user "+msg.getUser()+" "+e.getMessage());

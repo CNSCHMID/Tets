@@ -10,7 +10,7 @@ import de.uol.swp.common.message.*;
 import de.uol.swp.common.user.Session;
 import de.uol.swp.common.user.message.UserLoggedInMessage;
 import de.uol.swp.common.user.message.UserLoggedOutMessage;
-import de.uol.swp.common.user.response.LoginSuccessfulMessage;
+import de.uol.swp.common.user.response.LoginSuccessfulResponse;
 import de.uol.swp.server.message.ClientAuthorizedMessage;
 import de.uol.swp.server.message.ClientDisconnectedMessage;
 import de.uol.swp.server.message.ServerExceptionMessage;
@@ -159,7 +159,7 @@ public class Server implements ServerHandlerDelegate {
 		Optional<ChannelHandlerContext> ctx = getCtx(msg);
 		if (ctx.isPresent()) {
 			putSession(ctx.get(), msg.getSession().get());
-			sendToClient(ctx.get(), new LoginSuccessfulMessage(msg.getUser()));
+            sendToClient(ctx.get(), new LoginSuccessfulResponse(msg.getUser()));
 			sendMessage(new UserLoggedInMessage(msg.getUser().getUsername()));
 		}else{
 			LOG.warn("No context for "+msg);

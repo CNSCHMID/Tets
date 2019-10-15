@@ -7,7 +7,7 @@ import de.uol.swp.common.user.dto.UserDTO;
 import de.uol.swp.common.user.message.UserLoggedInMessage;
 import de.uol.swp.common.user.message.UserLoggedOutMessage;
 import de.uol.swp.common.user.response.AllOnlineUsersResponse;
-import de.uol.swp.common.user.response.LoginSuccessfulMessage;
+import de.uol.swp.common.user.response.LoginSuccessfulResponse;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,7 +32,7 @@ public class MainMenuPresenter extends AbstractPresenter {
     private ListView<String> usersView;
 
     @Subscribe
-    public void loginSuccessful(LoginSuccessfulMessage message) {
+    public void loginSuccessful(LoginSuccessfulResponse message) {
         this.loggedInUser = message.getUser();
         userService.retrieveAllUsers();
     }

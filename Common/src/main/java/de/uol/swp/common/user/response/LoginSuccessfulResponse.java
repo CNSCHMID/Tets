@@ -8,13 +8,13 @@ import de.uol.swp.common.user.User;
  *
  * @author Marco Grawunder
  */
-public class LoginSuccessfulMessage extends AbstractResponseMessage {
+public class LoginSuccessfulResponse extends AbstractResponseMessage {
 
     private static final long serialVersionUID = -9107206137706636541L;
 
     private final User user;
 
-    public LoginSuccessfulMessage(User user) {
+    public LoginSuccessfulResponse(User user) {
         this.user = user;
     }
 
